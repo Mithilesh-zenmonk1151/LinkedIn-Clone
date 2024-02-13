@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-exports.signup = async (req) => {
+exports.signup = async (req,res) => {
   try {
     const { name, email, password } = req.body;
     console.log(req.body);
@@ -26,7 +26,7 @@ exports.signup = async (req) => {
     });
   } catch (error) {
     console.error(error);
-    throw res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "User cannot be registered. Please try again.",
     });

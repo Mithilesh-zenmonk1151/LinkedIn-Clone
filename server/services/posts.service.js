@@ -1,13 +1,15 @@
 const { Posts } = require("../models/posts.model");
 exports.createPosts = async (req) => {
-  const { id } = req.params;
-  const { title, body } = req.body;
-  const post = new Posts({
-    userId: id,
-    title,
-    body,
-  });
+ 
   try {
+    const { id } = req.params;
+    const { title, body } = req.body;
+    
+    const images = req.files.map((i) => { return i.path }); 
+    console.log('images' , images)
+    const post = await PostModel.create({title:title,body:body,user:id,images:images});
+    console.log('newuser', newuser)
+
     post.save();
     return post;
   } catch (err) {
@@ -17,6 +19,8 @@ exports.createPosts = async (req) => {
 exports.getPost = async (req) => {
   const { id } = req.params;
   try {
+    
+
     const post =await Posts.findOne({ userId: id });
     return post;
   } catch (err) {

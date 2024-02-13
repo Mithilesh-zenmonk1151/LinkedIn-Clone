@@ -1,22 +1,22 @@
 const mongoose = require("mongoose");
-const educational_details_schema = new mongoose.Schema(
+const educationalDetailsSchema = new mongoose.Schema(
   {
-    education_id: {
+    educationId: {
       type: String,
     },
-    school_id: {
+    schoolId: {
       type: String,
     },
     degree: {
       type: String,
     },
-    field_of_study: {
+    fieldOfStudy: {
       type: String,
     },
-    start_date: {
+    startDate: {
       type: Date,
     },
-    end_date: {
+    endDate: {
       type: Date,
     },
     grade: {
@@ -29,6 +29,6 @@ const educational_details_schema = new mongoose.Schema(
   { timestamps: true }
 );
 module.exports = mongoose.model(
-  "educational_details",
-  educational_details_schema
+  "educationalDetails",
+  educationalDetailsSchema
 );

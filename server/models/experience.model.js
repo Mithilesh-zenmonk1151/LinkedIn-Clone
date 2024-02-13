@@ -1,35 +1,35 @@
 const mongoose = require("mongoose");
-const experience_schema = new mongoose.Schema(
+const experienceSchema = new mongoose.Schema(
   {
-    experience_id: {
+    experienceId: {
       type: String,
       required: true,
     },
-    profile_headline: {
+    profileHeadline: {
       type: String,
       required: true,
     },
-    employment_type: {
+    employmentType: {
       type: String,
       required: true,
     },
-    start_date: {
+    startDate: {
       type: Date,
       required: true,
     },
-    end_date: {
+    endDate: {
       type: Date,
     },
-    location_type: {
+    locationType: {
       type: String,
       required: true,
     },
-    employement_location: {
+    employementLocation: {
       type: String,
       required: true,
     },
-    is_current_role: {},
+    isCurrentRole: {},
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("experience", experience_schema);
+module.exports = mongoose.model("experience", experienceSchema);

@@ -15,7 +15,7 @@ exports.getPost = async (req, res) => {
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);
-    return res.status(404).send(err);
+     res.status(404).send(err);
   }
 };
 exports.updatePost = async (req, res) => {

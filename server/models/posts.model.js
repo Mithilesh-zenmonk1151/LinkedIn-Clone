@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
-const {ObjectId } = require('mongodb')
-const posts_schema = new mongoose.Schema(
+const { ObjectId } = require("mongodb");
+const user = require("./user.model")
+const comment= require("./comment.model")
+const postsSchema = new mongoose.Schema(
   {
-    user_id: {
+    userId: {
       type: ObjectId,
-      ref: "users",
+      ref: user,
     },
-
     title: {
       type: String,
       required: true,
@@ -15,11 +16,17 @@ const posts_schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    image_url: {
-      type: String,
-      required: true,
+   
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: comment,
+      },
+    ],
+    images: {
+      type: Array,
     },
   },
   { timestamps: true }
 );
-module.exports = mongoose.model("posts", posts_schema);
+module.exports = mongoose.model("posts", postsSchema);

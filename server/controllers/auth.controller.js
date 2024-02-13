@@ -4,14 +4,14 @@ const { userService } = require("../services");
 exports.signup = async (req, res) => {
   try {
     const response = await userService.signup(req);
-    if (response.status === 400) {
-       res.status(400).json({
-        success: false,
-        message: "üser allready exists",
-      });
-    } else {
+    // if (response.status === 400) {
+    //    res.status(400).json({
+    //     success: false,
+    //     message: "üser allready exists",
+    //   });
+    // } else {
        res.status(201).json({ message: "user registered succesfylly" });
-    }
+    // }
   } catch (error) {
     console.error(error);
     res.status(500).json({

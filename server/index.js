@@ -13,7 +13,7 @@ app.use(
     credentials: true,
   })
 );
-app.use("/api", require('./routes'));
+app.use("/api/v1", require('./routes'));
 
 app.get("/", (req, res) => {
   return res.json({
