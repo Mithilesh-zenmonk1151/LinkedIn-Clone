@@ -3,4 +3,5 @@ module.exports = {
   postsController: require("./posts.controller"),
   commentController: require("./comment.controller"),
   reactionController: require("./reaction.controller"),
+  updateUserProfileController:require("./updateUser.controller"),
 };

@@ -5,6 +5,6 @@ const upload = multer({ dest: "./uploads" });
 const { auth } = require("../middlewares/auth.middleware");
 router.post("/", upload.array("images"), auth, postsController.createPosts);
 router.get("/", auth, postsController.getPost);
-router.put("/", auth, postsController.updatePost);
-router.delete("/", auth, postsController.deletePosts);
+router.put("/:postId", auth, postsController.updatePost);
+router.delete("/:postId", auth, postsController.deletePosts);
 module.exports = router;

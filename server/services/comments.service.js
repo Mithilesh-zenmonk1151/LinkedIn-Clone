@@ -1,6 +1,6 @@
 const comments = require("../models");
 const posts = require("../models");
-exports.addComment = async (payload,res) => {
+exports.addComment = async (payload, res) => {
   try {
     const userId = payload.params;
     const { postId, comment } = payload.body;
@@ -28,15 +28,41 @@ exports.addComment = async (payload,res) => {
     throw error;
   }
 };
-exports.getComment = async (payload,res) => {
+exports.getComment = async (payload, res) => {
   try {
-    const limit = payload.query.limit || 10;
+    // const limit = payload.query.limit || 10;
 
-    const allComments = await comments.commentModel
-      .find({})
+    // const allComments = await comments.commentModel
+    //   .find({})
+    //   .sort({ createdAt: -1 })
+    //   .limit(limit)
+    //   .skip()
+    //   .populate({
+    //     path: "user",
+    //     select: "name email ",
+    //   })
+    //   .populate({
+    //     path: "post",
+    //     select: "post",
+    //   })
+    //   .exec();
+    // res.status(200).json({
+    //   success: true,
+    //   data: allComments,
+    // });
+    const { postId } = req.params;
+    const query = { postId: postId };
+    const createAt = req.query.time;
+    if (createAt) {
+      query = { postId: postId, createAt: { $gte: new Date(createAt) } };
+    }
+    console.log(postId);
+    console.log(postId);
+    console.log("first", createAt);
+    const commentData = await comments.commentModel
+      .find(query)
       .sort({ createdAt: -1 })
-      .limit(limit)
-      .skip()
+      .limit(2)
       .populate({
         path: "user",
         select: "name email ",
@@ -46,16 +72,15 @@ exports.getComment = async (payload,res) => {
         select: "post",
       })
       .exec();
-    res.status(200).json({
-      success: true,
-      data: allComments,
-    });
+    console.log(commentData);
+    return commentData;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 exports.editComment = async (payload) => {
-  const { commentId } = payload.params; 
+  const { commentId } = payload.params;
   console.log(commentId);
   console.log(payload.body);
   const { comment } = payload.body;
