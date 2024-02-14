@@ -10,7 +10,6 @@ exports.auth = async (req, res, next) => {
     if (!token) {
       return res.status(401).json({ success: false, message: `Token Missing` });
     }
-
     try {
       const decode = await jwt.verify(token, process.env.JWT_SECRET);
       console.log(decode);

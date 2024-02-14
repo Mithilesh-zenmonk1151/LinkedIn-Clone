@@ -1,54 +1,60 @@
-const { Posts } = require("../models/posts.model");
-exports.createPosts = async (req) => {
- 
+const posts = require("../models");
+exports.createPosts = async (payload) => {
   try {
-    const { id } = req.params;
-    const { title, body } = req.body;
-    
-    const images = req.files.map((i) => { return i.path }); 
-    console.log('images' , images)
-    const post = await PostModel.create({title:title,body:body,user:id,images:images});
-    console.log('newuser', newuser)
-
+    const { id } = payload.params;
+    const { title, body } = payload.body;
+    const images = payload.files.map((i) => {
+      return i.path;
+    });
+    console.log("images", images);
+    const post = await posts.postsModel.create({
+      title: title,
+      body: body,
+      user: id,
+      images: images,
+    });
+    console.log("newuser", newuser);
     post.save();
     return post;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
-exports.getPost = async (req) => {
-  const { id } = req.params;
+exports.getPost = async (payload) => {
+  const { id } = payload.params;
   try {
-    
-
-    const post =await Posts.findOne({ userId: id });
+    const post = await posts.postsModel.findOne({ userId: id });
     return post;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
-exports.updatePost = async (req) => {
-  const { id } = req.params;
-  const { body, title } = req.body;
-  // console.log(req.body)
+exports.updatePost = async (payload) => {
+  const { id } = payload.params;
+  const { body, title } = payload.body;
+  // console.log(payload.body)
   try {
-    const updated = await Posts.findByIdAndUpdate(
+    const updated = await posts.postsModel.findByIdAndUpdate(
       id,
       { title, body },
       { new: true }
     );
     console.log(updated);
     return updated;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };
-exports.deletePosts = async (req) => {
-  const { id } = req.params;
+exports.deletePosts = async (payload) => {
+  const { id } = payload.params;
   try {
-    const deleted = await Posts.findByIdAndDelete(id);
+    const deleted = await posts.postsModel.findByIdAndDelete(id);
     return deleted;
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

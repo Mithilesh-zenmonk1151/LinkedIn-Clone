@@ -28,7 +28,4 @@ const educationalDetailsSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-module.exports = mongoose.model(
-  "educationalDetails",
-  educationalDetailsSchema
-);
+module.exports = mongoose.model("educationalDetails", educationalDetailsSchema);

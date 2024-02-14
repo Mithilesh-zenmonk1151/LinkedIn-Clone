@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongodb");
-const user = require("./user.model")
-const comment= require("./comment.model")
+const user = require("./user.model");
+const comment = require("./comment.model");
 const postsSchema = new mongoose.Schema(
   {
     userId: {
@@ -16,7 +16,6 @@ const postsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-   
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,

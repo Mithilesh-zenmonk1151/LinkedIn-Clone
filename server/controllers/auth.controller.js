@@ -1,24 +1,30 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
+
 const { userService } = require("../services");
 exports.signup = async (req, res) => {
   try {
-    const response = await userService.signup(req);
+    // const response = await userService.signup(req);
     // if (response.status === 400) {
     //    res.status(400).json({
     //     success: false,
-    //     message: "üser allready exists",
+    //     message: "user allready exists",
     //   });
-    // } else {
-       res.status(201).json({ message: "user registered succesfylly" });
-    // }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "User cannot be registered. Please try again.",
+    //  } else {
+    //   return res.status(201).json({ message: "user registered succesfylly" });
+    //  }
+    const response = await userService.signup(req);
+   
+    return res.status(200).json({
+      message:"Signup successfull",
+      user:  response.user
     });
-  }
+  } catch (error) {
+    console.log(error)
+    if(error.name === 'CONFLICT') {
+      return res.status(409).json({
+        success: false,
+        message: error.message
+      })
+    }}
 };
 exports.login = async (req, res) => {
   try {
@@ -28,34 +34,22 @@ exports.login = async (req, res) => {
         success: false,
         message: `Please Fill up All the Required Fields`,
       });
-    } else {
-      const token = jwt.sign(
-        { email: response.email, id: response._id, role: response.role },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "24h",
-        }
-      );
-      response.token = token;
-      response.password = undefined;
-      const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-      };
-      res.cookie("token", token, options).status(200).json({
-        success: true,
-        token,
-        response,
-        message: `User Login Success`,
-      });
-    }
+    } 
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: `Login Failure Please Try Again`,
-    });
+    if(error.name === 'INVALIDUSER') {
+      return res.status(401).json({
+        success: false,
+        message: error.message
+      })
+   
   }
+  if(error.name === 'INVALIDPASSWORD') {
+    return res.status(401).json({
+      success: false,
+      message: error.message
+    })
+ 
+}}
 };
 exports.getUser = async (req, res) => {
   try {

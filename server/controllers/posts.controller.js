@@ -1,12 +1,11 @@
 const { postsService } = require("../services");
-
 exports.createPosts = async (req, res) => {
   try {
     const response = await postsService.createPosts(req);
     return res.status(201).json(response);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send(err);
+  } catch (error) {
+    console.log(error);
+     res.status(500).send(error);
   }
 };
 exports.getPost = async (req, res) => {
@@ -15,7 +14,7 @@ exports.getPost = async (req, res) => {
     return res.status(200).json(response);
   } catch (err) {
     console.log(err);
-     res.status(404).send(err);
+    res.status(404).send(err);
   }
 };
 exports.updatePost = async (req, res) => {

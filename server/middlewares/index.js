@@ -1,5 +1,3 @@
 module.exports = {
-    authMiddleware:require("./auth.middleware"),
-   
-  };
-  
+  authMiddleware: require("./auth.middleware"),
+};

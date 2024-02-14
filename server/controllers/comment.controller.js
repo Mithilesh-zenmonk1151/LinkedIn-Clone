@@ -25,14 +25,11 @@ exports.updateComment = async (req, res) => {
     console.log(error);
   }
 };
-exports.deleteComment= async (req,res)=>{
-    try{
-        const response= await commentService.deleteComment(req);
-        return res.status(202).json(response);
-
-    }
-    catch(error){
-        console.log(error);
-
-    }
-}
+exports.deleteComment = async (req, res) => {
+  try {
+    const response = await commentService.deleteComment(req);
+    return res.status(202).json(response);
+  } catch (error) {
+    console.log(error);
+  }
+};

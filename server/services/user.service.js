@@ -1,81 +1,95 @@
-const User = require("../models/user.model");
+const User = require("../models");
 require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-exports.signup = async (req,res) => {
+exports.signup = async (payload) => {
   try {
-    const { name, email, password } = req.body;
-    console.log(req.body);
-    const existingUser = await User.findOne({ email });
-    // const existUserName= await User.findOne({username});
+    const { name, email, password } = payload.body;
+    console.log(payload.body);
+    const existingUser = await User.userModel.findOne({ email });
+    //  const existUserName= await User.findOne({username});
     if (existingUser) {
-      throw {
-        success: false,
-        message: "User already exists. Please sign in to continue.",
-      };
+      throw Object.assign(new Error(), {
+        name: "CONFLICT",
+        message: "User Aleady Exists!",
+      });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
+    const user = await User.userModel.create({
       name,
       email,
       password: hashedPassword,
     });
-    return res.status(200).json({
-      success: true,
-      user,
-      message: "User register  successfully",
-    });
+    return { user };
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: "User cannot be registered. Please try again.",
-    });
+    throw error;
   }
 };
-exports.login = async (req) => {
+exports.login = async (payload,res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password } = payload.body;
     if (!email || !password) {
       return res.status(400).json({
         success: false,
         message: `Please Fill up All the Required Fields`,
       });
     }
-    const user = await User.findOne({ email })
+    const user = await User.userModel
+      .findOne({ email })
       .populate("additionalDetails")
       .exec();
     if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: `User is not Registered with Us Please SignUp to Continue`,
+      throw Object.assign(new Error(), {
+        name: "INVALIDUSER",
+        message: "User Not  Exists!",
       });
     }
     const isCorrectPassword = bcrypt.compareSync(password, user.password);
     if (!isCorrectPassword) {
-      return res.status(401).json({
-        success: false,
-        message: `Password is incorrect`,
+      throw Object.assign(new Error(), {
+        name: "INVALIDPASSWORD",
+        message:"Wrong Password",
+      });
+     
+    }
+    else {
+      const token = jwt.sign(
+        { email: user.email, id: user._id},
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
+      user.token = token;
+      user.password = undefined;
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+      };
+      res.cookie("token", token, options).status(200).json({
+        success: true,
+        token,
+        user,
+        message: `User Login Success`,
       });
     }
   } catch (error) {
     console.error(error);
-    return res.status(500).json({
-      success: false,
-      message: `Login Failure Please Try Again`,
-    });
+   throw error;
   }
 };
-exports.getUser = async (req) => {
-  const userId = req.id;
+exports.getUser = async (payload) => {
+  const userId = payload.id;
   let user;
   try {
-    user = await User.findById(userId, "-password");
+    user = await User.userModel.findById(userId, "-password");
     if (!user) {
       return "User Not Found";
     } else {
       return user;
     }
   } catch (error) {
-    return new Error(error);
+    throw error;
   }
 };
