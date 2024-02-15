@@ -1,18 +1,18 @@
-const comments = require("../models");
-const posts = require("../models");
+const commentModel = require("../models");
+const postsModel = require("../models");
 exports.addComment = async (payload, res) => {
   try {
     const userId = payload.params;
     const { postId, comment } = payload.body;
-    const postDetails = await posts.postsModel.findOne({
+    const postDetails = await postsModel.postsModel.findOne({
       _id: postId,
     });
-    const userComment = await comments.commentModel.create({
+    const userComment = await commentModel.commentModel.create({
       userId: userId,
       postId: postId,
       comment,
     });
-    await posts.postsModel.findByIdAndUpdate(postId, {
+    await postsModel.postsModel.findByIdAndUpdate(postId, {
       $push: {
         comments: userComment,
       },
@@ -39,8 +39,7 @@ exports.getComment = async (payload, res) => {
     console.log(postId);
     console.log(postId);
     console.log("first", createAt);
-    const commentData = await comments.commentModel
-      .find(query)
+    const commentData = await commentModel.commentModel.find(query)
       .sort({ createdAt: -1 })
       .limit(2)
       .populate({
@@ -53,7 +52,7 @@ exports.getComment = async (payload, res) => {
       })
       .exec();
     console.log(commentData);
-    return commentData;
+    commentData;
   } catch (error) {
     console.log(error);
     throw error;
@@ -65,12 +64,12 @@ exports.editComment = async (payload) => {
   console.log(payload.body);
   const { comment } = payload.body;
   try {
-    const updateComment = await comments.commentModel.findByIdAndUpdate(
+    const updateComment = await commentModel.commentModel.findByIdAndUpdate(
       commentId,
       { comment: comment },
       { new: true }
     );
-    return updateComment;
+    updateComment;
   } catch (err) {
     throw err;
   }
@@ -79,10 +78,10 @@ exports.deleteComment = async (payload) => {
   try {
     const { commentId } = payload.params;
     console.log(commentId);
-    const commentDelete = await comments.commentModel.findByIdAndDelete(
+    const commentDelete = await commentModel.commentModel.findByIdAndDelete(
       commentId
     );
-    return commentDelete;
+    commentDelete;
   } catch (error) {
     console.log(error);
     throw error;

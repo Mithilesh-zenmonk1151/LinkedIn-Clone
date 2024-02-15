@@ -16,7 +16,6 @@ exports.getComment = async (req, res) => {
     res.status(404).send(error);
   }
 };
-
 exports.updateComment = async (req, res) => {
   try {
     const response = await commentService.editComment(req);

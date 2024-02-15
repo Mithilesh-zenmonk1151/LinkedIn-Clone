@@ -22,8 +22,8 @@ const postsSchema = new mongoose.Schema(
         ref: comment,
       },
     ],
-    images: {
-      type: Array,
+   images: {
+       type: Array,
     },
   },
   { timestamps: true }

@@ -1,4 +1,4 @@
-const User = require("../models");
+const userModel = require("../models");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -6,7 +6,7 @@ exports.signup = async (payload) => {
   try {
     const { name, email, password } = payload.body;
     console.log(payload.body);
-    const existingUser = await User.userModel.findOne({ email });
+    const existingUser = await userModel.userModel.findOne({ email });
     //  const existUserName= await User.findOne({username});
     if (existingUser) {
       throw Object.assign(new Error(), {
@@ -15,7 +15,7 @@ exports.signup = async (payload) => {
       });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.userModel.create({
+    const user = await userModel.userModel.create({
       name,
       email,
       password: hashedPassword,
@@ -26,7 +26,7 @@ exports.signup = async (payload) => {
     throw error;
   }
 };
-exports.login = async (payload,res) => {
+exports.login = async (payload, res) => {
   try {
     const { email, password } = payload.body;
     if (!email || !password) {
@@ -35,7 +35,7 @@ exports.login = async (payload,res) => {
         message: `Please Fill up All the Required Fields`,
       });
     }
-    const user = await User.userModel
+    const user = await userModel.userModel
       .findOne({ email })
       .populate("additionalDetails")
       .exec();
@@ -49,13 +49,11 @@ exports.login = async (payload,res) => {
     if (!isCorrectPassword) {
       throw Object.assign(new Error(), {
         name: "INVALIDPASSWORD",
-        message:"Wrong Password",
+        message: "Wrong Password",
       });
-     
-    }
-    else {
+    } else {
       const token = jwt.sign(
-        { email: user.email, id: user._id},
+        { email: user.email, id: user._id },
         process.env.JWT_SECRET,
         {
           expiresIn: "24h",
@@ -76,14 +74,14 @@ exports.login = async (payload,res) => {
     }
   } catch (error) {
     console.error(error);
-   throw error;
+    throw error;
   }
 };
 exports.getUser = async (payload) => {
   const userId = payload.id;
   let user;
   try {
-    user = await User.userModel.findById(userId, "-password");
+    user = await userModel.userModel.findById(userId, "-password");
     if (!user) {
       return "User Not Found";
     } else {

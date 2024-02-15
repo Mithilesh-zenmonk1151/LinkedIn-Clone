@@ -1,2 +1,5 @@
 const multer = require("multer");
-const upload = multer({ dest: "./uploads" });
+exports.uploadImage= async()=>{
+    const upload = multer({ dest: "./uploads" });
+    await upload.array("images")
+}

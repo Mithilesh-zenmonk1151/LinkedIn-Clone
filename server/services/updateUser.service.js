@@ -1,5 +1,4 @@
-const usersModel = require("../models");
-
+const userModel = require("../models");
 exports.updateProfile = async (req) => {
   try {
     console.log( req.params);
@@ -7,7 +6,7 @@ exports.updateProfile = async (req) => {
     const { username, phone, website, title, industry, summary } = req.body;
     const address = JSON.parse(req.body.address);
     const image = req.file.path;
-    const user = await usersModel.userModel.findByIdAndUpdate(
+    const user = await userModel.userModel.findByIdAndUpdate(
       id,
       {
         username: username,
@@ -27,11 +26,9 @@ exports.updateProfile = async (req) => {
       },
       { new: true }
     );
-    if (!user) {
-      throw new CustomError("User not updated", 403);
-    } else {
-      return user;
-    }
+    await user.save();
+    const updatedUser= await userModel.userModel.findById(id);
+    return {updatedUser};
   } catch (error) {
     throw error;
   }

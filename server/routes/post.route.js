@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const { postsController } = require("../controllers");
-const multer = require("multer");
-const upload = multer({ dest: "./uploads" });
-const { auth } = require("../middlewares/auth.middleware");
-router.post("/", upload.array("images"), auth, postsController.createPosts);
+const { uploadImageMiddleware, authMiddleware } = require("../middlewares");
+const { uploadImage } = uploadImageMiddleware;
+const { auth } = authMiddleware;
+router.post("/",auth, postsController.createPosts);
 router.get("/", auth, postsController.getPost);
 router.put("/:postId", auth, postsController.updatePost);
 router.delete("/:postId", auth, postsController.deletePosts);

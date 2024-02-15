@@ -12,7 +12,6 @@ export const Signup = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   const [password, setPassword] = useState("Abc.@678");
-  
   const [imag, setImag] = useState("");
   const [selectAccountType, setSelectAccountType] = useState("");
   function handleUploadImage(e) {
