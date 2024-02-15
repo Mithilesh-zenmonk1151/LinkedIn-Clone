@@ -1,3 +1,3 @@
 module.exports={
-    errorHandler:require("./constatnts")
+    handleError:require("./constatnts")
 }

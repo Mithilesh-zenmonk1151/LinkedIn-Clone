@@ -30,26 +30,6 @@ exports.addComment = async (payload, res) => {
 };
 exports.getComment = async (payload, res) => {
   try {
-    // const limit = payload.query.limit || 10;
-
-    // const allComments = await comments.commentModel
-    //   .find({})
-    //   .sort({ createdAt: -1 })
-    //   .limit(limit)
-    //   .skip()
-    //   .populate({
-    //     path: "user",
-    //     select: "name email ",
-    //   })
-    //   .populate({
-    //     path: "post",
-    //     select: "post",
-    //   })
-    //   .exec();
-    // res.status(200).json({
-    //   success: true,
-    //   data: allComments,
-    // });
     const { postId } = req.params;
     const query = { postId: postId };
     const createAt = req.query.time;
