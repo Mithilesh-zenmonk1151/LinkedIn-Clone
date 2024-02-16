@@ -28,7 +28,7 @@ exports.updateProfile = async (req) => {
     );
     await user.save();
     const updatedUser= await userModel.userModel.findById(id);
-    return {updatedUser};
+    return updatedUser;
   } catch (error) {
     throw error;
   }

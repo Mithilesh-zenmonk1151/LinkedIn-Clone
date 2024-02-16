@@ -21,7 +21,29 @@ exports.login = async (req, res) => {
         success: false,
         message: `Please Fill up All the Required Fields`,
       });
+     
     } 
+    else{
+      const token = jwt.sign(
+        { email: user.email, id: user._id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "24h",
+        }
+      );
+      user.token = token;
+      user.password = undefined;
+      const options = {
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
+      };
+      res.cookie("token", token, options).status(200).json({
+        success: true,
+        token,
+        user,
+        message: `User Login Success`,
+      });
+    }
   } catch (error) {
     if(error.name === 'INVALIDUSER') {
       return res.status(401).json({
@@ -44,7 +66,12 @@ exports.getUser = async (req, res) => {
     } else {
       return res.status(201).json({ response });
     }
-  } catch (err) {
-    console.log(err);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      success:false,
+      message:error.message
+    })
+
   }
 };

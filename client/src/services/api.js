@@ -4,10 +4,6 @@ export const endPoints={
     signupApi: BaseUrl + "/user/signup",
     loginApi: BaseUrl + "/user/login",
 }
-
-
-
-
 export const profileApis = {
     updateProfileApi: BaseUrl + "/users/:id",
     getProfileApi: BaseUrl + "/auth/users",
@@ -25,6 +21,4 @@ export const postApis ={
     updateReactionApi: BaseUrl +"",
     getReactionApi: BaseUrl + "",
     deleteReactionApi: BaseUrl +"",
-    
-
 }

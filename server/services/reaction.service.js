@@ -11,7 +11,7 @@ exports.uploadReaction = async (payload) => {
       emoji: emoji,
     });
     console.log(newReaction);
-     newReaction;
+    return newReaction;
   } catch (error) {
     console.log(error);
     throw error;
@@ -24,7 +24,7 @@ exports.getReaction = async (payload) => {
       postId: postId,
     });
     console.log("first", reactionData);
-     reactionData;
+    return reactionData;
   } catch (error) {
     throw error;
   }
@@ -43,7 +43,7 @@ exports.updateReaction = async (payload) => {
         { type: type },
         { new: true }
       );
-       updateReaction;
+      return updateReaction;
     }
   } catch (error) {
     throw error;
@@ -57,7 +57,7 @@ exports.deleteReaction = async (payload) => {
       const deleteReaction = await reactionModel.reactionModel.findByIdAndDelete(
         reactionId
       );
-      deleteReaction;
+      return deleteReaction;
     }
   } catch (error) {
     throw error;

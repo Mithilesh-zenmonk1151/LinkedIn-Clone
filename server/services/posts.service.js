@@ -42,7 +42,7 @@ exports.updatePost = async (payload) => {
       { new: true }
     );
     console.log(updated);
-    updated;
+    return updated;
   } catch (error) {
     console.log(error);
     throw error;
@@ -52,7 +52,7 @@ exports.deletePosts = async (payload) => {
   const { id } = payload.params;
   try {
     const deleted = await postsModel.postsModel.findByIdAndDelete(id);
-    deleted;
+    return deleted;
   } catch (error) {
     console.log(error);
     throw error;

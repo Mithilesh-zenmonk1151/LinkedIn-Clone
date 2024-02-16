@@ -18,7 +18,7 @@ exports.addComment = async (payload, res) => {
       },
     });
     await postDetails.save();
-    res.status(201).json({
+   return res.status(201).json({
       success: true,
       message: "Comment Created Successfully",
       userComment,
@@ -52,7 +52,7 @@ exports.getComment = async (payload, res) => {
       })
       .exec();
     console.log(commentData);
-    commentData;
+    return commentData;
   } catch (error) {
     console.log(error);
     throw error;
@@ -69,7 +69,7 @@ exports.editComment = async (payload) => {
       { comment: comment },
       { new: true }
     );
-    updateComment;
+    return updateComment;
   } catch (err) {
     throw err;
   }
@@ -81,7 +81,7 @@ exports.deleteComment = async (payload) => {
     const commentDelete = await commentModel.commentModel.findByIdAndDelete(
       commentId
     );
-    commentDelete;
+   return commentDelete;
   } catch (error) {
     console.log(error);
     throw error;
