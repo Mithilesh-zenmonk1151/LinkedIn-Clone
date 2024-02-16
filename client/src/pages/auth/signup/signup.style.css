@@ -1,16 +1,18 @@
 .linkedIn-logo{
-    height: 40px;
+    height: 35px;
+    padding-left: 45px;
 
 }
 .signup_page{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    padding: 40px;
 }
 
 .form-section{
     background-color: rgb(255, 255, 255);
     align-items: center;
-    width: 450px;
+    width: 400px;
     
     border-radius: 5px;
     
@@ -18,10 +20,16 @@
 
 .form{
     padding: 25px;
+   display: flex;
+   flex-direction: column;
+   gap: 30px;
+   padding-top: 40px;
+   
    
 }
 .email-field{
-    width: 400px;
+    width: 330px;
+    
 }
 .normal-text{
     color: rgb(101, 101, 101);
@@ -44,11 +52,13 @@
     border-radius:24px !important;
     height: 50px;
     background-color: #2e64c0 !important;
+    color: white;
    
 }
 .agree-span{
     font-weight: 600;
     font-size: 15px;
+    color: white;
 }
 .span-line{
     height: 0.08px;
@@ -66,4 +76,10 @@
     color: #656565;
     font-weight: 500;
     font-family: sans-serif;
+}
+
+
+.login-link{
+    text-decoration: none;
+    color: #8344ca;
 }
