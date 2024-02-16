@@ -5,12 +5,13 @@ export const endPoints={
     loginApi: BaseUrl + "/user/login",
 }
 
+
+
+
 export const profileApis = {
     updateProfileApi: BaseUrl + "/users/:id",
     getProfileApi: BaseUrl + "/auth/users",
     getPostsApi: BaseUrl + "/posts",
-
-    
 }
 export const postApis ={
     createPostApi: BaseUrl + "",
