@@ -12,24 +12,24 @@ exports.uploadReaction = async (req, res) => {
 exports.fetchReaction = async (req, res) => {
   try {
     const response = await reactionServices.getReaction(req);
-   res.status(200).json(response);
+    res.status(200).json(response);
   } catch (err) {
-    return res.status(500).json(err);
+     res.status(500).json(err);
   }
 };
 exports.deleteReaction = async (req, res) => {
   try {
     const response = await reactionServices.deleteReaction(req);
-    return res.status(200).json(response);
+    res.status(200).json(response);
   } catch (error) {
-    return res.status(500).json(error);
+    res.status(500).json(error);
   }
 };
 exports.updateReaction = async (req, res) => {
   try {
     const response = await reactionServices.updateReaction(req);
-    return res.status(200).json(response);
+     res.status(200).json(response);
   } catch (err) {
-    return res.status(500).json(err);
+     res.status(500).json(err);
   }
 };

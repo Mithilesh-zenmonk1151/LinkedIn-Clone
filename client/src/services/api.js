@@ -1,11 +1,29 @@
-const Base_Url= "http://localhost:4000/api"
+const BaseUrl= "http://localhost:4000/api"
 
 export const endPoints={
-    SIGNUP_API: Base_Url + "/user/signup",
-    LOGIN_API: Base_Url + "/user/login",
+    signupApi: BaseUrl + "/user/signup",
+    loginApi: BaseUrl + "/user/login",
 }
 
-export const updaterUser = {
+export const profileApis = {
+    updateProfileApi: BaseUrl + "/users/:id",
+    getProfileApi: BaseUrl + "/auth/users",
+    getPostsApi: BaseUrl + "/posts",
+
     
 }
-   
+export const postApis ={
+    createPostApi: BaseUrl + "",
+    editPostApi: BaseUrl + "",
+    getAllPostsApis: BaseUrl + "",
+    deletePostApis: BaseUrl + "",
+    createCommentApi: BaseUrl + "",
+    deleteCommentApi: BaseUrl + "",
+    editCommentApi: BaseUrl + "",
+    createReactionApi: BaseUrl + "",
+    updateReactionApi: BaseUrl +"",
+    getReactionApi: BaseUrl + "",
+    deleteReactionApi: BaseUrl +"",
+    
+
+}
