@@ -8,39 +8,26 @@ import {Link} from "react-router-dom"
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from 'react-redux'
 
-import { authUser } from "../../../slices/authAction.slice";}
+import { authUser } from "../../../slices/authAction.slice";
 import icon_Google from "../../../assets/Icon-Google.png";
 function signup() {
   const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const dispatch =useDispatch()
-   
-
- 
-
- 
-
     function handlePassword(event) {
         let new_pass = event.target.value;
         setPassword(new_pass);
-        
     }
     const handleSubmit = (e) => {
       e.preventDefault();
-    
-  
   try{
       dispatch(authUser({  email, password }));
-     
   }
     catch(err){
       alert(err);
     } 
-      
       };
       const success= useSelector((state)=>state.auth.success)
-     
-
   return (
     <>
       <Box
@@ -61,18 +48,15 @@ function signup() {
         <Box className="signup-body" sx={{
           pt:"20px",
         }}>
-         
-          <Typography variant="h5" component="h4"
+\          <Typography variant="h5" component="h4"
           sx={{
             fontSize:"30px",
             fontWeight:"500",
 
           }} >
           Make the most of your professional life
-            
-</Typography>
-
-          <Box
+\</Typography>
+\          <Box
             className="form-section"
             sx={{
               borderRadius: "10px",
@@ -99,8 +83,7 @@ function signup() {
               </Box>
               <Box>
                 <label for="email">Password (6+ characters)</label>
-
-                <InputField
+\                <InputField
                   size="small"
                   id="outlined-basic"
                   className="email-field"
@@ -166,8 +149,7 @@ function signup() {
                   alt="google icon"
                   className="icon-google"
                 />
-
-                <span className="span_google"> Continue with Google</span>
+\                <span className="span_google"> Continue with Google</span>
               </Button>
             </Box>
             <Box
@@ -183,11 +165,9 @@ function signup() {
           </Box>
           </Box>
         </Box>
-
-        <Box></Box>
+\        <Box></Box>
       </Box>
     </>
   );
 }
-
 export default signup;

@@ -1,50 +1,38 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { Typography, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
 import icon_Google from "../../../assets/Icon-Google.png";
 import icon_Apple from "../../../assets/apple-logo.png";
-import icon_Chain from "../../../assets/chain-icon.jpg"
+import icon_Chain from "../../../assets/chain-icon.jpg";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./login.style.css";
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { authUser } from "../../../slices/authAction.slice";
 const login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   function handlePassword(event) {
-    let new_pass = event.target.value;
-    setPassword(new_pass);
-}
-  const logged = useSelector(state => state.auth.logged);
-
+    let newPass = event.target.value;
+    setPassword(newPass);
+  }
+  const logged = useSelector((state) => state.auth.logged);
   const navigate = useNavigate();
-
-
   const handleSubmit = (e) => {
     e.preventDefault();
-  try{
-    dispatch(loginUser({ email, password }));
-
-  }
-  catch(err){
-    alert(err);
-  }
-  
-    
-  };
- 
-  
-  useEffect(()=>{
-    if(logged){
-      navigate('/Home')
+    try {
+      dispatch(loginUser({ email, password }));
+    } catch (err) {
+      alert(err);
     }
-  },[logged ,navigate])
-  //this signup
-  
-  
+  };
+  useEffect(() => {
+    if (logged) {
+      navigate("/Home");
+    }
+  }, [logged, navigate]);
   return (
     <>
       <Box
@@ -100,7 +88,9 @@ const login = () => {
                     },
                     width: "300px",
                   }}
-                value={email}/>
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Box>
               <Box>
                 <TextField
@@ -118,14 +108,17 @@ const login = () => {
                     },
                     width: "300px",
                   }}
-                value={password}/>
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Box>
 
               <Button
                 disableElevation
                 className="agree-btn"
                 sx={{ textTransform: "none" }}
-              type="submit">
+                type="submit"
+              >
                 <span className="agree-span">Sign in</span>
               </Button>
             </form>
@@ -142,13 +135,20 @@ const login = () => {
                 <span className="span-or">or</span>
                 <Box className="span-line"></Box>
               </Box>
-              <Box sx={{
-                p:"20px"
-              }}>
-                <span className="login-policy">By clicking Continue, you agree to LinkedIn’s</span>{" "}
-                <span className="user-agreement">User<br/> Agreement Privacy Policy</span>
-                <span  className="login-policy"> and  </span>
-                <span  className="user-agreement">Cookie Policy.</span>
+              <Box
+                sx={{
+                  p: "20px",
+                }}
+              >
+                <span className="login-policy">
+                  By clicking Continue, you agree to LinkedIn’s
+                </span>{" "}
+                <span className="user-agreement">
+                  User
+                  <br /> Agreement Privacy Policy
+                </span>
+                <span className="login-policy"> and </span>
+                <span className="user-agreement">Cookie Policy.</span>
               </Box>
               <Box
                 sx={{
@@ -169,7 +169,7 @@ const login = () => {
                     width: "365px",
                     textAlign: "center",
                     height: "45px",
-                    gap:"10px"
+                    gap: "10px",
                   }}
                 >
                   <img
@@ -200,7 +200,7 @@ const login = () => {
                     width: "365px",
                     textAlign: "center",
                     height: "45px",
-                    gap:"10px"
+                    gap: "10px",
                   }}
                 >
                   <img
@@ -215,7 +215,7 @@ const login = () => {
               <Box
                 sx={{
                   textAlign: "center",
-                  pb:"60px"
+                  pb: "60px",
                 }}
               >
                 <Button
@@ -232,7 +232,7 @@ const login = () => {
                     width: "365px",
                     textAlign: "center",
                     height: "45px",
-                    gap:"10px"
+                    gap: "10px",
                   }}
                 >
                   <img
@@ -241,19 +241,23 @@ const login = () => {
                     className="icon-google"
                   />
 
-                  <span className="span_google"> Sign in with a one time link</span>
+                  <span className="span_google">
+                    {" "}
+                    Sign in with a one time link
+                  </span>
                 </Button>
               </Box>
-            
             </Box>
-           
           </Box>
-          <Box sx={{
-            display:"flex",
-            mt:"30px"
-
-          }}>
-            <Typography  variant="p" component="p">New to LinkedIn?</Typography>
+          <Box
+            sx={{
+              display: "flex",
+              mt: "30px",
+            }}
+          >
+            <Typography variant="p" component="p">
+              New to LinkedIn?
+            </Typography>
             <Link to="/join">Join now</Link>
           </Box>
         </Box>
