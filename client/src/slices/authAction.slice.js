@@ -1,19 +1,21 @@
 import axios from "axios";
-import { logInAction, logOutAction, signUpAction } from "./authType";
+// import { logInAction, logOutAction, signUpAction } from "./authType";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-export const authUser = createAsyncThunk(
+const signUpAction='auth/signup' 
+ const logInAction='auth/login'
+ const logOutAction='auth/logoutUser'
+ export const authUser = createAsyncThunk(
   signUpAction,
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }, { rejectValue }) => {
     try {
-      const response = await axios.post("http://localhost:8080/api", {
+      const response = await axios.post("http://localhost:4000/api", {
         email,
         password,
       });
-
       return response.data;
-    } catch (err) {
-      console.log("errpor", err.response.data);
-      return rejectWithValue(err.response.data);
+    } catch (error) {
+      console.log("error", error.response.data);
+      return rejectValue(error.response.data);
     }
   }
 );
@@ -30,20 +32,20 @@ export const loginUser = createAsyncThunk(
       localStorage.setItem("logged", "true");
       localStorage.setItem("token", response.data.token);
       return response.data;
-    } catch (err) {
-      console.log("error", err.response.data);
-      return rejectWithValue(err.message);
+    } catch (error) {
+      console.log("error", error.response.data);
+      return rejectWithValue(error.message);
     }
   }
 );
 export const logoutUser = createAsyncThunk(logOutAction, async () => {
   try {
     console.log("logout");
-    localStorage.removeItem("logged"); // Remove logged state from local storage
+    localStorage.removeItem("logged");
     localStorage.removeItem("token");
     const response = await axios.post("http://localhost:8080/logout");
     return response.data;
-  } catch (err) {
-    return err.message;
+  } catch (error) {
+    return error.message;
   }
 });

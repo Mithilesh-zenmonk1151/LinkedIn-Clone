@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 exports.signup = async (payload) => {
   try {
-    const { name, email, password } = payload.body;
+    const {  email, password } = payload.body;
     console.log(payload.body);
     const existingUser = await userModel.userModel.findOne({ email });
     //  const existUserName= await User.findOne({username});
@@ -16,7 +16,7 @@ exports.signup = async (payload) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await userModel.userModel.create({
-      name,
+      
       email,
       password: hashedPassword,
     });

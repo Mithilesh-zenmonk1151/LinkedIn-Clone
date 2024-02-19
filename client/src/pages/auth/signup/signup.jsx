@@ -6,13 +6,12 @@ import {Button , Typography}from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {Link} from "react-router-dom"
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from 'react-redux'
-
+import { useDispatch } from 'react-redux'
 import { authUser } from "../../../slices/authAction.slice";
 import icon_Google from "../../../assets/Icon-Google.png";
-function signup() {
-  const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+function Signup() {
+  const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const dispatch =useDispatch()
     function handlePassword(event) {
         let newPass = event.target.value;
@@ -22,9 +21,11 @@ function signup() {
       e.preventDefault();
   try{
       dispatch(authUser({  email, password }));
+      console.log("user login")
   }
-    catch(err){
-      alert(err);
+    catch(error){
+      alert(error);
+      console.log(error)
     } 
       };
       // const success= useSelector((state)=>state.auth.success)
@@ -48,15 +49,15 @@ function signup() {
         <Box className="signup-body" sx={{
           pt:"20px",
         }}>
-\          <Typography variant="h5" component="h4"
+          <Typography variant="h5" component="h4"
           sx={{
             fontSize:"30px",
             fontWeight:"500",
 
           }} >
           Make the most of your professional life
-\</Typography>
-\          <Box
+</Typography>
+         <Box
             className="form-section"
             sx={{
               borderRadius: "10px",
@@ -174,4 +175,4 @@ function signup() {
     </>
   );
 }
-export default signup;
+export default Signup;

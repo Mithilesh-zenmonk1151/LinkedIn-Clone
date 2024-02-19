@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
 import icon_Google from "../../../assets/Icon-Google.png";
 import icon_Apple from "../../../assets/apple-logo.png";
@@ -10,14 +10,14 @@ import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./login.style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../../slices/authAction.slice";
-const login = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  function handlePassword(event) {
-    let newPass = event.target.value;
-    setPassword(newPass);
-  }
+  // function handlePassword(event) {
+  //   let newPass = event.target.value;
+  //   setPassword(newPass);
+  // }
   const logged = useSelector((state) => state.auth.logged);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -30,7 +30,7 @@ const login = () => {
   };
   useEffect(() => {
     if (logged) {
-      navigate("/Home");
+      navigate("/home");
     }
   }, [logged, navigate]);
   return (
@@ -266,4 +266,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
