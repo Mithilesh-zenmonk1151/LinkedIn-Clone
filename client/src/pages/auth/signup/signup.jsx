@@ -14,13 +14,13 @@ function Signup() {
     const [password, setPassword] = useState("");
     const dispatch =useDispatch()
     function handlePassword(event) {
-        let newPass = event.target.value;
+        const newPass = event.target.value;
         setPassword(newPass);
     }
     const handleSubmit = (e) => {
       e.preventDefault();
   try{
-      dispatch(authUser({  email, password }));
+      dispatch(authUser({email, password }));
       console.log("user login")
   }
     catch(error){
@@ -113,7 +113,7 @@ function Signup() {
                 disableElevation
                 style={{ textTransform: "capitalize" }}
                 className="agree-btn"
-              >
+             type="submit" >
                 <span className="agree-span"> Agree & Join</span>
               </Button>
             </form>
@@ -163,7 +163,7 @@ function Signup() {
               }}
             >
               Already on LinkedIn?{" "}
-              <Link to="/signup/login" className="login-link">
+              <Link to="/login" className="login-link">
                 Sign in
               </Link>
             </Box>

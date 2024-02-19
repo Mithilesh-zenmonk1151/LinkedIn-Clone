@@ -1,5 +1,6 @@
 const commentModel = require("../models");
 const postsModel = require("../models");
+
 exports.addComment = async (payload, res) => {
   try {
     const userId = payload.params;

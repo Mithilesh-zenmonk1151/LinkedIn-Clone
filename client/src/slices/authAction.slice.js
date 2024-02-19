@@ -8,13 +8,15 @@ const signUpAction='auth/signup'
   signUpAction,
   async ({ email, password }, { rejectValue }) => {
     try {
-      const response = await axios.post("http://localhost:4000/api", {
+      const response = await axios.post("http://localhost:4000/api/auth/signup", {
         email,
-        password,
-      });
+        password
+       });
+       console.log(response.data);
       return response.data;
     } catch (error) {
       console.log("error", error.response.data);
+      alert("api not hitted")
       return rejectValue(error.response.data);
     }
   }
@@ -24,7 +26,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     console.log("email, password: ", email, password);
     try {
-      const response = await axios.post("http://localhost:8080/api", {
+      const response = await axios.post("http://localhost:4000/api/auth/login", {
         email,
         password,
       });

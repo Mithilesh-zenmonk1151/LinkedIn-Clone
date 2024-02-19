@@ -1,5 +1,6 @@
 const {  userService } = require("../services");
-const {handleError} = require("../utils");
+const handleError = require("../utils");
+
 exports.signup = async (req, res) => {
   try {
     const response = await userService.signup(req);
@@ -23,27 +24,7 @@ exports.login = async (req, res) => {
       });
      
     } 
-    else{
-      const token = jwt.sign(
-        { email: user.email, id: user._id },
-        process.env.JWT_SECRET,
-        {
-          expiresIn: "24h",
-        }
-      );
-      user.token = token;
-      user.password = undefined;
-      const options = {
-        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-        httpOnly: true,
-      };
-      res.cookie("token", token, options).status(200).json({
-        success: true,
-        token,
-        user,
-        message: `User Login Success`,
-      });
-    }
+   
   } catch (error) {
     if(error.name === 'INVALIDUSER') {
       return res.status(401).json({
