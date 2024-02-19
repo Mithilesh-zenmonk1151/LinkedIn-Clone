@@ -16,17 +16,18 @@ import  Bag  from "../../../../assets/svg/bag.svg";
 import LinnkedInLogo from "../../../../assets/linkedIn_Logo.png";
 // import AdbIcon from '@mui/icons-material/Adb';
 import "./navbarComponent.style.css";
-import  Message from "../../../../assets/svg/message.svg";
+import  Message from "../../../../assets/apple-logo.png";
 import  Home from "../../../../assets/svg/home.svg";
-import  Network from "../../../../assets/svg/network.svg";
-import  Notification from "../../../../assets/svg/notifications.svg";
+import  Network from "../../../../assets/Icon-Google.png";
+import  Notification from "../../../../assets/linkedIn_Logo.png";
+import SearchBar from "./searchComponent/SearchBar";
 
 const pages = [
-  { name: "Home", src:{Home}, href: "/home", current: true  },
-  { name: "My Networks",src: {Network}, href: "/my-network", current: false },
-  { name: "Jobs",src: {Bag}, href: "/jobs", current: false },
-  { name: "Messagging",src: {Message}, href: "/message", current: false },
-  { name: "Notifications",src: {Notification}, href: "/notification", current: false },
+  { name: "Home", img:{Home}, href: "/home", current: true  },
+  { name: "My Networks",img: {Network}, href: "/my-network", current: false },
+  { name: "Jobs",img: {Bag}, href: "/jobs", current: false },
+  { name: "Messagging",img: {Message}, href: "/message", current: false },
+  { name: "Notifications",img: {Notification}, href: "/notification", current: false },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -65,6 +66,7 @@ function NavbarComponent() {
             alt="inkedin Logo"
             className="linkedInLogo"
           />
+          <SearchBar/>
           <Typography
             variant="h6"
             noWrap
@@ -121,7 +123,7 @@ function NavbarComponent() {
                   >
                     {page.name}
                   </Link>
-                  <img src={page.src} alt=""/> 
+                  <img src={Home} alt=""/> 
                  
                 </MenuItem>
               ))}
@@ -157,7 +159,7 @@ function NavbarComponent() {
                   className={page.current ? "active" : "inActive"}
                 >
                   {page.name}
-                  <img src={page.src} alt=""/>
+                  <img src={page.img} alt="k"/>
                 </Link>
 
               </Button>
