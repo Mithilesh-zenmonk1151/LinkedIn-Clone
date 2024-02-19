@@ -1,4 +1,4 @@
-import React from "react";
+import React, {  useState }  from "react";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./signup.style.css";
 import InputField from "@mui/material/TextField";
@@ -6,8 +6,41 @@ import {Button , Typography}from "@mui/material";
 import TextField from "@mui/material/TextField";
 import {Link} from "react-router-dom"
 import { Box } from "@mui/material";
+import { useDispatch, useSelector } from 'react-redux'
+
+import { authUser } from "../../../slices/authAction.slice";}
 import icon_Google from "../../../assets/Icon-Google.png";
 function signup() {
+  const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const dispatch =useDispatch()
+   
+
+ 
+
+ 
+
+    function handlePassword(event) {
+        let new_pass = event.target.value;
+        setPassword(new_pass);
+        
+    }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+    
+  
+  try{
+      dispatch(authUser({  email, password }));
+     
+  }
+    catch(err){
+      alert(err);
+    } 
+      
+      };
+      const success= useSelector((state)=>state.auth.success)
+     
+
   return (
     <>
       <Box

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {  useState } from "react";
 import { Typography, Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { Link } from "react-router-dom";
@@ -8,7 +8,43 @@ import icon_Apple from "../../../assets/apple-logo.png";
 import icon_Chain from "../../../assets/chain-icon.jpg"
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./login.style.css";
+import { useDispatch, useSelector } from 'react-redux'
+import { authUser } from "../../../slices/authAction.slice";
 const login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  function handlePassword(event) {
+    let new_pass = event.target.value;
+    setPassword(new_pass);
+}
+  const logged = useSelector(state => state.auth.logged);
+
+  const navigate = useNavigate();
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  try{
+    dispatch(loginUser({ email, password }));
+
+  }
+  catch(err){
+    alert(err);
+  }
+  
+    
+  };
+ 
+  
+  useEffect(()=>{
+    if(logged){
+      navigate('/Home')
+    }
+  },[logged ,navigate])
+  //this signup
+  
+  
   return (
     <>
       <Box
@@ -47,7 +83,7 @@ const login = () => {
             <Typography variant="p" component="h4">
               Stay updated on your professional world
             </Typography>
-            <form className="form">
+            <form className="form" onSubmit={handleSubmit}>
               <Box>
                 {/* email da */}
                 <TextField
@@ -64,7 +100,7 @@ const login = () => {
                     },
                     width: "300px",
                   }}
-                />
+                value={email}/>
               </Box>
               <Box>
                 <TextField
@@ -82,14 +118,14 @@ const login = () => {
                     },
                     width: "300px",
                   }}
-                />
+                value={password}/>
               </Box>
 
               <Button
                 disableElevation
                 className="agree-btn"
                 sx={{ textTransform: "none" }}
-              >
+              type="submit">
                 <span className="agree-span">Sign in</span>
               </Button>
             </form>
