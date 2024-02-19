@@ -1,11 +1,15 @@
+import { Box } from '@mui/material';
 import React from 'react';
 
-const navbar = () => {
+
+import NavbarComponent from './navbarComponent/navbarComponent';
+
+const Navbar = () => {
   return (
-    <div >
-      
-    </div>
+   <Box>
+    <NavbarComponent/>
+   </Box>
   );
 }
 
-export default navbar;
+export default Navbar;
