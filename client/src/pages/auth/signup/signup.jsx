@@ -15,8 +15,8 @@ function signup() {
     const [password, setPassword] = useState();
     const dispatch =useDispatch()
     function handlePassword(event) {
-        let new_pass = event.target.value;
-        setPassword(new_pass);
+        let newPass = event.target.value;
+        setPassword(newPass);
     }
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -27,7 +27,7 @@ function signup() {
       alert(err);
     } 
       };
-      const success= useSelector((state)=>state.auth.success)
+      // const success= useSelector((state)=>state.auth.success)
   return (
     <>
       <Box
@@ -65,7 +65,7 @@ function signup() {
               pl:"20px",
             }}
           >
-            <form className="form">
+            <form className="form" onSubmit={handleSubmit}>
               <Box 
               >
                 <label for="email">Email or phone number</label>
@@ -79,6 +79,8 @@ function signup() {
                   sx={{
                     height: "px",
                   }}
+                  value={email}
+                  onChange={(e)=>setEmail(e.target.value)}
                 />
               </Box>
               <Box>
@@ -89,6 +91,8 @@ function signup() {
                   className="email-field"
                   name="password"
                   type="password"
+                  value={password}
+                  onChange={handlePassword}
                 />
               </Box>
               <Box className="span-tags">

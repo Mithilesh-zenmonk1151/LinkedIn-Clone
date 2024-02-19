@@ -9,7 +9,7 @@ import icon_Chain from "../../../assets/chain-icon.jpg";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./login.style.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authUser } from "../../../slices/authAction.slice";
+import { loginUser } from "../../../slices/authAction.slice";
 const login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
