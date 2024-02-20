@@ -5,7 +5,7 @@ exports.uploadReaction = async (req, res) => {
     console.log("first", response);
      res.status(200).json(response);
   } catch (error) {
-    console.log("");
+    console.log(error);
     res.status(500).json(error);
   }
 };
@@ -13,8 +13,8 @@ exports.fetchReaction = async (req, res) => {
   try {
     const response = await reactionServices.getReaction(req);
     res.status(200).json(response);
-  } catch (err) {
-     res.status(500).json(err);
+  } catch (error) {
+     res.status(500).json(error);
   }
 };
 exports.deleteReaction = async (req, res) => {
@@ -29,7 +29,7 @@ exports.updateReaction = async (req, res) => {
   try {
     const response = await reactionServices.updateReaction(req);
      res.status(200).json(response);
-  } catch (err) {
-     res.status(500).json(err);
+  } catch (error) {
+     res.status(500).json(error);
   }
 };

@@ -44,6 +44,9 @@ const Login = () => {
         <Box
           sx={{
             pl: "55px",
+            alignItems:"center",
+            justifyContent:"center",
+            paddingLeft:"100px"
           }}
         >
           <img
@@ -52,25 +55,52 @@ const Login = () => {
             className="linkedIn-log"
           />
         </Box>
+        
         <Box
           sx={{
             borderRadius: "10px",
             display: "flex",
-            textAlign: "center",
+          
             alignItems: "center",
             flexDirection: "column",
-            justifyContent: "center",
+            
             pt: "50px",
             mr: "40px",
           }}
         >
-          <Box className="form-section">
-            <Typography variant="h5" component="h4">
+          <Box  className="form-section" sx={{
+            display:"flex",
+            flexDirection:"column",
+
+          }}>
+          <Box sx={{
+            display:"flex",
+            flexDirection:"column",
+
+          }}>
+            <Typography variant="h5" component="h4" sx={
+              {
+                fontFamily:"sans-serif",
+                fontWeight:500,
+                paddingTop:"30px",
+                borderRadius:"20px",
+                fontSize:"2rem"
+               
+              }
+            }>
               Sign in
             </Typography>
-            <Typography variant="p" component="h4">
+            <Typography variant="p" component="p" sx={{
+              fontFamily:"sans-serif",
+              fontWeight:100,
+              
+              borderRadius:"20px",
+             
+            }}>
               Stay updated on your professional world
             </Typography>
+            </Box>
+            
             <form className="form" onSubmit={handleSubmit}>
               <Box>
                 {/* email da */}
@@ -78,6 +108,7 @@ const Login = () => {
                   id="outlined-basic"
                   label="Email or Phone"
                   variant="filled"
+                  className="email-login"
                   sx={{
                     borderTop: "1px solid black",
                     borderRight: "1px solid black",
@@ -87,6 +118,7 @@ const Login = () => {
                       backgroundColor: "white",
                     },
                     width: "300px",
+                    borderRadius:"20px solid black"
                   }}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -130,7 +162,10 @@ const Login = () => {
                 pt: "10px",
               }}
             >
-              <Box className="or-section">
+              <Box className="or-section" sx={{
+                display:"flex",
+                alignItems:"center"
+              }}>
                 <Box className="span-line"></Box>
                 <span className="span-or">or</span>
                 <Box className="span-line"></Box>

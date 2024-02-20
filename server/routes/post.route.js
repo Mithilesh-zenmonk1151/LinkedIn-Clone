@@ -4,7 +4,7 @@ const { uploadImageMiddleware, authMiddleware } = require("../middlewares");
 const { uploadImage } = uploadImageMiddleware;
 const { auth } = authMiddleware;
 router.post("/",auth, postsController.createPosts);
-router.get("/", auth, postsController.getPost);
+router.get("/", postsController.getPost);
 router.put("/:postId", auth, postsController.updatePost);
 router.delete("/:postId", auth, postsController.deletePosts);
 module.exports = router;

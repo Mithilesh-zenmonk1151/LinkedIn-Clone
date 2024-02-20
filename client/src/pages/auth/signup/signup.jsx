@@ -86,7 +86,7 @@ function Signup() {
               </Box>
               <Box>
                 <label for="email">Password (6+ characters)</label>
-\                <InputField
+               <InputField
                   size="small"
                   id="outlined-basic"
                   className="email-field"
@@ -154,7 +154,7 @@ function Signup() {
                   alt="google icon"
                   className="icon-google"
                 />
-\                <span className="span_google"> Continue with Google</span>
+              <span className="span_google"> Continue with Google</span>
               </Button>
             </Box>
             <Box
@@ -170,7 +170,7 @@ function Signup() {
           </Box>
           </Box>
         </Box>
-\        <Box></Box>
+       <Box></Box>
       </Box>
     </>
   );

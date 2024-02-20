@@ -1,22 +1,17 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const addPostAction = "/posts";
-const getPosts= "/posts"
-
 
 export const createPosts = createAsyncThunk(
   addPostAction,
-  async ({userId , title,body,images }, { rejectValue }) => {
+  async ({ userId, title, body, images }, { rejectValue }) => {
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/posts",
-        {
-          userId,
-          title,
-          body,
-          images
-        }
-      );
+      const response = await axios.post("http://localhost:4000/api/posts", {
+        userId,
+        title,
+        body,
+        images,
+      });
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -27,22 +22,15 @@ export const createPosts = createAsyncThunk(
   }
 );
 
-export const getPost= createAsyncThunk(
-  getPosts,
-  async({userId,title,body,image},{rejectValue}) => {
-    console.log("posts data -->>", userId,title,body,image);
-    try{
-      const response= await axios.get("http://localhost:4000/api/posts");
-       console.log(response.data);
-
-      return response.data;
-
-    }
-    catch(error){
-      console.log("error", error.response.data);
-      return rejectValue(error.response.data);
-
-    }
-  
+export const getPost = createAsyncThunk("posts/fetchPosts", async (inputs) => {
+ 
+  try {
+    const response = await axios.get("http://localhost:4000/api/posts", inputs);
+    console.log(response.data);
+    const data = response.data;
+    return data;
+  } catch (error) {
+    console.log("error", error.response.data);
+    return inputs(error.response.data);
   }
-  )
+});

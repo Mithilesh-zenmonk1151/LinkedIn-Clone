@@ -12,53 +12,60 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Link from "@mui/material/Link";
-import  Bag  from "../../../../assets/svg/bag.svg";
+import Bag from "../../../../assets/svg/bag.svg";
 import LinnkedInLogo from "../../../../assets/linkedIn_Logo.png";
-// import AdbIcon from '@mui/icons-material/Adb';
 import "./navbarComponent.style.css";
-import  Message from "../../../../assets/apple-logo.png";
-import  Home from "../../../../assets/svg/home.svg";
-import  Network from "../../../../assets/Icon-Google.png";
-import  Notification from "../../../../assets/linkedIn_Logo.png";
+import Message from "../../../../assets/svg/message.svg";
+import Home from "../../../../assets/svg/home.svg";
+import Network from "../../../../assets/svg/network.svg";
+import Notification from "../../../../assets/svg/notifications.svg";
 import SearchBar from "./searchComponent/SearchBar";
-
 const pages = [
-  { name: "Home", src:Home, href: "/home", current: true  },
-  { name: "My Networks",src: Network, href: "/my-network", current: false },
-  { name: "Jobs",src: Bag, href: "/jobs", current: false },
-  { name: "Messagging",src: Message, href: "/message", current: false },
-  { name: "Notifications",src: Notification, href: "/notification", current: false },
+  { name: "Home", src: Home, href: "/home", current: true },
+  { name: "My Networks", src: Network, href: "/my-network", current: false },
+  { name: "Jobs", src: Bag, href: "/jobs", current: false },
+  { name: "Messagging", src: Message, href: "/message", current: false },
+  {
+    name: "Notifications",
+    src: Notification,
+    href: "/notification",
+    current: false,
+  },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-
   return (
     <AppBar
       position="static"
       sx={{
-        bgcolor: "white",
+        bgcolor: "#ffffff",
       }}
     >
-  
-      <Container maxWidth="xl">
+      <Container
+        maxWidth="xl"
+        sx={{
+          display: "flex",
+          margin: "0",
+          padding: "0",
+          justifyContent: "center",
+          gap: "20px",
+        }}
+      >
         <Toolbar disableGutters>
           {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <img
@@ -66,7 +73,7 @@ function NavbarComponent() {
             alt="inkedin Logo"
             className="linkedInLogo"
           />
-          <SearchBar/>
+          <SearchBar />
           <Typography
             variant="h6"
             noWrap
@@ -82,7 +89,6 @@ function NavbarComponent() {
               textDecoration: "none",
             }}
           ></Typography>
-
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
@@ -112,9 +118,7 @@ function NavbarComponent() {
                 display: { xs: "block", md: "none" },
               }}
             >
-                 
               {pages.map((page) => (
-
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Link
                     href={page.href}
@@ -123,18 +127,15 @@ function NavbarComponent() {
                   >
                     {page.name}
                   </Link>
-                  <img src={Home} alt=""/> 
-                 
                 </MenuItem>
               ))}
             </Menu>
           </Box>
-          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />  */}
           <Typography
             variant="h5"
             noWrap
             component="a"
-            // href="#app-bar-with-responsive-menu"
+             href="#app-bar-with-responsive-menu"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -152,21 +153,32 @@ function NavbarComponent() {
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "black", display: "block" }}
-              > 
-               <img  key={page} src={page.src} alt=""/>
-                <Link
-                  href={page.href}
-                  underline="hover"
-                  className={page.current ? "active" : "inActive"}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    color: "black",
+                    alignItems: "flx-end",
+                    paddingBottom: "0px",
+                    margin: 0,
+                  }}
                 >
-                  {page.name}
-                 
-                </Link>
-
+                  <img key={page} src={page.src} alt="" />
+                  <Link
+                    href={page.href}
+                    underline="hover"
+                    className={page.current ? "active" : "inActive"}
+                    sx={{
+                      color: "black",
+                    }}
+                  >
+                    {page.name}
+                  </Link>
+                </Box>
               </Button>
             ))}
           </Box>
-
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -195,8 +207,6 @@ function NavbarComponent() {
                 </MenuItem>
               ))}
             </Menu>
-            <img src={Home} alt="ddd"/>
-            ddd
           </Box>
         </Toolbar>
       </Container>
