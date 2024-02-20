@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <Box>
         <Navbar/>
-         <ShowPosts/> 
+          <ShowPosts/>  
        
       
     </Box>

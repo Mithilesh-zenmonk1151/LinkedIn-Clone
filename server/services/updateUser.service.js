@@ -33,3 +33,19 @@ exports.updateProfile = async (req) => {
     throw error;
   }
 };
+
+exports.getUser = async (payload) => {
+  const userId = payload.id;
+  let user;
+  try {
+    user = await userModel.userModel.findById(userId, "-password");
+    if (!user) {
+      return "User Not Found";
+    } else {
+      return user;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+

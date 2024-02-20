@@ -1,42 +1,46 @@
-const  postsModel = require("../models");
+const {postsModel} = require("../models");
 exports.createPosts = async (payload) => {
   try {
-    const { id } = payload.params;
-    const { title, body } = payload.body;
-    const images = payload.files.map((i) => {
-       return i.path;
-     });
-     console.log("images", images);
-    const post = await postsModel.postsModel.create({
+    
+    const { userId, title, body } = payload.body;
+    // const images = payload.files.map((i) => {
+    //    return i.path;
+    //  });
+    //  console.log("images", images);
+    const post = await postsModel.create({
       title: title,
       body: body,
-      user: id,
-      images: images,
+      userId: userId,
+       // images: images,
     });
     console.log("newpost", post);
     post.save();
-     post;
+    return post;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
 exports.getPost = async (payload) => {
-  const { id } = payload.params;
+  const { userId } = payload.params;
+  console.log(userId)
   try {
-    const post = await postsModel.postsModel.findOne({ userId: id });
-    post;
+    const posts = await postsModel.find().sort({createdAt :-1});
+    console.log(posts);
+    return posts;
   } catch (error) {
     console.log(error);
     throw error;
   }
 };
+
 exports.updatePost = async (payload) => {
   const { id } = payload.params;
   const { body, title } = payload.body;
-  // console.log(payload.body)
+  
   try {
-    const updated = await postsModel.postsModel.findByIdAndUpdate(
+    const updated = await postsModel.findByIdAndUpdate(
       id,
       { title, body },
       { new: true }
@@ -51,7 +55,7 @@ exports.updatePost = async (payload) => {
 exports.deletePosts = async (payload) => {
   const { id } = payload.params;
   try {
-    const deleted = await postsModel.postsModel.findByIdAndDelete(id);
+    const deleted = await postsModel.findByIdAndDelete(id);
     return deleted;
   } catch (error) {
     console.log(error);

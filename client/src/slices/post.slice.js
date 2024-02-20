@@ -3,10 +3,12 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 export const getPosts = createAsyncThunk("posts/fetchPosts", async (inputs) => {
   try {
-    const response = await axios.get("http://localhost:4000/api/posts", inputs);
+    const response = await axios.get("http://localhost:4000/api/posts",inputs );
     console.log(response);
     const data = response.data;
+    console.log("post get data",data)
     return data;
+    
   } catch (error) {
     console.log("error", error.response.data);
     return inputs(error.response.data);
