@@ -1,9 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-export const getPosts = createAsyncThunk("posts/fetchPosts", async (inputs) => {
+export const getPosts = createAsyncThunk("posts/fetchPosts", async (inputs,{rejectWithValue,getState}) => {
   try {
-    const response = await axios.get("http://localhost:4000/api/posts",inputs );
+    const head={
+        header:{
+            'Athorization':`Bearer&{token}`
+        }
+    }
+    const response = await axios.get("http://localhost:4000/api/posts",inputs,head );
     console.log(response);
     const data = response.data;
     console.log("post get data",data)
