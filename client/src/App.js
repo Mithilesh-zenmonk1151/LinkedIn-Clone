@@ -3,18 +3,16 @@ import "./App.css";
 import Signup from "./pages/auth/signup/signup";
 import Login from "./pages/auth/login/login";
 import Home from "./pages/Home";
+import PrivateRoute from "./utils/PrivateRoute";
 function App() {
   return (<div className="App">
-    
-
      <Routes>
-      <Route path="/" element={<Signup/>}/>
-      <Route path="/login" element={<Login/>}/>
+     <Route path="/" element={<Signup/>}/>
+     <Route element={<PrivateRoute/>}>
       <Route path="/home" element={<Home/>}/>
-      </Routes>  
-       
-        
-        
+      </Route>
+      <Route path="/login" element={<Login/>}/>
+      </Routes> 
   </div>
 )}
 
