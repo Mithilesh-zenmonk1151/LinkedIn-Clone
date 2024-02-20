@@ -14,6 +14,7 @@ const Posts = () => {
   // const success= useSelector((state)=> state.content.success)
   if (isLoading) {
     return "Loading....";
+    
   }
   if (error) {
     return error;
