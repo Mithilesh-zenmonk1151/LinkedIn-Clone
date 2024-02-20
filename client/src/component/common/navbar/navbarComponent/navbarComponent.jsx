@@ -22,11 +22,11 @@ import  Network from "../../../../assets/svg/network.svg";
 import  Notification from "../../../../assets/svg/notifications.svg";
 
 const pages = [
-  { name: "Home", src:{Home}, href: "/home", current: true  },
-  { name: "My Networks",src: {Network}, href: "/my-network", current: false },
-  { name: "Jobs",src: {Bag}, href: "/jobs", current: false },
-  { name: "Messagging",src: {Message}, href: "/message", current: false },
-  { name: "Notifications",src: {Notification}, href: "/notification", current: false },
+  { name: "Home", src:Home, href: "/home", current: true  },
+  { name: "My Networks",src: Network, href: "/my-network", current: false },
+  { name: "Jobs",src: Bag, href: "/jobs", current: false },
+  { name: "Messagging",src: Message, href: "/message", current: false },
+  { name: "Notifications",src: Notification, href: "/notification", current: false },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -151,13 +151,14 @@ function NavbarComponent() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "black", display: "block" }}
               > 
+               <img  key={page} src={page.src} alt=""/>
                 <Link
                   href={page.href}
                   underline="hover"
                   className={page.current ? "active" : "inActive"}
                 >
                   {page.name}
-                  <img src={page.src} alt=""/>
+                 
                 </Link>
 
               </Button>
