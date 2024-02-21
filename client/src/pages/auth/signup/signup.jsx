@@ -1,34 +1,74 @@
-import React, {  useState }  from "react";
+import React, { useState } from "react";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./signup.style.css";
 import InputField from "@mui/material/TextField";
-import {Button , Typography}from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from "react-redux";
 import { authUser } from "../../../slices/authAction.slice";
 import icon_Google from "../../../assets/Icon-Google.png";
 function Signup() {
   const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const dispatch =useDispatch()
-    function handlePassword(event) {
-        const newPass = event.target.value;
-        setPassword(newPass);
-    }
-    const handleSubmit = (e) => {
-      e.preventDefault();
-  try{
-      dispatch(authUser({email, password }));
-      console.log("user login")
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [error, setError] = useState(null);
+  function isValidEmail(email) {
+    return /\S+@\S+\.\S+/.test(email);
   }
-    catch(error){
+  const dispatch = useDispatch();
+  // function handlePassword(event) {
+  //   const newPass = event.target.value;
+  //   setPassword(newPass);
+  // }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // if (!isValidEmail(email)) {
+    //   setError("Email is invalid");
+    // } else {
+    //   setError(null);
+    // }
+    try {
+      dispatch(authUser({ email, password }));
+      console.log("user signup");
+      alert("User Registred successfuly");
+    } catch (error) {
       alert(error);
-      console.log(error)
-    } 
-      };
-      // const success= useSelector((state)=>state.auth.success)
+      console.log(error);
+    }
+  };
+  function handlePassword(event) {
+    let newPass = event.target.value;
+    setPassword(newPass);
+
+    // regular expressions to validate password
+    var lowerCase = /[a-z]/g;
+    var upperCase = /[A-Z]/g;
+    var numbers = /[0-9]/g;
+    if (!newPass.match(lowerCase)) {
+      setErrorMessage("Password should contains lowercase letters!");
+    } else if (!newPass.match(upperCase)) {
+      setErrorMessage("Password should contain uppercase letters!");
+    } else if (!newPass.match(numbers)) {
+      setErrorMessage("Password should contains numbers also!");
+    } else if (newPass.length < 10) {
+      setErrorMessage("Password length should be more than 10.");
+    } else {
+      setErrorMessage("Password is strong!");
+    }
+  }
+  const handleOnEmailChange = (event) => {
+    setEmail(event.target.value);
+    // e.preventDefault();
+    if (!isValidEmail(email)) {
+      setError("Email is invalid");
+    } else {
+      setError(null);
+    }
+  };
+
+  // const success= useSelector((state)=>state.auth.success)
   return (
     <>
       <Box
@@ -37,38 +77,45 @@ function Signup() {
           paddingTop: "80px",
         }}
       >
-        <Box className="signup-hero" sx={{
-          pl:"100px",
-        }}>
+        <Box
+          className="signup-hero"
+          sx={{
+            pl: "100px",
+          }}
+        >
           <img
             src={linkedInLogo}
             alt="linked in logo"
             className="linkedIn-logo"
           />
         </Box>
-        <Box className="signup-body" sx={{
-          pt:"20px",
-        }}>
-          <Typography variant="h5" component="h4"
+        <Box
+          className="signup-body"
           sx={{
-            fontSize:"30px",
-            fontWeight:"500",
-
-          }} >
-          Make the most of your professional life
-</Typography>
-         <Box
+            pt: "20px",
+          }}
+        >
+          <Typography
+            variant="h5"
+            component="h4"
+            sx={{
+              fontSize: "30px",
+              fontWeight: "500",
+            }}
+          >
+            Make the most of your professional life
+          </Typography>
+          <Box
             className="form-section"
             sx={{
               borderRadius: "10px",
-              pb:"40px",
-              ml:"30px",
-              pl:"20px",
+              pb: "40px",
+              ml: "30px",
+              pl: "20px",
             }}
           >
             <form className="form" onSubmit={handleSubmit}>
-              <Box 
-              >
+              <Box>
                 <label for="email">Email or phone number</label>
 
                 <TextField
@@ -76,17 +123,25 @@ function Signup() {
                   id="outlined-basic"
                   className="email-field"
                   name="email"
-                  type="email"
                   sx={{
                     height: "px",
                   }}
                   value={email}
-                  onChange={(e)=>setEmail(e.target.value)}
+                  onChange={handleOnEmailChange}
                 />
+                {error && (
+                  <h3
+                    style={{
+                      color: "red",
+                    }}
+                  >
+                    {error}
+                  </h3>
+                )}
               </Box>
               <Box>
-                <label for="email">Password (6+ characters)</label>
-               <InputField
+                <label for="password">Password (6+ characters)</label>
+                <InputField
                   size="small"
                   id="outlined-basic"
                   className="email-field"
@@ -95,6 +150,7 @@ function Signup() {
                   value={password}
                   onChange={handlePassword}
                 />
+                <Box sx={{ color: "red" }}> {errorMessage} </Box>
               </Box>
               <Box className="span-tags">
                 <span className="normal-text">
@@ -108,69 +164,86 @@ function Signup() {
                 <span className="normal-text">and</span>
                 <span className="link-texts">Cookie Policy</span>
               </Box>
-              <Button
-                variant="contained"
-                disableElevation
-                style={{ textTransform: "capitalize" }}
-                className="agree-btn"
-             type="submit" >
-                <span className="agree-span"> Agree & Join</span>
-              </Button>
+
+              {errorMessage !== "Password is strong!" || error ? (
+                <Button
+                  variant="contained"
+                  disableElevation
+                  disabled
+                  sx={{ textTransform: "capitalize", cursor: "not-allowed" }}
+                  className="agree-btn"
+                  type="submit"
+                >
+                  <span className="agree-span"> Agree & Join</span>
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  disableElevation
+                  sx={{ textTransform: "capitalize",  }}
+                  className="agree-btn"
+                  type="submit"
+                >
+                  <span className="agree-span"> Agree & Join</span>
+                </Button>
+              )}
             </form>
-          <Box sx={{
-            display:"flex",
-            flexDirection:"column",
-            gap:"20px",
-            pt:"10px"
-          }}>
-          <Box className="or-section">
-              <Box className="span-line"></Box>
-              <span className="span-or">or</span>
-              <Box className="span-line"></Box>
-            </Box>
             <Box
               sx={{
-                textAlign: "center",
+                display: "flex",
+                flexDirection: "column",
+                gap: "20px",
+                pt: "10px",
               }}
             >
-              <Button
-                variant="outlined"
-                disableElevation
-                style={{ textTransform: "capitalize" }}
+              <Box className="or-section">
+                <Box className="span-line"></Box>
+                <span className="span-or">or</span>
+                <Box className="span-line"></Box>
+              </Box>
+              <Box
                 sx={{
-                  bgcolor: "#ffffff",
-                  boxShadow: "1px",
-                  borderRadius: "20px",
-                  border: 1,
-                  borderColor: "black",
-
-                  width: "365px",
                   textAlign: "center",
-                  height: "45px",
                 }}
               >
-                <img
-                  src={icon_Google}
-                  alt="google icon"
-                  className="icon-google"
-                />
-              <span className="span_google"> Continue with Google</span>
-              </Button>
+                <Button
+                  variant="outlined"
+                  disableElevation
+                  style={{ textTransform: "capitalize" }}
+                  sx={{
+                    bgcolor: "#ffffff",
+                    boxShadow: "1px",
+                    borderRadius: "20px",
+                    border: 1,
+                    borderColor: "black",
+
+                    width: "365px",
+                    textAlign: "center",
+                    height: "45px",
+                  }}
+                >
+                  <img
+                    src={icon_Google}
+                    alt="google icon"
+                    className="icon-google"
+                  />
+                  <span className="span_google"> Continue with Google</span>
+                </Button>
+              </Box>
+              <Box
+                sx={{
+                  textAlign: "center",
+                }}
+              >
+                Already on LinkedIn?{" "}
+                <Link to="/login" className="login-link">
+                  Sign in
+                </Link>
+              </Box>
             </Box>
-            <Box
-              sx={{
-                textAlign: "center",
-              }}
-            >
-              Already on LinkedIn?{" "}
-              <Link to="/login" className="login-link">
-                Sign in
-              </Link>
-            </Box>
-          </Box>
           </Box>
         </Box>
-       <Box></Box>
+        <Box></Box>
       </Box>
     </>
   );

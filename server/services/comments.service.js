@@ -1,6 +1,5 @@
 const commentModel = require("../models");
 const postsModel = require("../models");
-
 exports.addComment = async (payload, res) => {
   try {
     const userId = payload.params;
@@ -19,11 +18,7 @@ exports.addComment = async (payload, res) => {
       },
     });
     await postDetails.save();
-   return res.status(201).json({
-      success: true,
-      message: "Comment Created Successfully",
-      userComment,
-    });
+    return { userComment };
   } catch (error) {
     console.log(error);
     throw error;
@@ -40,7 +35,8 @@ exports.getComment = async (payload, res) => {
     console.log(postId);
     console.log(postId);
     console.log("first", createAt);
-    const commentData = await commentModel.commentModel.find(query)
+    const commentData = await commentModel.commentModel
+      .find(query)
       .sort({ createdAt: -1 })
       .limit(2)
       .populate({
@@ -82,7 +78,7 @@ exports.deleteComment = async (payload) => {
     const commentDelete = await commentModel.commentModel.findByIdAndDelete(
       commentId
     );
-   return commentDelete;
+    return commentDelete;
   } catch (error) {
     console.log(error);
     throw error;

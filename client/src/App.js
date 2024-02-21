@@ -1,19 +1,29 @@
-import { Route, Routes } from "react-router";
+import {  Route, Routes } from "react-router-dom";
 import "./App.css";
 import Signup from "./pages/auth/signup/signup";
 import Login from "./pages/auth/login/login";
 import Home from "./pages/Home";
-import PrivateRoute from "./utils/PrivateRoute";
+import { useEffect, useState } from "react";
 function App() {
-  return (<div className="App">
-     <Routes>
-     <Route path="/" element={<Signup/>}/>
-     <Route element={<PrivateRoute/>}>
-      <Route path="/home" element={<Home/>}/>
-      </Route>
-      <Route path="/login" element={<Login/>}/>
-      </Routes> 
-  </div>
-)}
+  const [auth, setAuth] = useState("");
+  useEffect(() => {
+    const isAuth = localStorage.getItem("token");
+    if (isAuth) {
+      setAuth(isAuth);
+    }
+  }, []);
+  return (
+    <Routes>
+      {auth ? (
+        <Route path="/home" element={<Home />} />
+      ) : (
+        <>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Signup />} />
+        </>
+      )}
+    </Routes>
+  );
+}
 
 export default App;

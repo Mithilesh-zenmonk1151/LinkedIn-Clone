@@ -1,6 +1,6 @@
 module.exports = {
-  userService: require("./user.service"),
+  userService: require("./auth.service"),
   postsService: require("./posts.service"),
   commentService: require("./comments.service"),
-  updateUserProfile:require("./updateUser.service")
+  updateUserProfile:require("./user.service")
 };

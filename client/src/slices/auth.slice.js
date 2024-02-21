@@ -9,8 +9,8 @@ export const authSlice = createSlice({
     loading: false,
     error: null,
     success: false,
-    logged: localStorage.getItem("logged") === "true",
-    token: localStorage.getItem("token") ? JSON.parse(localStorage.getItem("token")) : null,
+    logged: localStorage.getItem('logged') === 'true',
+    token: localStorage.getItem('token'),
 
   },
   reducers: {

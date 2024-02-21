@@ -1,7 +1,6 @@
 const {postsModel} = require("../models");
 exports.createPosts = async (payload) => {
   try {
-    
     const { userId, title, body } = payload.body;
     // const images = payload.files.map((i) => {
     //    return i.path;
@@ -21,7 +20,6 @@ exports.createPosts = async (payload) => {
     throw error;
   }
 };
-
 exports.getPost = async (payload) => {
   const { userId } = payload.params;
   console.log(userId)

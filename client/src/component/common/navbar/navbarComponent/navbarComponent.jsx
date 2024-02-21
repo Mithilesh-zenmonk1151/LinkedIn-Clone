@@ -20,6 +20,9 @@ import Home from "../../../../assets/svg/home.svg";
 import Network from "../../../../assets/svg/network.svg";
 import Notification from "../../../../assets/svg/notifications.svg";
 import SearchBar from "./searchComponent/SearchBar";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { logoutUser } from "../../../../slices/authAction.slice";
 const pages = [
   { name: "Home", src: Home, href: "/home", current: true },
   { name: "My Networks", src: Network, href: "/my-network", current: false },
@@ -32,7 +35,6 @@ const pages = [
     current: false,
   },
 ];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function NavbarComponent() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -48,6 +50,15 @@ function NavbarComponent() {
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logged = useSelector((state) => state.auth.logged);
+  console.log("logged value", logged);
+  const handleLogOut = () => {
+    dispatch(logoutUser());
+    navigate("/Login");
   };
   return (
     <AppBar
@@ -201,11 +212,16 @@ function NavbarComponent() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {/* {settings.map((setting) => ( */}
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Typography textAlign="center">Profile</Typography>
+                <Typography textAlign="center">Account</Typography>
+                <Typography textAlign="center">Dashboard</Typography>
+                <Typography textAlign="center" onClick={handleLogOut}>
+                  Logout
+                </Typography>
+              </MenuItem>
+              {/* ))} */}
             </Menu>
           </Box>
         </Toolbar>

@@ -18,6 +18,7 @@ const Login = () => {
   //   let newPass = event.target.value;
   //   setPassword(newPass);
   // }
+  
   const logged = useSelector((state) => state.auth.logged);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -109,6 +110,7 @@ const Login = () => {
                   label="Email or Phone"
                   variant="filled"
                   className="email-login"
+                  type="email"
                   sx={{
                     borderTop: "1px solid black",
                     borderRight: "1px solid black",
@@ -128,6 +130,7 @@ const Login = () => {
                 <TextField
                   id="outlined-basic"
                   label="Password"
+                  type="password"
                   variant="filled"
                   sx={{
                     borderTop: "1px solid black",
