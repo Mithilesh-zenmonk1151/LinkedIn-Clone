@@ -1,3 +1,3 @@
 module.exports={
-    handleError:require("./errorHandler")
+    handleError:require("./handleError")
 }

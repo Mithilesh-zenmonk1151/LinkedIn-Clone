@@ -4,6 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 const signUpAction = "auth/signup";
 const logInAction = "auth/login";
 const logOutAction = "auth/logoutUser";
+ 
 export const authUser = createAsyncThunk(
   signUpAction,
   async ({ email, password }, { rejectValue }) => {

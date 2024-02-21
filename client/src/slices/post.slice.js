@@ -19,6 +19,26 @@ export const getPosts = createAsyncThunk("posts/fetchPosts", async (inputs,{reje
     return inputs(error.response.data);
   }
 });
+export const createPosts = createAsyncThunk("posts/createPosts",
+ 
+  async ({ userId, title, body, images }, { rejectValue }) => {
+    try {
+      const response = await axios.post("http://localhost:4000/api/posts", {
+        
+        title,
+        body,
+        images,
+      });
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log("error", error.response.data);
+      alert("api not hitted");
+      return rejectValue(error.response.data);
+    }
+  }
+);
+
 
 export const postSlice = createSlice({
   name: "posts",
@@ -30,6 +50,19 @@ export const postSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(createPosts.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    builder.addCase(createPosts.fulfilled, (state) => {
+      state.isLoading = false;
+      state.success = true;
+      console.log(" state", state.success);
+    })
+    builder.addCase(createPosts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = action.error.message;
+    })
     builder.addCase(getPosts.pending, (state) => {
       state.isLoading = false;
     });

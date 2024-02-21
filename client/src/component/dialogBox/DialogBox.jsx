@@ -5,12 +5,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import EmojiPicker from "../emojiPicker/EmojiPicker";
 import fileUploadIcon from "../../assets/svg/fileUploadIcon.svg";
 import Divider from "@mui/material-next/Divider";
-
+import { useState } from "react";
+import Inputemoji from "react-input-emoji";
+import { useDispatch } from "react-redux";
+import { createPosts } from "../../slices/postAction.slice";
 const ariaLabel = { "aria-label": "description" };
-
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -20,13 +21,33 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 export default function DialogBox() {
+  // const [postContent, setPostContent] = React.useState("");
+  const [body, setBody] = useState("");
+  const [title, setTitle] = useState("");
+  const [images, setImages] = useState([]);
+  const dispatch = useDispatch();
+  const handleOnUpload = (e) => {
+    e.preventDefault();
+    try {
+      dispatch(createPosts({ title, body, images }));
+      console.log("posts successfully created");
+      alert("posts successfully added");
+    } catch (error) {}
+  };
   const [open, setOpen] = React.useState(false);
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  function handleOnEnter(text) {
+    console.log("enter", text);
+  }
   const handleClose = () => {
     setOpen(false);
   };
+  const handleOnImageChange=(e)=>{
+    setImages([e.target.file]);
+  }
   return (
     <React.Fragment>
       <Box
@@ -35,11 +56,13 @@ export default function DialogBox() {
         sx={{
           cursor: "pointer",
           m: 0,
-          p: 2,
+          p: 0,
+          width: "100%",
         }}
       >
         start a post
       </Box>
+
       <Box
         sx={{
           bgcolor: "red",
@@ -80,45 +103,70 @@ export default function DialogBox() {
           </IconButton>
 
           <DialogActions>
-          <Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                padding:"0px",
-                gap:"100px",
-              }}
-            >
-              <Input
-                placeholder="What do you want to talk about"
-                inputProps={ariaLabel}
-              />
+            <Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  padding: "0px",
+                  gap: "100px",
+                }}
+              >
+                <form onSubmit={handleOnUpload}>
+                  <Input
+                    placeholder="title"
+                    inputProps={ariaLabel}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                  />
+                  <Input
+                    placeholder="body"
+                    inputProps={ariaLabel}
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                  />
+                  <Inputemoji
+                    value={body}
+                    onChange={setBody}
+                    cleanOnEnter
+                    onEnter={handleOnEnter}
 
-              <EmojiPicker />
-              <Box>
-              <Button variant="contained" sx={{
-              
-            }}>Rewrite with AI</Button>
+                    // onChange={(e)=>{console.log(e.target)}}
+                  />
+                  {/* <EmojiPicker /> */}
+                  {/* <Emoji/> */}
+
+                  <Box>
+                    <Button variant="contained" sx={{}}>
+                      Rewrite with AI
+                    </Button>
+                    <Button component="label">
+                      <img src={fileUploadIcon} alt="fileuploadicon" />
+                      <input type="file" value={images} onChange={handleOnImageChange}/>
+                    </Button>
+                  </Box>
+                  <Button
+                    type="submit"
+                    autoFocus
+                    onClick={handleClose}
+                    sx={{
+                      bgcolor: "#e8e8e8",
+                      borderRadius: "20px",
+                    }}
+                  >
+                    Post
+                  </Button>
+                </form>
+              </Box>
             </Box>
-           
-            </Box>
-           
-           </Box>
-           
+
             <Divider
               sx={{
                 height: "0.5px",
                 width: "100px",
               }}
             />
-            <Box>
-              <Button
-                component="label"
-              >
-                <img src={fileUploadIcon} alt="fileuploadicon" />
-                <input type="file" hidden />
-              </Button>
-            </Box>
+            <Box></Box>
             <Button
               autoFocus
               onClick={handleClose}

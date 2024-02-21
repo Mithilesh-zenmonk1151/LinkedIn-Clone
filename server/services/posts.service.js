@@ -1,4 +1,4 @@
-const {postsModel} = require("../models");
+const { postsModel } = require("../models");
 exports.createPosts = async (payload) => {
   try {
     const { userId, title, body } = payload.body;
@@ -10,11 +10,11 @@ exports.createPosts = async (payload) => {
       title: title,
       body: body,
       userId: userId,
-       // images: images,
+      // images: images,
     });
     console.log("newpost", post);
     post.save();
-    return post;
+    return { post };
   } catch (error) {
     console.log(error);
     throw error;
@@ -22,9 +22,9 @@ exports.createPosts = async (payload) => {
 };
 exports.getPost = async (payload) => {
   const { userId } = payload.params;
-  console.log(userId)
+  console.log(userId);
   try {
-    const posts = await postsModel.find().sort({createdAt :-1});
+    const posts = await postsModel.find().sort({ createdAt: -1 });
     console.log(posts);
     return posts;
   } catch (error) {
@@ -36,7 +36,7 @@ exports.getPost = async (payload) => {
 exports.updatePost = async (payload) => {
   const { id } = payload.params;
   const { body, title } = payload.body;
-  
+
   try {
     const updated = await postsModel.findByIdAndUpdate(
       id,

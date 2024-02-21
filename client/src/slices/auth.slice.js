@@ -9,9 +9,8 @@ export const authSlice = createSlice({
     loading: false,
     error: null,
     success: false,
-    logged: localStorage.getItem('logged') === 'true',
-    token: localStorage.getItem('token'),
-
+    logged: localStorage.getItem("logged") === "true",
+    token: localStorage.getItem("token"),
   },
   reducers: {
     toggleSuccess: (state, action) => {
