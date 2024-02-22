@@ -22,7 +22,7 @@ import Notification from "../../../../assets/svg/notifications.svg";
 import SearchBar from "./searchComponent/SearchBar";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { logoutUser } from "../../../../slices/authAction.slice";
+import { logoutUser } from "../../../../slices/auth.slice";
 const pages = [
   { name: "Home", src: Home, href: "/home", current: true },
   { name: "My Networks", src: Network, href: "/my-network", current: false },
@@ -213,10 +213,14 @@ function NavbarComponent() {
               onClose={handleCloseUserMenu}
             >
               {/* {settings.map((setting) => ( */}
-              <MenuItem onClick={handleCloseUserMenu}>
+              <MenuItem onClick={handleCloseUserMenu} sx={{
+                display:"flex",
+                flexDirection:"column",
+                alignItems:"flex-start"
+              }}>
                 <Typography textAlign="center">Profile</Typography>
                 <Typography textAlign="center">Account</Typography>
-                <Typography textAlign="center">Dashboard</Typography>
+                <Typography textAlign="center" >Dashboard</Typography>
                 <Typography textAlign="center" onClick={handleLogOut}>
                   Logout
                 </Typography>

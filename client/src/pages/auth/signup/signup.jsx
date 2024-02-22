@@ -1,19 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./signup.style.css";
 import InputField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { authUser } from "../../../slices/authAction.slice";
+import { useDispatch, useSelector } from "react-redux";
+import { authUser } from "../../../slices/auth.slice";
 import icon_Google from "../../../assets/Icon-Google.png";
 function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(null);
+  const logged = useSelector((state) => state.auth.logged);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (logged) {
+      navigate("/home");
+    }
+  }, [logged, navigate]);
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
   }
@@ -41,8 +48,6 @@ function Signup() {
   function handlePassword(event) {
     let newPass = event.target.value;
     setPassword(newPass);
-
-    // regular expressions to validate password
     var lowerCase = /[a-z]/g;
     var upperCase = /[A-Z]/g;
     var numbers = /[0-9]/g;
@@ -67,8 +72,6 @@ function Signup() {
       setError(null);
     }
   };
-
-  // const success= useSelector((state)=>state.auth.success)
   return (
     <>
       <Box
@@ -180,7 +183,7 @@ function Signup() {
                 <Button
                   variant="contained"
                   disableElevation
-                  sx={{ textTransform: "capitalize",  }}
+                  sx={{ textTransform: "capitalize" }}
                   className="agree-btn"
                   type="submit"
                 >
