@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 export const getPosts = createAsyncThunk("posts/getPosts", async (inputs,{rejectWithValue,getState}) => {
   try {
     const head={
@@ -19,22 +20,26 @@ export const getPosts = createAsyncThunk("posts/getPosts", async (inputs,{reject
     return inputs(error.response.data);
   }
 });
+
 export const createPosts = createAsyncThunk("posts/createPosts",
  
-  async ({ userId, title, body, images }, { rejectValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
+      console.log( data);
+      const {title,body,images} = data;
+      console.log(images)
       const response = await axios.post("http://localhost:4000/api/posts", {
         
         title,
         body,
         images,
       });
-      console.log(response.data);
+      console.log("response from create",response.data);
       return response.data;
     } catch (error) {
       console.log("error", error.response.data);
       alert("api not hitted");
-      return rejectValue(error.response.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );

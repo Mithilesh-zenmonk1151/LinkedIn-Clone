@@ -211,20 +211,57 @@ function NavbarComponent() {
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
-            >
+            > 
               {/* {settings.map((setting) => ( */}
-              <MenuItem onClick={handleCloseUserMenu} sx={{
-                display:"flex",
-                flexDirection:"column",
-                alignItems:"flex-start"
-              }}>
+              <MenuItem
+                onClick={handleCloseUserMenu}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
                 <Typography textAlign="center">Profile</Typography>
-                <Typography textAlign="center">Account</Typography>
-                <Typography textAlign="center" >Dashboard</Typography>
-                <Typography textAlign="center" onClick={handleLogOut}>
-                  Logout
-                </Typography>
+              
               </MenuItem>
+              <MenuItem
+                onClick={handleCloseUserMenu}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              > 
+              <Typography textAlign="center">Account</Typography>
+              
+               
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseUserMenu}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                <Typography textAlign="center">Dashboard</Typography>
+             
+               
+              </MenuItem>
+              <MenuItem
+                onClick={handleCloseUserMenu}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                }}
+              >
+                 <Typography textAlign="center" onClick={handleLogOut}>
+                Logout
+              </Typography>
+               
+              </MenuItem>
+
               {/* ))} */}
             </Menu>
           </Box>

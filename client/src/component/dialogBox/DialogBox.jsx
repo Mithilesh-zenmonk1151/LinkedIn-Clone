@@ -29,6 +29,7 @@ export default function DialogBox() {
   const handleOnUpload = (e) => {
     e.preventDefault();
     try {
+      console.log({ title, body, images });
       dispatch(createPosts({ title, body, images }));
       console.log("posts successfully created");
       alert("posts successfully added");
@@ -45,9 +46,10 @@ export default function DialogBox() {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleOnImageChange=(e)=>{
-    setImages([e.target.file]);
-  }
+  const handleOnImageChange = (e) => {
+    console.log(e.target.files)
+    setImages([e.target.files[0]]);
+  };
   return (
     <React.Fragment>
       <Box
@@ -112,7 +114,7 @@ export default function DialogBox() {
                   gap: "100px",
                 }}
               >
-                <form onSubmit={handleOnUpload}>
+                <form onSubmit={handleOnUpload} action="/upload">
                   <Input
                     placeholder="title"
                     inputProps={ariaLabel}
@@ -142,7 +144,11 @@ export default function DialogBox() {
                     </Button>
                     <Button component="label">
                       <img src={fileUploadIcon} alt="fileuploadicon" />
-                      <input type="file" value={images} onChange={handleOnImageChange}/>
+                      <input
+                        type="file"
+                       
+                        onChange={handleOnImageChange}
+                      />
                     </Button>
                   </Box>
                   <Button
@@ -167,7 +173,6 @@ export default function DialogBox() {
               }}
             />
             <Box></Box>
-           
           </DialogActions>
         </BootstrapDialog>
       </Box>

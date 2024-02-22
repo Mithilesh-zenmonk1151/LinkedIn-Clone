@@ -1,16 +1,26 @@
-const {postsModel} = require("../models");
+const { postsModel } = require("../models");
 exports.createPosts = async (payload) => {
+  console.log('createPosts: ', );
+  console.log(payload.body,"post")
   try {
+    console.log("create post", payload.body)
     const { userId, title, body } = payload.body;
+    const files = payload.body.images;
     // const images = payload.files.map((i) => {
     //    return i.path;
     //  });
     //  console.log("images", images);
+
+    const images = files?.map((i) => {
+      return i.path;
+    });
+    console.log("images",images);
     const post = await postsModel.create({
       title: title,
       body: body,
       userId: userId,
-       // images: images,
+      images: images,
+      // images: images,
     });
     console.log("newpost", post);
     post.save();
@@ -22,10 +32,10 @@ exports.createPosts = async (payload) => {
 };
 exports.getPost = async (payload) => {
   const { userId } = payload.params;
-  console.log(userId)
+  console.log(userId);
   try {
-    const posts = await postsModel.find().sort({createdAt :-1});
-    console.log(posts);
+    const posts = await postsModel.find().sort({ createdAt: -1 });
+    // console.log(posts);
     return posts;
   } catch (error) {
     console.log(error);
@@ -36,7 +46,7 @@ exports.getPost = async (payload) => {
 exports.updatePost = async (payload) => {
   const { id } = payload.params;
   const { body, title } = payload.body;
-  
+
   try {
     const updated = await postsModel.findByIdAndUpdate(
       id,

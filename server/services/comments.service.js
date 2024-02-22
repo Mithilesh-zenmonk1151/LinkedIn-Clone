@@ -2,23 +2,21 @@ const commentModel = require("../models");
 const postsModel = require("../models");
 exports.addComment = async (payload, res) => {
   try {
-    const userId = payload.params;
-    const { postId, comment } = payload.body;
-    const postDetails = await postsModel.postsModel.findOne({
-      _id: postId,
-    });
-    const userComment = await commentModel.commentModel.create({
+    console.log("data back", params);
+    const { postId } = params;
+
+    const databody = Object.keys(comment)[0];
+    console.log("databody: ", databody);
+    if (!(await postsModel.findById(postId))) {
+      throw new CustomError("No such post exists", 404);
+    }
+    const newComment = await commentModel.create({
       userId: userId,
       postId: postId,
-      comment,
+      comment: databody,
     });
-    await postsModel.postsModel.findByIdAndUpdate(postId, {
-      $push: {
-        comments: userComment,
-      },
-    });
-    await postDetails.save();
-    return { userComment };
+    console.log(newComment);
+    return newComment;
   } catch (error) {
     console.log(error);
     throw error;
@@ -26,9 +24,9 @@ exports.addComment = async (payload, res) => {
 };
 exports.getComment = async (payload, res) => {
   try {
-    const { postId } = req.params;
+    const { postId } = payload.params;
     const query = { postId: postId };
-    const createAt = req.query.time;
+    const createAt = payload.query.time;
     if (createAt) {
       query = { postId: postId, createAt: { $gte: new Date(createAt) } };
     }

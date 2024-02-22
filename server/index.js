@@ -13,6 +13,7 @@ app.use(
     credentials: true,
   })
 );
+app.use('/uploads', express.static('uploads')) 
 app.use("/api", require("./routes"));
 app.listen(PORT, () => {
   console.log(`App is listening at ${PORT}`);

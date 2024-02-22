@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const user = require("./user.model");
+// const user = require("./user.model");
 const commentSchema = new mongoose.Schema(
   {
     userId: {
