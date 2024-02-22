@@ -1,7 +1,7 @@
 const userModel = require("../models");
 exports.updateProfile = async (req) => {
   try {
-    console.log(req.params);
+    console.log( req.params);
     const { id } = req.params;
     const { username, phone, website, title, industry, summary } = req.body;
     const address = JSON.parse(req.body.address);
@@ -27,12 +27,13 @@ exports.updateProfile = async (req) => {
       { new: true }
     );
     await user.save();
-    const updatedUser = await userModel.userModel.findById(id);
+    const updatedUser= await userModel.userModel.findById(id);
     return updatedUser;
   } catch (error) {
     throw error;
   }
 };
+
 exports.getUser = async (payload) => {
   const userId = payload.id;
   let user;
@@ -41,9 +42,10 @@ exports.getUser = async (payload) => {
     if (!user) {
       return "User Not Found";
     } else {
-      return {user};
+      return user;
     }
   } catch (error) {
     throw error;
   }
 };
+

@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import linkedInLogo from "../../../assets/linkedInLogo.png";
 import "./signup.style.css";
 import InputField from "@mui/material/TextField";
 import { Button, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { authUser } from "../../../slices/authAction.slice";
 import icon_Google from "../../../assets/Icon-Google.png";
 function Signup() {
@@ -14,8 +14,6 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(null);
-  const logged = useSelector((state) => state.auth.logged);
-  const navigate = useNavigate();
   function isValidEmail(email) {
     return /\S+@\S+\.\S+/.test(email);
   }
@@ -31,9 +29,6 @@ function Signup() {
     // } else {
     //   setError(null);
     // }
-    if (!email) {
-      setError("Email is required");
-    }
     try {
       dispatch(authUser({ email, password }));
       console.log("user signup");
@@ -72,11 +67,7 @@ function Signup() {
       setError(null);
     }
   };
-  useEffect(() => {
-    if (logged) {
-      navigate("/home");
-    }
-  }, [logged, navigate]);
+
   // const success= useSelector((state)=>state.auth.success)
   return (
     <>
@@ -189,7 +180,7 @@ function Signup() {
                 <Button
                   variant="contained"
                   disableElevation
-                  sx={{ textTransform: "capitalize" }}
+                  sx={{ textTransform: "capitalize",  }}
                   className="agree-btn"
                   type="submit"
                 >
