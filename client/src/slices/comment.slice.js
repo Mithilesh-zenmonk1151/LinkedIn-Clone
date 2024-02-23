@@ -1,7 +1,10 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 const commentPostAction='comment/commentUser' 
+const getCommentPostAction= 'getComment/commentUser'
+
 export const commentUser = createAsyncThunk(
     commentPostAction,
     async (data, { rejectWithValue, getState }) => {
@@ -9,37 +12,40 @@ export const commentUser = createAsyncThunk(
         try {
             const token = getState().auth.token;
           
-            const head = {
+            const header = {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             };
-           
-            const response = await axios.post(`http://localhost:4000/api/comments/${data.postId}`,body , head);
-            
+            const response = await axios.post(`http://localhost:4000/api/comments/${data.postId}`,body , header);
             return response.data;
         }
         catch (error) {
-           
             return rejectWithValue(error.response.data);
 
         }
     }
 );
 
+// export const getComment =createAsyncThunk(
+
+// )
+//   "getComment", 
+
+
+
 
 
 export const commentSlice = createSlice({
-    name: 'comment',
+    name: 'comments',
     initialState: {
+      content:[],
       loading: false,
       error: null,
       success:false,
     
     },
-    reducers: {
-     
-    },
+    reducers: {},
     extraReducers: (builder) => {
       builder
         .addCase(commentUser.pending, (state) => {
@@ -55,10 +61,8 @@ export const commentSlice = createSlice({
         .addCase(commentUser.rejected, (state, action) => {
           state.loading = false;
           state.error = action.error.message;
-          console.log("errorrrr" , state.error)
+          console.log("error" , state.error)
         })
-       
-       
     },
   });
 

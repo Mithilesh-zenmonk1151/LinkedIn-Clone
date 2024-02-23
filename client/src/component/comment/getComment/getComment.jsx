@@ -1,22 +1,19 @@
-import { Avatar, Box, Button, Divider, Stack } from "@mui/material";
+import { Avatar, Box, Button, Divider, Stack, Input } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getComments } from "../../slices/comment.slice";
-import Posts from "../postCard/PostCard";
-import DialogBox from "../dialogBox/DialogBox";
-import { useNavigate } from "react-router";
+import { commentUser } from "../../../slices/comment.slice";
+import Posts from "../../postCard/PostCard";
 
-const ShowPosts = () => {
-    const [comment, setCommment]= useState("");
-  const navigate = useNavigate();
+const GetComment = () => {
+  const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getComments());
+    dispatch(commentUser());
   }, [dispatch]);
   const comments = useSelector((state) => state.comments.content);
   const loading = useSelector((state) => state.comments.isLoading);
   const error = useSelector((state) => state.comments.error);
-  console.log("empty", posts);
+  console.log("empty", comments);
   if (loading) {
     return "Loading...";
   }
@@ -26,7 +23,9 @@ const ShowPosts = () => {
   function handleOnClick() {
     console.log("comment wala field is clicked");
   }
-
+  function handleOnComment() {
+    console.log("Comment");
+  }
   return (
     <Stack flexDirection={"column"} className="Home">
       <Box className="home-nav"></Box>
@@ -79,9 +78,7 @@ const ShowPosts = () => {
                     fontWeight: "400",
                     fontSize: "17px",
                   }}
-                >
-                  <DialogBox />
-                </Box>
+                ></Box>
               </Stack>
             </Stack>
             <Divider />
@@ -96,16 +93,16 @@ const ShowPosts = () => {
         </Stack>
       </Box>
       <form onSubmit={handleOnComment}>
-      <Input
-                    placeholder="title"
-                    inputProps={ariaLabel}
-                    value={comment}
-                    onChange={(e) => setTitle(e.target.value)}
-                  />
-                  <Button type="submit"  onChange={(e)=> setCommment(e.target.value)}>comment</Button>
-
+        <Input
+          placeholder="title"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <Button type="submit" onChange={(e) => setComment(e.target.value)}>
+          comment
+        </Button>
       </form>
     </Stack>
   );
 };
-export default ShowPosts;
+export default GetComment;

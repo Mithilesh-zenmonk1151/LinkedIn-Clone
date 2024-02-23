@@ -1,10 +1,13 @@
-const commentModel = require("../models");
-const postsModel = require("../models");
+const {commentModel} = require("../models");
+const {postsModel} = require("../models");
 exports.addComment = async (payload, res) => {
   try {
-    console.log("data back", params);
-    const { postId } = params;
+    console.log("data back", payload.params);
+    const { postId } = payload.params;
+    console.log('postId: ', postId);
 
+      const {comment,userId}=payload.body;
+      console.log('comment: ', comment);
     const databody = Object.keys(comment)[0];
     console.log("databody: ", databody);
     if (!(await postsModel.findById(postId))) {

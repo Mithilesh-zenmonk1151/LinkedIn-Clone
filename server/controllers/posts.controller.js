@@ -1,11 +1,20 @@
 const { postsService } = require("../services");
 exports.createPosts = async (req, res) => {
+  const { title, body, images } = req.body;
+  console.log(req.body)
+  const payload = {
+    title,
+    body,
+    images,
+  };
   try {
-    const response = await postsService.createPosts(req);
-    console.log(response)
-    return res
-      .status(201)
-      .json({ success: true, message: `Post Added Successfully`, post: response.post });
+    const response = await postsService.createPosts(payload);
+    console.log(response);
+    return res.status(201).json({
+      success: true,
+      message: `Post Added Successfully`,
+      post: response.post,
+    });
   } catch (error) {
     console.log("post creation error", error);
     res.status(500).send(error);

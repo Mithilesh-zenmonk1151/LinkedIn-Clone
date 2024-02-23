@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const initialState = {
   user: null,
   isLoading: false,
@@ -15,5 +16,7 @@ const userSlice = createSlice({
     },
   },
 });
+
 export const { setUser, setIsLoading } = userSlice.actions;
+
 export default userSlice.reducers;

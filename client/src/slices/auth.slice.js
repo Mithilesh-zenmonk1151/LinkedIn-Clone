@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+
 const signUpAction = "auth/signup";
 const logInAction = "auth/login";
 const logOutAction = "auth/logoutUser";
+
 export const authUser = createAsyncThunk(
   signUpAction,
   async ({ email, password }, { rejectWithValue }) => {
@@ -23,6 +25,7 @@ export const authUser = createAsyncThunk(
     }
   }
 );
+
 export const loginUser = createAsyncThunk(
   logInAction,
   async ({ email, password }, { rejectWithValue }) => {
@@ -45,17 +48,21 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
-export const logoutUser = createAsyncThunk(logOutAction, async () => {
-  try {
-    console.log("logout");
-    localStorage.removeItem("logged");
-    localStorage.removeItem("token");
-    const response = await axios.post("http://localhost:4000/api/logout");
-    return response.data;
-  } catch (error) {
-    return error.message;
+
+export const logoutUser = createAsyncThunk(
+  logOutAction,
+  async (rejectWithValue) => {
+    try {
+      console.log("logout");
+      localStorage.removeItem("logged");
+      localStorage.removeItem("token");
+      const response = await axios.post("http://localhost:4000/api/logout");
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-});
+);
 
 export const authSlice = createSlice({
   name: "auth",
@@ -123,5 +130,6 @@ export const authSlice = createSlice({
       });
   },
 });
+
 export const { toggleSuccess } = authSlice.actions;
 export default authSlice.reducer;

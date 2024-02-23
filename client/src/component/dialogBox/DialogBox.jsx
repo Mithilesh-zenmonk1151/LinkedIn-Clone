@@ -24,26 +24,19 @@ export default function DialogBox() {
   // const [postContent, setPostContent] = React.useState("");
   const [body, setBody] = useState("");
   const [title, setTitle] = useState("");
-  const [images, setImages] = useState([]);
+  const [images, setImages] = useState();
   const dispatch = useDispatch();
+  const formData = new FormData();
   const handleOnUpload = (e) => {
     e.preventDefault();
     try {
-      const imageArray = images;
-      console.log({ title, body, images });
-      const formData = new FormData();
-      console.log("image",imageArray)
-
-      formData.append("image1",images);
-      for(let i=0; i<images.length; i++){
-        formData.append("images",images[i]);
-        
-      }
-      
-
+      console.log({ title, body });
       formData.append("body",body);
       formData.append("title",title);
-
+      for(let i = 0; i < images.length; i++) {
+        formData.append("images", images[i]);
+      }
+      console.log('image folder', images)
       dispatch(createPosts(formData));
       console.log("posts successfully created");
       alert("posts successfully added");
@@ -61,8 +54,14 @@ export default function DialogBox() {
     setOpen(false);
   };
   const handleOnImageChange = (e) => {
-    console.log(e.target.files)
-    setImages([...e.target.files]);
+    console.log('files',e.target.files);
+    const files = e.target.files;
+    const array = []
+    for(let i = 0; i < files.length; i++) {
+      formData.append('images', files[i]);
+      array.push(files[i]);
+    }
+    setImages(array)
   };
   return (
     <React.Fragment>
