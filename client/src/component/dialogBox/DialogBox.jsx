@@ -29,8 +29,22 @@ export default function DialogBox() {
   const handleOnUpload = (e) => {
     e.preventDefault();
     try {
+      const imageArray = images;
       console.log({ title, body, images });
-      dispatch(createPosts({ title, body, images }));
+      const formData = new FormData();
+      console.log("image",imageArray)
+
+      formData.append("image1",images);
+      for(let i=0; i<images.length; i++){
+        formData.append("images",images[i]);
+        
+      }
+      
+
+      formData.append("body",body);
+      formData.append("title",title);
+
+      dispatch(createPosts(formData));
       console.log("posts successfully created");
       alert("posts successfully added");
     } catch (error) {}
@@ -48,7 +62,7 @@ export default function DialogBox() {
   };
   const handleOnImageChange = (e) => {
     console.log(e.target.files)
-    setImages([e.target.files[0]]);
+    setImages([...e.target.files]);
   };
   return (
     <React.Fragment>
@@ -146,7 +160,7 @@ export default function DialogBox() {
                       <img src={fileUploadIcon} alt="fileuploadicon" />
                       <input
                         type="file"
-                       
+                       multiple
                         onChange={handleOnImageChange}
                       />
                     </Button>

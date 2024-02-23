@@ -25,14 +25,13 @@ export const createPosts = createAsyncThunk("posts/createPosts",
  
   async (data, { rejectWithValue }) => {
     try {
-      console.log( data);
-      const {title,body,images} = data;
-      console.log(images)
-      const response = await axios.post("http://localhost:4000/api/posts", {
-        
-        title,
-        body,
-        images,
+      console.log('data: ', data);
+      // const {title,body,images} = data;
+      // console.log(images)
+      const response = await axios.post("http://localhost:4000/api/posts", data,{
+        header:{
+          'Content-Type': 'multipart/form-data'
+        }
       });
       console.log("response from create",response.data);
       return response.data;

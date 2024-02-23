@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../slices/post.slice";
 import Posts from "../postCard/PostCard";
 import DialogBox from '../dialogBox/DialogBox';
+import { useNavigate } from 'react-router';
 
 const ShowPosts = () => {
+  const navigate= useNavigate()
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getPosts());
@@ -22,6 +24,10 @@ const ShowPosts = () => {
   }
   function handleOnClick(){
     console.log("post wala field is clicked")
+  }
+  function showCommentHandler(){
+    navigate("/comment")
+
   }
   return (
     <Stack flexDirection={'column'} className='Home'>
@@ -111,7 +117,9 @@ const ShowPosts = () => {
         return (
           <Stack className="display-posts">
             <Posts title={post.title} body={post.body} />
+            <Button onClick={showCommentHandler}>comments</Button>
           </Stack>
+          
         );
       })}
        </Stack>

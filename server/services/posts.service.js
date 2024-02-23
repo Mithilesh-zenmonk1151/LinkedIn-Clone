@@ -1,30 +1,34 @@
 const { postsModel } = require("../models");
+const path = require("path");
 exports.createPosts = async (payload) => {
-  console.log('createPosts: ', );
-  console.log(payload.body,"post")
+  console.log("createPosts: ");
+  console.log(payload.body, "post");
   try {
-    const userId = req.id;
-    const { title, body} = req.body
-    console.log(req.body)
-    let newImages
-    if(req.files.images !== null){
-         newImages = req.files.images.map((i) => {return i.path})     
-        console.log(newImages)
-    }
-    const post = new Posts({
-        userId,
-        title,
-        body,
-        images: newImages
-    })
   
-        await post.save()
-        return post
-    }
-    catch(err){
-        console.log(err)
-        return err
-    }
+    const userId = payload._id;
+    const { title, body} = payload.body;
+    const images=payload.files;
+    console.log(images,"tjios is the images")
+    let newImages
+     if(payload.files.images!==null )
+       newImages = payload.files.images?.map((image) => {
+      console.log(image)
+        return image.path;
+      })
+      console.log(images);
+    const post = new postsModel({
+      userId,
+      title,
+      body,
+      images: newImages,
+    });
+
+    await post.save();
+    return { post };
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
 };
 exports.getPost = async (payload) => {
   const { userId } = payload.params;

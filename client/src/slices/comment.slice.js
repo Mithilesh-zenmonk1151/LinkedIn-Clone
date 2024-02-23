@@ -15,7 +15,7 @@ export const commentUser = createAsyncThunk(
                 }
             };
            
-            const response = await axios.post(`http://localhost:4000/api/comments/${data.postId}/comments`,body , head);
+            const response = await axios.post(`http://localhost:4000/api/comments/${data.postId}`,body , head);
             
             return response.data;
         }
