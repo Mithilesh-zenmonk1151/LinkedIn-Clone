@@ -5,7 +5,7 @@ const logInAction = "auth/login";
 const logOutAction = "auth/logoutUser";
 export const authUser = createAsyncThunk(
   signUpAction,
-  async ({ email, password }, { rejectValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/auth/signup",
@@ -19,13 +19,13 @@ export const authUser = createAsyncThunk(
     } catch (error) {
       console.log("error", error.response.data);
       alert("api not hitted");
-      return rejectValue(error.response.data);
+      return rejectWithValue(error.response.data);
     }
   }
 );
 export const loginUser = createAsyncThunk(
   logInAction,
-  async ({ email, password }, { rejectValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     console.log("email, password: ", email, password);
     try {
       const response = await axios.post(
@@ -41,7 +41,7 @@ export const loginUser = createAsyncThunk(
       return response.data;
     } catch (error) {
       console.log("error", error.response.data);
-      return rejectValue(error.message);
+      return rejectWithValue(error.message);
     }
   }
 );

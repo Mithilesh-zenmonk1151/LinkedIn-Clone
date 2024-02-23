@@ -3,32 +3,28 @@ exports.createPosts = async (payload) => {
   console.log('createPosts: ', );
   console.log(payload.body,"post")
   try {
-    console.log("create post", payload.body)
-    const { userId, title, body } = payload.body;
-    const files = payload.body.images;
-    // const images = payload.files.map((i) => {
-    //    return i.path;
-    //  });
-    //  console.log("images", images);
-
-    const images = files?.map((i) => {
-      return i.path;
-    });
-    console.log("images",images);
-    const post = await postsModel.create({
-      title: title,
-      body: body,
-      userId: userId,
-      images: images,
-      // images: images,
-    });
-    console.log("newpost", post);
-    post.save();
-    return post;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+    const userId = req.id;
+    const { title, body} = req.body
+    console.log(req.body)
+    let newImages
+    if(req.files.images !== null){
+         newImages = req.files.images.map((i) => {return i.path})     
+        console.log(newImages)
+    }
+    const post = new Posts({
+        userId,
+        title,
+        body,
+        images: newImages
+    })
+  
+        await post.save()
+        return post
+    }
+    catch(err){
+        console.log(err)
+        return err
+    }
 };
 exports.getPost = async (payload) => {
   const { userId } = payload.params;
