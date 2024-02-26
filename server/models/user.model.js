@@ -57,6 +57,10 @@ const userSchema = new mongoose.Schema(
     industry: {
       type: String,
     },
+
+    connections: {
+      type: [String],
+    },
   },
   { timestamps: true }
 );

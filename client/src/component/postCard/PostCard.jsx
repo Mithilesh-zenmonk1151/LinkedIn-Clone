@@ -18,7 +18,7 @@ import { Box, Button, Divider, Stack } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Comment from "../comment/createComment/CreateComment";
+import Comment from "../comment/createComment/CreateComment.jsx";
 import PublicIcon from "@mui/icons-material/Public";
 import CommentCard from "../commentCard/CommentCard";
 import { useDispatch, useSelector } from "react-redux";

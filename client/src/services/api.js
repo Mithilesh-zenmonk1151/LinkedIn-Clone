@@ -10,7 +10,7 @@ export const profileApis = {
     getPostsApi: BaseUrl + "/posts",
 }
 export const postApis ={
-    createPostApi: BaseUrl + "",
+    createPostApi: BaseUrl + "/posts",
     editPostApi: BaseUrl + "",
     getAllPostsApis: BaseUrl + "",
     deletePostApis: BaseUrl + "",

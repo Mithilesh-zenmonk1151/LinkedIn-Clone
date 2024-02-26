@@ -1,7 +1,7 @@
 const {commentModel} = require("../models");
 const {postsModel} = require("../models");
 const {userModel} = require('../models')
-exports.addComment = async (payload, res) => {
+exports.addComment = async (payload) => {
   try {
     console.log("data back", payload.params);
     const { postId } = payload.params;
@@ -26,25 +26,26 @@ exports.addComment = async (payload, res) => {
     throw error;
   }
 };
-exports.getComment = async (payload, res) => {
+exports.getComment = async (payload) => {
   try {
     const { postId } = payload.params;
     const query = { postId: postId };
     const createAt = payload.query.time;
+    
     if (createAt) {
       query = { postId: postId, createAt: { $gte: new Date(createAt) } };
     }
     console.log(postId);
     console.log(postId);
     console.log("first", createAt);
-    // const postData = await PostModel.find().populate({ path: 'user', select: 'name' });
-    const commentData = await commentModel.commentModel
-      .find(query)
+   
+    const commentData = await commentModel
+      .find()
       .sort({ createdAt: -1 })
       .limit(5)
       .populate({
         path: "user",
-        select: "email ",
+        select: "email name",
       })
       .populate({
         path: "post",

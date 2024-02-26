@@ -14,11 +14,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  // function handlePassword(event) {
-  //   let newPass = event.target.value;
-  //   setPassword(newPass);
-  // }
-  
   const logged = useSelector((state) => state.auth.logged);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
@@ -56,7 +51,6 @@ const Login = () => {
             className="linkedIn-log"
           />
         </Box>
-        
         <Box
           sx={{
             borderRadius: "10px",
@@ -72,7 +66,6 @@ const Login = () => {
           <Box  className="form-section" sx={{
             display:"flex",
             flexDirection:"column",
-
           }}>
           <Box sx={{
             display:"flex",
@@ -86,7 +79,6 @@ const Login = () => {
                 paddingTop:"30px",
                 borderRadius:"20px",
                 fontSize:"2rem"
-               
               }
             }>
               Sign in
@@ -94,9 +86,7 @@ const Login = () => {
             <Typography variant="p" component="p" sx={{
               fontFamily:"sans-serif",
               fontWeight:100,
-              
               borderRadius:"20px",
-             
             }}>
               Stay updated on your professional world
             </Typography>

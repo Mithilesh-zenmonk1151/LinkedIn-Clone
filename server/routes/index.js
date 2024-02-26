@@ -7,4 +7,5 @@ router.use("/posts", require("./post.route"));
 router.use("/comments", require("./comment.route"));
 router.use("/reactions", require("./reaction.route"));
 router.use("/users", require("./user.route"));
+router.use("/my-connections",require("./connection.route"))
 module.exports = router;

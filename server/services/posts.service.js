@@ -1,10 +1,9 @@
 const { postsModel } = require("../models");
 const path = require("path");
-exports.createPosts = async ({title , body , files , id}) => {
+exports.createPosts = async ({ title, body, files, id }) => {
   // console.log("createPosts: ");
   // console.log(payload.body, "post");
   try {
-
     // const userId = payload.id;
     // console.log(payload.id,"dgthfgjhiuyo879oui")
     // const { title, body} = payload;
@@ -25,9 +24,16 @@ exports.createPosts = async ({title , body , files , id}) => {
     //   body,
     //   files:payload.file.path,
     // });
-    const images = files?.map((i) => { return i.path });
+    const images = files?.map((i) => {
+      return i.path;
+    });
 
-    const Post = await postsModel.create({ title: title, body: body, user: id, images: images });
+    const Post = await postsModel.create({
+      title: title,
+      body: body,
+      user: id,
+      images: images,
+    });
     return { Post };
   } catch (error) {
     console.log(error);
