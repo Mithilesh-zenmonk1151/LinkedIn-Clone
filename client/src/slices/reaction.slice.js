@@ -1,19 +1,12 @@
 import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
-
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
-// const { getReactionAction } = "reaction/getReactionUser";
-// const { postReactionUserAction } = "reaction/postReactionUser";
-
 export const postReactionUser = createAsyncThunk(
   "postReactionUserAction",
   async (reactionData, { rejectWithValue, getState }) => {
     console.log("reactionData: ", reactionData?.reaction);
-
     try {
       const token = getState().auth.token;
-
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -37,12 +30,10 @@ export const getReactionUser = createAsyncThunk(
     const res = await axios.get(
       `http://localhost:4000/api/reactions/${postId}`
     );
-
     const data = res.data;
     return data;
   }
 );
-
 export const reactionSlice = createSlice({
   name: "reaction",
   initialState: {
@@ -82,5 +73,4 @@ export const reactionSlice = createSlice({
       });
   },
 });
-
 export default reactionSlice.reducer;
