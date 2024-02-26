@@ -10,4 +10,3 @@ exports.upload = multer({
     },
   }),
 }).single("images")
-

@@ -27,11 +27,21 @@ export const commentUser = createAsyncThunk(
     }
 );
 
-// export const getComment =createAsyncThunk(
+export const getCommentUser = createAsyncThunk( getCommentPostAction, async (postId , {rejectWithValue})=>{
+  // const postId=datatofetch.postId;
 
-// )
-//   "getComment", 
+try{
+  const res =await axios.get(`http://localhost:4000/api/comments/${postId}`);
+  const data =  res.data;
 
+  return {postId,data};
+}
+catch (error) {
+         
+  return rejectWithValue(error.response.data);
+
+}
+})
 
 
 

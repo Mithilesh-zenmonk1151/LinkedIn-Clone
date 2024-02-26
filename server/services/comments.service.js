@@ -1,5 +1,6 @@
 const {commentModel} = require("../models");
 const {postsModel} = require("../models");
+const {userModel} = require('../models')
 exports.addComment = async (payload, res) => {
   try {
     console.log("data back", payload.params);
@@ -36,13 +37,14 @@ exports.getComment = async (payload, res) => {
     console.log(postId);
     console.log(postId);
     console.log("first", createAt);
+    // const postData = await PostModel.find().populate({ path: 'user', select: 'name' });
     const commentData = await commentModel.commentModel
       .find(query)
       .sort({ createdAt: -1 })
-      .limit(2)
+      .limit(5)
       .populate({
         path: "user",
-        select: "name email ",
+        select: "email ",
       })
       .populate({
         path: "post",

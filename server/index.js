@@ -8,14 +8,16 @@ const PORT = process.env.PORT || 4001;
 database.connect();
 const multer= require("multer");
 const path= require("path");
-app.use(express.json({extended:true}));
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
- app.use(express.static(path.join(__dirname,'uploads')))
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors({
+  origin: ["http://localhost:3000"],
+  methods:  ['POST','GET'],
+  credentials: true
+}));
+app.use('/uploads', express.static('uploads')) 
+
  
 app.use("/api", require("./routes"));
 app.listen(PORT, () => {

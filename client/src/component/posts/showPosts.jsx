@@ -23,7 +23,7 @@ const ShowPosts = () => {
     return error;
   }
   function handleOnClick(){
-    console.log("post wala field is clicked")
+    console.log("post wala field is clicked");
   }
   function showCommentHandler(){
     navigate("/comment")

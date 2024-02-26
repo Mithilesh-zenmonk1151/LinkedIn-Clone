@@ -4,7 +4,7 @@ const user = require("./user.model");
 const comment = require("./comment.model");
 const postsSchema = new mongoose.Schema(
   {
-    userId: {
+    user: {
       type: ObjectId,
       ref: user,
     },
@@ -16,12 +16,7 @@ const postsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // comments: [
-    //   {
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: comment,
-    //   },
-    // ],
+    
    images: {
        type: Array,
     },
