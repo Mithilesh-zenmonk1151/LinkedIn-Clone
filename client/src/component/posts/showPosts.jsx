@@ -1,10 +1,11 @@
 import { Avatar, Box, Button, Divider, Stack } from '@mui/material'
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../slices/post.slice";
 import Posts from "../postCard/PostCard";
 import DialogBox from '../dialogBox/DialogBox';
 import { useNavigate } from 'react-router';
+import GetComment from "../comment/getComment/GetComment";
 
 const ShowPosts = () => {
   const navigate= useNavigate()
@@ -12,6 +13,11 @@ const ShowPosts = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  function toggle() {
+    setIsOpen((isOpen) => !isOpen);
+  }
   const posts = useSelector((state) => state.posts.content);
   const loading = useSelector((state) => state.posts.isLoading);
   const error = useSelector((state) => state.posts.error);
@@ -23,12 +29,9 @@ const ShowPosts = () => {
     return error;
   }
   function handleOnClick(){
-    console.log("post wala field is clicked");
+    console.log("post wala field is clicked")
   }
-  function showCommentHandler(){
-    navigate("/comment")
-
-  }
+  
   return (
     <Stack flexDirection={'column'} className='Home'>
       <Box className='home-nav'>
@@ -117,7 +120,8 @@ const ShowPosts = () => {
         return (
           <Stack className="display-posts">
             <Posts title={post.title} body={post.body} />
-            <Button onClick={showCommentHandler}>comments</Button>
+            {isOpen && <GetComment/>}
+            <Button onClick={toggle}>comments</Button>
           </Stack>
           
         );
