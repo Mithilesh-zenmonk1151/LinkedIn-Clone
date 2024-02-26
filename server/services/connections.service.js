@@ -45,10 +45,8 @@ exports.setConnectionFlag = async (payload) => {
         message:"No connection found"
       })
     }
-    if (status === 'pending') {
-      throw new CustomError("Bad request", 400);
-  }
-  if (status === 'Withdraw' && response.Status === 'pending') {
+   
+  if (status === 'withdraw' && response.Status === 'pending') {
       const res = await connectionModel.findOneAndUpdate({ senderId: senderId, _id: connectionId }, { Status: status }, { new: true, upsert: true });
       console.log('res: ', res);
       return res;
@@ -74,10 +72,10 @@ exports.setConnectionFlag = async (payload) => {
       User2.connections.push(senderId);
       await User2.save();
     }
-    const isAccepted = await connectionModel.connectionModel.findOne({
-      senderId: senderId,
-    });
-    console.log(isAccepted);
+    // const isAccepted = await connectionModel.connectionModel.findOne({
+    //   senderId: senderId,
+    // });
+    // console.log(isAccepted);
     if (isAccepted.status === "accepted") {
       console.log("already accepted");
       return;
