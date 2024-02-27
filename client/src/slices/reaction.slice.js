@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 export const postReactionUser = createAsyncThunk(
   "postReactionUserAction",
-  async (reactionData, { rejectWithValue, getState }) => {
-    console.log("reactionData: ", reactionData);
+  async (data, { rejectWithValue, getState }) => {
+    const reactionData = { label: data.label, postId: data.postId };
     try {
       const token = getState().auth.token;
       const config = {
@@ -13,8 +13,8 @@ export const postReactionUser = createAsyncThunk(
         },
       };
       const response = await axios.post(
-        `http://localhost:4000/api/reactions/${reactionData.postId}`,
-        reactionData.reaction,
+        `http://localhost:4000/api/reactions/${data.postId}`,
+        reactionData,
         config
       );
       console.log("response: ", response);

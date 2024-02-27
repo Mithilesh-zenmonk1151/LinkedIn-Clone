@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 export const getPosts = createAsyncThunk(
   "posts/getPosts",
-  async (inputs, { rejectWithValue, getState }) => {
+  async (inputs, { rejectWithValue }) => {
     try {
       const head = {
         header: {

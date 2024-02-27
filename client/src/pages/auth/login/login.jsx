@@ -286,7 +286,7 @@ const Login = () => {
             <Typography variant="p" component="p">
               New to LinkedIn?
             </Typography>
-            <Link to="/join">Join now</Link>
+            <Link to="/signup">Join now</Link>
           </Box>
         </Box>
       </Box>

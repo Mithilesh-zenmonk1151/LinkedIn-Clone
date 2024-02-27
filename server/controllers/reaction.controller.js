@@ -1,8 +1,12 @@
-const { reactionServices } = require("../services");
+const { reactionService } = require("../services");
 exports.uploadReaction = async (req, res) => {
   try {
-    const response = await reactionServices.uploadReaction(req);
+
+    const postId= req.params;
+    console.log("postId",postId)
+    const response = await reactionService.uploadReaction({emoji:req.body.emoji,userId:req.body.userId, id:postId});
     console.log("first", response);
+    console.log("response",response);
      res.status(200).json(response);
   } catch (error) {
     console.log(error);
@@ -11,7 +15,7 @@ exports.uploadReaction = async (req, res) => {
 };
 exports.fetchReaction = async (req, res) => {
   try {
-    const response = await reactionServices.getReaction(req);
+    const response = await reactionService.getReaction(req);
     res.status(200).json(response);
   } catch (error) {
      res.status(500).json(error);

@@ -3,6 +3,7 @@ const { connectionService } = require("../services");
 exports.sendConnectionRequest = async (req, res) => {
   try {
     const response = await connectionService.sendConnectionRequest(req);
+   
     return res.status(201).json(response);
   } catch (error) {
     res.status(500).json({

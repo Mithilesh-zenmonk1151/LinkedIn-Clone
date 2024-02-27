@@ -1,8 +1,12 @@
 const reactionModel = require("../models");
 exports.uploadReaction = async (payload) => {
-  const { postId } = payload.params;
-  const userId = payload.query.userId;
-  const { emoji } = payload.body;
+  console.log(payload,"payloadsdsdfe")
+  const postId = payload.id.postId;
+
+
+  console.log("erftfuhgrhgtghryj",postId)
+  const userId = payload.userId;
+  const  emoji  = payload.emoji;
   console.log(userId, postId);
   try {
     const newReaction = await reactionModel.reactionModel.create({

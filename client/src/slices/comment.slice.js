@@ -95,14 +95,14 @@ export const commentSlice = createSlice({
           state.error = action.error.message;
           console.log("error" , state.error)
         })
-        builder.addCase(getCommentUser.pending, (state) => {
+        .addCase(getCommentUser.pending, (state) => {
           state.loading = false;
-        });
-        builder.addCase(getCommentUser.fulfilled, (state, action) => {
+        })
+        .addCase(getCommentUser.fulfilled, (state, action) => {
           state.loading = false;
           state.content = action.payload;
-        });
-        builder.addCase(getCommentUser.rejected, (state, action) => {
+        })
+        .addCase(getCommentUser.rejected, (state, action) => {
           state.loading = false;
           state.error = action.error;
         });

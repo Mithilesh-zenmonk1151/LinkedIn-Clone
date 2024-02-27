@@ -9,6 +9,7 @@ import "./App.css";
 import Signup from "./pages/auth/signup/signup";
 import Login from "./pages/auth/login/login";
 import Home from "./pages/Home";
+import MyNetwork from "./pages/myNetwork/MyNetwork";
 function App() {
   const PrivateRoute = ({ children }) => {
     const isAuth = localStorage.getItem("token");
@@ -23,6 +24,14 @@ function App() {
           element={
             <PrivateRoute>
               <Home />
+            </PrivateRoute>
+          }
+        />
+         <Route
+          path="//my-network"
+          element={
+            <PrivateRoute>
+              <MyNetwork/>
             </PrivateRoute>
           }
         />

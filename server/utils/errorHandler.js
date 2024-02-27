@@ -1,4 +1,4 @@
-const handleError  = (res,error) => {
+  exports.handleError  = (res,error) => {
     if(error.name === 'CONFLICT') {
       return res.status(409).json({
         success: false,
@@ -16,3 +16,4 @@ const handleError  = (res,error) => {
       });
     }
   }
+  

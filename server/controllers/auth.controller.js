@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    handleError(res, error);
+    handleError.handleError.handleError(res, error);
   }
 };
 
