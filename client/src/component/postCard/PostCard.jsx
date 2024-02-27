@@ -29,6 +29,7 @@ import {
   postReactionUser,
 } from "../../slices/reaction.slice.js";
 export default function PostCard({ body, title, images, user, postId }) {
+  console.log('postId: ', postId);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getReactionUser(postId));
@@ -48,10 +49,11 @@ export default function PostCard({ body, title, images, user, postId }) {
     const reactionData = {};
     reactionData.reaction = label;
     reactionData.postId = postId;
-    dispatch(postReactionUser(reactionData));
+    console.log('reactionData: ', reactionData);
+    dispatch(postReactionUser({label,postId}));
   };
   const ReactionsData = useSelector((state) => state.reaction.data);
-  console.log("ReactionsData: ", ReactionsData);
+  // console.log("ReactionsData: ", ReactionsData);
   if (isLoading) {
     return "Loading...";
   }

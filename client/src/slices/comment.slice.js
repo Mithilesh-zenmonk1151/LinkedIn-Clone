@@ -8,7 +8,10 @@ const getCommentPostAction= 'getComment/commentUser'
 export const commentUser = createAsyncThunk(
     commentPostAction,
     async (data, { rejectWithValue, getState }) => {
-       const body =data.commentbody
+       const body ={comment:data.comment,
+                   postId:data.postId};
+       console.log(body, "body")
+       
         try {
             const token = getState().auth.token;
           
@@ -32,12 +35,31 @@ export const getCommentUser = createAsyncThunk( getCommentPostAction, async (pos
 
 try{
   const res =await axios.get(`http://localhost:4000/api/comments/${postId}`);
+  console.log(res ,"comment response get");
   const data =  res.data;
+  const response= data.commentData;
+  // let comment={};
+  // for(let i=0; i<response.length; i++){
+  //   comment=comment.push(response[i].comment)
 
-  return {postId,data};
+
+  // }
+ 
+  let comments = [];
+response.forEach((comment) => {
+  comments.push(comment?.comment);
+}) 
+
+ 
+  console.log("this is response of only get comment data",response);
+  console.log("comment duwedqwed er3weq get daata",comments);
+
+
+  return {postId,comments};
 }
 catch (error) {
-         
+         console.log("errorrmgvdsfhdryjjkyuljk",error)
+
   return rejectWithValue(error.response.data);
 
 }
@@ -73,6 +95,17 @@ export const commentSlice = createSlice({
           state.error = action.error.message;
           console.log("error" , state.error)
         })
+        builder.addCase(getCommentUser.pending, (state) => {
+          state.loading = false;
+        });
+        builder.addCase(getCommentUser.fulfilled, (state, action) => {
+          state.loading = false;
+          state.content = action.payload;
+        });
+        builder.addCase(getCommentUser.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.error;
+        });
     },
   });
 

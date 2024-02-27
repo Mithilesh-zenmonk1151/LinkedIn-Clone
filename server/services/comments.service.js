@@ -6,18 +6,17 @@ exports.addComment = async (payload) => {
     console.log("data back", payload.params);
     const { postId } = payload.params;
     console.log('postId: ', postId);
-
       const {comment,userId}=payload.body;
       console.log('comment: ', comment);
-    const databody = Object.keys(comment)[0];
-    console.log("databody: ", databody);
+    // const databody = Object.keys(comment)[0];
+    // console.log("databody: ", databody);
     if (!(await postsModel.findById(postId))) {
       throw new CustomError("No such post exists", 404);
     }
     const newComment = await commentModel.create({
       userId: userId,
       postId: postId,
-      comment: databody,
+      comment
     });
     console.log(newComment);
     return newComment;
@@ -28,32 +27,29 @@ exports.addComment = async (payload) => {
 };
 exports.getComment = async (payload) => {
   try {
-    const { postId } = payload.params;
-    const query = { postId: postId };
-    const createAt = payload.query.time;
+     const { postId } = payload.params;
+    const{userId}= payload.body
+    //  const query = { postId: postId };
+    // const createdAt = payload.query.createdAt;
     
-    if (createAt) {
-      query = { postId: postId, createAt: { $gte: new Date(createAt) } };
-    }
-    console.log(postId);
-    console.log(postId);
-    console.log("first", createAt);
+    // if (createAt) {
+    //   query = { postId: postId, createAt: { $gte: new Date(createAt) } };
+    // }
+    console.log("postId",postId);
    
-    const commentData = await commentModel
-      .find()
-      .sort({ createdAt: -1 })
-      .limit(5)
-      .populate({
-        path: "user",
-        select: "email name",
-      })
-      .populate({
-        path: "post",
-        select: "post",
-      })
-      .exec();
+    // console.log("first", createdAt);
+     const commentData = await commentModel.find( { postId}).sort()
+    //  .populate({
+    //     path: "user",
+    //     select: "email name",
+    //   })
+    //   .populate({
+    //     path: "post",
+    //     select: "post",
+    //   })
+    //   .exec();
     console.log(commentData);
-    return commentData;
+    return {commentData};
   } catch (error) {
     console.log(error);
     throw error;

@@ -4,7 +4,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 export const postReactionUser = createAsyncThunk(
   "postReactionUserAction",
   async (reactionData, { rejectWithValue, getState }) => {
-    console.log("reactionData: ", reactionData?.reaction);
+    console.log("reactionData: ", reactionData);
     try {
       const token = getState().auth.token;
       const config = {
