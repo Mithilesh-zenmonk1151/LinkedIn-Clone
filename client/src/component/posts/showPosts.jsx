@@ -1,11 +1,10 @@
 import { Avatar, Box, Button, Divider, Stack } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getPosts } from "../../slices/post.slice";
 import Posts from "../postCard/PostCard";
 import DialogBox from "../dialogBox/DialogBox";
 import { useNavigate } from "react-router";
-import GetComment from "../comment/getComment/GetComment";
 
 const ShowPosts = () => {
   const navigate = useNavigate();
@@ -13,11 +12,8 @@ const ShowPosts = () => {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
-  const [isOpen, setIsOpen] = useState(false);
 
-  function toggle() {
-    setIsOpen((isOpen) => !isOpen);
-  }
+  
   const posts = useSelector((state) => state.posts.content);
   const loading = useSelector((state) => state.posts.isLoading);
   const error = useSelector((state) => state.posts.error);
@@ -123,8 +119,7 @@ const ShowPosts = () => {
               return (
                 <Stack className="display-posts">
                   <Posts title={post.title} body={post.body} />
-                  {isOpen && <GetComment />}
-                  <Button onClick={toggle}>comments</Button>
+                  
                 </Stack>
               );
             })}

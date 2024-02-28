@@ -133,13 +133,15 @@ function Signup() {
                   onChange={handleOnEmailChange}
                 />
                 {error && (
-                  <h3
+                  <p
                     style={{
                       color: "red",
+                      fontSize:"15px",
+                      fontFamily:"sans-serif"
                     }}
                   >
                     {error}
-                  </h3>
+                  </p>
                 )}
               </Box>
               <Box>
@@ -153,7 +155,9 @@ function Signup() {
                   value={password}
                   onChange={handlePassword}
                 />
-                <Box sx={{ color: "red" }}> {errorMessage} </Box>
+                <Box sx={{ color: "red",
+                 fontSize:"15px",
+                 fontFamily:"sans-serif" }}> {errorMessage} </Box>
               </Box>
               <Box className="span-tags">
                 <span className="normal-text">

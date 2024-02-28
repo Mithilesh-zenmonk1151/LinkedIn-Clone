@@ -10,6 +10,7 @@ import Signup from "./pages/auth/signup/signup";
 import Login from "./pages/auth/login/login";
 import Home from "./pages/Home";
 import MyNetwork from "./pages/myNetwork/MyNetwork";
+import Navbar from "./component/common/navbar/Navbar";
 function App() {
   const PrivateRoute = ({ children }) => {
     const isAuth = localStorage.getItem("token");
@@ -17,8 +18,20 @@ function App() {
   };
  
   return (
+    <>
     <Router>
+    <Navbar/>
       <Routes>
+      
+            {/* <Route
+            path="/"
+            element={
+            <PrivateRoute>
+             
+            </PrivateRoute>
+            }
+            /> */}
+          
         <Route
           path="/home"
           element={
@@ -28,7 +41,7 @@ function App() {
           }
         />
          <Route
-          path="//my-network"
+          path="/my-network"
           element={
             <PrivateRoute>
               <MyNetwork/>
@@ -39,6 +52,6 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
-  );
+    </>);
 }
 export default App;

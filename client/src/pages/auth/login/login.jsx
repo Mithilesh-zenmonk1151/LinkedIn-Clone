@@ -15,6 +15,10 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const logged = useSelector((state) => state.auth.logged);
+  const error=useSelector((state)=>state.auth.error);
+  // const error = useSelector((state) => state.auth.error);
+    console.log("userndfdgfdg",error);
+
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -147,6 +151,11 @@ const Login = () => {
                 <span className="agree-span">Sign in</span>
               </Button>
             </form>
+            {error && <Box sx={{
+              color:"red",
+              fontSize:"20px"
+            }}>{error.message}</Box>}
+            {/* {error && <Box>{error}</Box>} */}
             <Box
               sx={{
                 display: "flex",

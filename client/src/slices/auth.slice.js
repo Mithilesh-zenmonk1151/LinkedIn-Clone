@@ -38,15 +38,21 @@ export const loginUser = createAsyncThunk(
           password,
         }
       );
+      const data=response.data;
       console.log("response redux", response.data);
+      console.log("error wala response",data.error)
       localStorage.setItem("logged", "true");
       localStorage.setItem("token", response.data.token);
-      return response.data;
+      return data;
     } catch (error) {
-      console.log("error", error.response.data);
-      return rejectWithValue(error.message);
+      // console.log("error", error.response.data);
+      // return rejectWithValue(error.message);
+      if (error.response && error.response.status === 401) {
+        return rejectWithValue({ success: false, message: "Invalid User or Password!" });
+      } else {
+        return rejectWithValue(error.message);
     }
-  }
+    }}
 );
 
 export const logoutUser = createAsyncThunk(

@@ -1,7 +1,7 @@
 import { Avatar, Box, Button, Divider, Stack, Input, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { commentUser } from "../../../slices/comment.slice";
+import { commentUser, getCommentUser } from "../../../slices/comment.slice";
 // import Posts from "../../postCard/PostCard";
 const GetComment = () => {
   const [comment, setComment] = useState("");
@@ -9,6 +9,10 @@ const GetComment = () => {
   useEffect(() => {
     dispatch(commentUser());
   }, [dispatch]);
+  useEffect(()=>{
+    dispatch(getCommentUser());
+
+  },[dispatch])
   const comments = useSelector((state) => state.comments.content.comments) || [];
   console.log(comments)
   // const response= comments.comments;
@@ -90,7 +94,7 @@ const GetComment = () => {
               console.log("comment",comment);
               return (
                 <Stack className="display-posts">
-                yo
+                
                   {/* <Typography>{comment} </Typography> */}
                   {/* <Posts title={comment.comments} body="" commentId={comment._id} postId={comment.postId}/> */}
                 </Stack>

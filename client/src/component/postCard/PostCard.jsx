@@ -1,4 +1,6 @@
 import * as React from "react";
+import GetComment from "../comment/getComment/GetComment";
+
 
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -41,6 +43,10 @@ export default function PostCard({ body, title, images, user, postId }) {
   const [seecomment, setSeecomment] = React.useState(false);
   const [Reactiondiv, SetReactiondiv] = React.useState(false);
   const [reaction, setReaction] = React.useState("");
+  const [isOpen, setIsOpen] = React.useState(false);
+  function toggle() {
+    setIsOpen((isOpen) => !isOpen);
+  }   
   const handleCommentClick = () => {
     setSeecomment(!seecomment);
     dispatch(getCommentUser(postId));
@@ -190,7 +196,8 @@ export default function PostCard({ body, title, images, user, postId }) {
             onMouseLeave={() => SetReactiondiv(false)}
           >
             <ThumbUpOffAltRoundedIcon fontSize="20px" />
-            <Typography fontSize={"14px"}>
+            <Typography fontSize={"14px"} sx={{
+            }}>
               {reaction ? reaction : "Like"}
             </Typography>
             {Reactiondiv && (
@@ -201,6 +208,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                     if (label === "satisfaction") {
                       label = "Like";
                     }
+                    
                     console.log("laber", label);
                     setReaction(label);
                     if (label) {
@@ -216,7 +224,15 @@ export default function PostCard({ body, title, images, user, postId }) {
               class="fa-regular fa-comment"
               style={{ height: "20px", width: "20px" }}
             ></i>
-            <Typography fontSize={"14px"}>Comment</Typography>
+           
+
+
+
+
+           {isOpen && <GetComment />}
+                  <Button onClick={toggle} fontSize={"14px"}>comments</Button> 
+
+            {/* <Typography >Comment</Typography> */}
           </IconButton>
 
           <IconButton sx={{ gap: "10px" }}>
