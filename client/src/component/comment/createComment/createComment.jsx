@@ -7,12 +7,13 @@ import { commentUser } from "../../../slices/comment.slice";
 import { useDispatch } from "react-redux";
 function CreateComment({ postId }) {
   const [showemoji, setShowemoji] = useState(false);
-  const [commentbody, setCommentbody] = useState("");
+  const [comment, setCommentbody] = useState("");
   const dispatch = useDispatch();
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     try {
-      dispatch(commentUser(postId, commentbody));
+      dispatch(commentUser({comment,postId}));
+
     } catch (error) {
       alert(error);
     }
@@ -43,8 +44,8 @@ function CreateComment({ postId }) {
           sx={{ width: "100%" }}
           type="text"
           required
-          name="commentbody"
-          value={commentbody}
+          name="comment"
+          value={comment}
           onChange={(e) => setCommentbody(e.target.value)}
           InputProps={{
             sx: { borderRadius: "30px", fontSize: "14px", height: "40px" },
@@ -74,7 +75,7 @@ function CreateComment({ postId }) {
         ></TextField>
         {showemoji && <EmojiPicker pickerStyle={{ width: "100%" }} />}
       </Stack>
-      {commentbody.length !== 0 && (
+      {comment.length !== 0 && (
         <Button
           type="submit"
           color="primary"

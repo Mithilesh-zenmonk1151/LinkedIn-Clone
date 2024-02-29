@@ -122,7 +122,12 @@ const ShowPosts = () => {
             {posts.posts?.map((post) => {
               return (
                 <Stack className="display-posts">
-                  <Posts title={post.title} body={post.body} />
+                  <Posts
+                    title={post.title}
+                    body={post.body}
+                    postId={post._id}
+                  />
+
                   {isOpen && <GetComment />}
                   <Button onClick={toggle}>comments</Button>
                 </Stack>

@@ -2,17 +2,17 @@ import { Avatar, Box, Button, Divider, Stack, Input, Typography } from "@mui/mat
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { commentUser } from "../../../slices/comment.slice";
-// import Posts from "../../postCard/PostCard";
+import Posts from "../../postCard/PostCard";
+import CommentCard from "../../commentCard/CommentCard";
 const GetComment = () => {
   const [comment, setComment] = useState("");
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(commentUser());
   }, [dispatch]);
-  const comments = useSelector((state) => state.comments.content.comments) || [];
-  console.log(comments)
-  // const response= comments.comments;
-  // console.log("respgrtutut",response);
+  const comments = useSelector((state) => state.comments.content);
+  const response= comments.comments;
+  console.log("response",response);
 
   
   const loading = useSelector((state) => state.comments.isLoading);
@@ -86,14 +86,13 @@ const GetComment = () => {
               </Stack>
             </Stack>
             <Divider />
-            {comments.map((comment) => {
-              console.log("comment",comment);
+            {response?.map((comment) => {
               return (
-                <Stack className="display-posts">
-                yo
-                  {/* <Typography>{comment} </Typography> */}
-                  {/* <Posts title={comment.comments} body="" commentId={comment._id} postId={comment.postId}/> */}
-                </Stack>
+                <CommentCard commentData={comment} />
+                // <Stack className="display-posts">
+                //   <Typography>{comment} </Typography>
+                //    <Posts title={comment.comments} body="" commentId={comment._id} postId={comment.postId}/> 
+                // </Stack>
               );
             })}
           </Stack>
