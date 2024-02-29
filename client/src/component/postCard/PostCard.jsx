@@ -251,8 +251,8 @@ export default function PostCard({ body, title, images, user, postId }) {
             <Comment postId={postId} />
             {commentArray?.length > 0 &&
               commentArray?.map((comment) => {
-                console.log(comment,"bcejkcekjbhv")
-                 return <CommentCard   commentBody={comment} />;
+                console.log(comment, "bcejkcekjbhv");
+                return <CommentCard commentBody={comment} />;
               })}
           </>
         )}
