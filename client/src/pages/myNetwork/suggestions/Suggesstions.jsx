@@ -11,7 +11,28 @@ const Suggesstions = () => {
     },[dispatch]);
     
   return (<Box>
-    <Stack>
+    <Stack sx={{
+      display:"grid",
+      
+      // justifyContent:"space-evenly",
+      // alignItems:"center",
+       textAlign:"center",
+       alignItems:"center",
+
+      
+      
+      gridTemplateColumns:" auto auto auto auto auto auto",
+      gridGap: "30px"
+    }}>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
+    <SuggestionCard/>
     <SuggestionCard/>
     </Stack>
  

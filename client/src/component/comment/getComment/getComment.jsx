@@ -10,9 +10,17 @@ const GetComment = () => {
   useEffect(() => {
     dispatch(commentUser());
   }, [dispatch]);
-  const comments = useSelector((state) => state.comments.content);
+  
   const response= comments.comments;
   console.log("response",response);
+  useEffect(()=>{
+    dispatch(getCommentUser());
+
+  },[dispatch])
+  const comments = useSelector((state) => state.comments.content.comments) || [];
+  console.log(comments)
+  // const response= comments.comments;
+  // console.log("respgrtutut",response);
 
   
   const loading = useSelector((state) => state.comments.isLoading);
@@ -88,11 +96,11 @@ const GetComment = () => {
             <Divider />
             {response?.map((comment) => {
               return (
-                <CommentCard commentData={comment} />
-                // <Stack className="display-posts">
-                //   <Typography>{comment} </Typography>
-                //    <Posts title={comment.comments} body="" commentId={comment._id} postId={comment.postId}/> 
-                // </Stack>
+                <Stack className="display-posts">
+                
+                  {/* <Typography>{comment} </Typography> */}
+                  {/* <Posts title={comment.comments} body="" commentId={comment._id} postId={comment.postId}/> */}
+                </Stack>
               );
             })}
           </Stack>

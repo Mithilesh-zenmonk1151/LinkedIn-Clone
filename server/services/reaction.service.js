@@ -22,11 +22,12 @@ exports.uploadReaction = async (payload) => {
   }
 };
 exports.getReaction = async (payload) => {
-  const { postId } = payload.params;
+  
   try {
-    const reactionData = await reactionModel.reactionModel.find({
-      postId: postId,
-    });
+    const postId = payload.query.postId;
+    const reactionData = await reactionModel.reactionModel.find(
+      {postId}
+    );
     console.log("first", reactionData);
     return reactionData;
   } catch (error) {
@@ -53,17 +54,38 @@ exports.updateReaction = async (payload) => {
     throw error;
   }
 };
-exports.deleteReaction = async (payload) => {
-  const { reactionId } = payload.params;
-  const userId = payload.query.userId;
-  try {
-    if (userId == (await reactionModel.reactionModel.findById(reactionId).userId)) {
-      const deleteReaction = await reactionModel.reactionModel.findByIdAndDelete(
-        reactionId
-      );
-      return deleteReaction;
-    }
-  } catch (error) {
-    throw error;
+// exports.deleteReaction = async (payload) => {
+//   const { reactionId } = payload.params;
+//   const userId = payload.query.userId;
+//   try {
+//     if (userId == (await reactionModel.reactionModel.findById(reactionId).userId)) {
+//       const deleteReaction = await reactionModel.reactionModel.findByIdAndDelete(
+//         reactionId
+//       );
+//       return deleteReaction;
+//     }
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+exports.deleteReaction=async(payload )=>{
+   
+  
+  try{
+  
+      const {reactionId} = params; 
+      const userId=payload.query.userId;
+      const userReaction = await reactionModel.findById(reactionId);
+
+      if(userReaction.userId === userId){
+          
+          const deleteReaction = await reactionModel.findByIdAndDelete(reactionId);
+          
+          return deleteReaction;
+      }
+     
+  }
+  catch(error){
+      throw error;
   }
 };

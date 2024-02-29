@@ -19,8 +19,8 @@ export const postReactionUser = createAsyncThunk(
       );
       console.log("response: ", response);
       return response;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+    } catch (error) {
+      return rejectWithValue(error.response.data);
     }
   }
 );
@@ -28,15 +28,36 @@ export const getReactionUser = createAsyncThunk(
   "getReactionAction",
   async (postId) => {
     const res = await axios.get(
-      `http://localhost:4000/api/reactions/${postId}`
+      `http://localhost:4000/api/reactions?postId=${postId}`
     );
     const data = res.data;
     return data;
   }
 );
+export const deleteReactionUser = createAsyncThunk("ReactionDeleteAction", async (reactionId, { rejectWithValue, getState }) => {
+  try {
+      
+      const token = getState().auth.token;
+      
+      const config = {
+          headers: {
+              'Authorization': `Bearer ${token}`
+          }
+      }
+    
+      const res = await axios.delete(`http://localhost:4000/post/reaction/${reactionId}`, config)
+    
+      return res.data
+  }
+  catch (error) {
+     
+      return rejectWithValue(error.response.data)
+  }
+})
 export const reactionSlice = createSlice({
   name: "reaction",
   initialState: {
+    data:[],
     loading: false,
     error: null,
     success: false,
@@ -70,7 +91,21 @@ export const reactionSlice = createSlice({
       .addCase(getReactionUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(deleteReactionUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(deleteReactionUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
+        console.log("action", state.data);
+      })
+      .addCase(deleteReactionUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
+
   },
 });
 export default reactionSlice.reducer;

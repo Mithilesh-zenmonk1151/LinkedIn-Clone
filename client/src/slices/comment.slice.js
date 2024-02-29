@@ -71,7 +71,7 @@ catch (error) {
 export const commentSlice = createSlice({
     name: 'comments',
     initialState: {
-      content:[],
+      content:{},
       loading: false,
       error: null,
       success:false,
