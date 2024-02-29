@@ -11,8 +11,7 @@ import {
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
-function CommentCard({ commentData }) {
-  console.log("commentData: ", commentData.userId.name);
+function CommentCard({ commentBody}) {
   return (
     <Stack flexDirection={"row"} sx={{ mb: "12px", ml: "16px", mr: "16px" }}>
       <Avatar
@@ -53,9 +52,13 @@ function CommentCard({ commentData }) {
                 alignItems={"center"}
                 gap={"5px"}
               >
+                {/* <Typography fontSize={"14px"} color={"Black"}>
+                  {" "}
+                  {commentData.postId}
+                </Typography> */}
                 <Typography fontSize={"14px"} color={"Black"}>
                   {" "}
-                  {commentData.userId.name}
+                  {commentBody.comment}
                 </Typography>
                 <Typography fontSize={"14px"} color={"grey"}>
                   {" "}
@@ -79,9 +82,9 @@ function CommentCard({ commentData }) {
           <CardContent
             sx={{ paddingTop: "0", paddingRight: "16px", paddingLeft: "12px" }}
           >
-            <Typography variant="body2" color="text.secondary">
+            {/* <Typography variant="body2" color="text.secondary">
               {commentData.body}
-            </Typography>
+            </Typography> */}
             <Stack backgroundColor={"red"}></Stack>
           </CardContent>
         </Card>

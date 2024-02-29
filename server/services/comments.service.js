@@ -28,7 +28,7 @@ exports.addComment = async (payload) => {
 exports.getComment = async (payload) => {
   try {
      const { postId } = payload.params;
-    const{userId}= payload.body
+    // const{userId}= payload.body
     //  const query = { postId: postId };
     // const createdAt = payload.query.createdAt;
     
@@ -38,7 +38,7 @@ exports.getComment = async (payload) => {
     console.log("postId",postId);
    
     // console.log("first", createdAt);
-     const commentData = await commentModel.find( { postId}).sort()
+     const commentData = await commentModel.find({ postId}).sort()
     //  .populate({
     //     path: "user",
     //     select: "email name",

@@ -1,6 +1,5 @@
 import * as React from "react";
-import GetComment from "../comment/getComment/GetComment";
-
+import GetComment from "../comment/getComment/GetComment.jsx";
 
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
@@ -31,12 +30,14 @@ import {
   postReactionUser,
 } from "../../slices/reaction.slice.js";
 export default function PostCard({ body, title, images, user, postId }) {
-  console.log('postId: ', postId);
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     dispatch(getReactionUser(postId));
   }, []);
-  const commentArray = useSelector((state) => state.comments.content);
+  const commentArray = useSelector(
+    (state) => state.comments.content.commentData
+  );
   const isLoading = useSelector((state) => state.comments.loading);
   const error = useSelector((state) => state.comments.error);
   const [seeMore, setSeeMore] = React.useState(true);
@@ -44,28 +45,26 @@ export default function PostCard({ body, title, images, user, postId }) {
   const [Reactiondiv, SetReactiondiv] = React.useState(false);
   const [reaction, setReaction] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
-  function toggle() {
-    setIsOpen((isOpen) => !isOpen);
-  }   
   const handleCommentClick = () => {
     setSeecomment(!seecomment);
     dispatch(getCommentUser(postId));
   };
+  console.log(commentArray);
+  // const comments=useSelector((state)=>state.comments.content)
   const ReactionClick = (label) => {
     const reactionData = {};
     reactionData.reaction = label;
     reactionData.postId = postId;
-    console.log('reactionData: ', reactionData);
-    dispatch(postReactionUser({label,postId}));
+    dispatch(postReactionUser({ label, postId }));
   };
   const ReactionsData = useSelector((state) => state.reaction.data);
-  console.log("ReactionsData: ", ReactionsData);
   if (isLoading) {
     return "Loading...";
   }
   if (error) {
     return error;
   }
+
   return (
     <Stack margin={"auto"}>
       <Card sx={{ width: 555, boxShadow: "none", borderRadius: "10px" }}>
@@ -196,8 +195,7 @@ export default function PostCard({ body, title, images, user, postId }) {
             onMouseLeave={() => SetReactiondiv(false)}
           >
             <ThumbUpOffAltRoundedIcon fontSize="20px" />
-            <Typography fontSize={"14px"} sx={{
-            }}>
+            <Typography fontSize={"14px"} sx={{}}>
               {reaction ? reaction : "Like"}
             </Typography>
             {Reactiondiv && (
@@ -208,8 +206,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                     if (label === "satisfaction") {
                       label = "Like";
                     }
-                    
-                    console.log("laber", label);
+
                     setReaction(label);
                     if (label) {
                       ReactionClick(label);
@@ -219,18 +216,19 @@ export default function PostCard({ body, title, images, user, postId }) {
               </Box>
             )}
           </IconButton>
-          <IconButton sx={{ gap: "10px" }} onClick={handleCommentClick}>
+
+          <IconButton sx={{ gap: "10px" }}>
             <i
               class="fa-regular fa-comment"
-              style={{ height: "20px", width: "20px" }}
+              style={{ height: "20px", width: "20px", fontSize: "14px" }}
             ></i>
-           
-
-
-
-
-           {isOpen && <GetComment />}
-                  <Button onClick={toggle} fontSize={"14px"}>comments</Button> 
+            <Typography
+              component="span"
+              onClick={handleCommentClick}
+              fontSize={"14px"}
+            >
+              comments
+            </Typography>
 
             {/* <Typography >Comment</Typography> */}
           </IconButton>
@@ -251,12 +249,15 @@ export default function PostCard({ body, title, images, user, postId }) {
         {seecomment && (
           <>
             <Comment postId={postId} />
-            {commentArray[postId]?.map((comment) => (
-              <CommentCard commentData={comment} />
-            ))}
+            {commentArray?.length > 0 &&
+              commentArray?.map((comment) => {
+                console.log(comment,"bcejkcekjbhv")
+                 return <CommentCard   commentBody={comment} />;
+              })}
           </>
         )}
       </Card>
     </Stack>
   );
 }
+// commentData={comment}
