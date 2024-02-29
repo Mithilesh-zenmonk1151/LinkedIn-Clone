@@ -118,7 +118,6 @@ const ShowPosts = () => {
             {posts.posts?.map((post) => {
               return (
                 <Stack className="display-posts">
-<<<<<<< HEAD
                   <Posts
                     title={post.title}
                     body={post.body}
@@ -127,10 +126,6 @@ const ShowPosts = () => {
 
                   {isOpen && <GetComment />}
                   <Button onClick={toggle}>comments</Button>
-=======
-                  <Posts title={post.title} body={post.body} />
-                  
->>>>>>> 76d03347c6febccf4db835a3362377f2dcfb7053
                 </Stack>
               );
             })}
