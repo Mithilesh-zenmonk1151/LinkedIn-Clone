@@ -1,12 +1,10 @@
 import * as React from "react";
-import GetComment from "../comment/getComment/GetComment.jsx";
-
+// import GetComment from "../comment/getComment/GetComment.jsx";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -58,6 +56,7 @@ export default function PostCard({ body, title, images, user, postId }) {
     dispatch(postReactionUser({ label, postId }));
   };
   const ReactionsData = useSelector((state) => state.reaction.data);
+  console.log("reaction", ReactionsData)
   if (isLoading) {
     return "Loading...";
   }
@@ -199,7 +198,9 @@ export default function PostCard({ body, title, images, user, postId }) {
               {reaction ? reaction : "Like"}
             </Typography>
             {Reactiondiv && (
-              <Box className="reactionsdiv">
+              <Box className="reactionsdiv" sx={{
+                
+              }}>
                 {" "}
                 <ReactionBarSelector
                   onSelect={(label) => {
