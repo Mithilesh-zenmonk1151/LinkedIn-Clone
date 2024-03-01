@@ -13,7 +13,7 @@ import RepeatOutlinedIcon from "@mui/icons-material/RepeatOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbUpOffAltRoundedIcon from "@mui/icons-material/ThumbUpOffAltRounded";
 import AddIcon from "@mui/icons-material/Add";
-import { Box, Button, Divider, Stack } from "@mui/material";
+import { Box, Button, Divider, Stack, TextField } from "@mui/material";
 import { Carousel } from "react-responsive-carousel";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -246,7 +246,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                     },
                   }}
                 >
-                  {["Like", "Love", "funny", "Insight"].map((value) => (
+                  {["Like", "Love", "funny", "Insight","Support","Insightful"].map((value) => (
                     <Sheet
                       key={value}
                       variant="outlined"
@@ -260,7 +260,7 @@ export default function PostCard({ body, title, images, user, postId }) {
                     >
                       <FormLabel htmlFor={value}>
                         {" "}
-                        <img src={value} />{" "}
+                       
                       </FormLabel>
                     </Sheet>
                   ))}

@@ -1,6 +1,5 @@
 import { Box } from "@mui/material";
 import React from "react";
-// import Navbar from "../component/common/navbar/navbar";
 import ShowPosts from "../component/posts/ShowPosts";
 import Profile from "../component/profile/Profile";
 const Home = () => {
