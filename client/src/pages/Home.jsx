@@ -11,6 +11,7 @@ const Home = () => {
       paddingLeft:"30px"
 
     }}>
+     
       <Profile/>
       <ShowPosts />
     </Box>

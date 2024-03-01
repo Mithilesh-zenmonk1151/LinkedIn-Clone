@@ -22,12 +22,17 @@ import PublicIcon from "@mui/icons-material/Public";
 import CommentCard from "../commentCard/CommentCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommentUser } from "../../slices/comment.slice.js";
-import { ReactionBarSelector } from "@charkour/react-reactions";
+import FormLabel from "@mui/joy/FormLabel";
+import { radioClasses } from "@mui/joy/Radio";
+import RadioGroup from "@mui/joy/RadioGroup";
+import Sheet from "@mui/joy/Sheet";
+// import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import {
   getReactionUser,
   postReactionUser,
 } from "../../slices/reaction.slice.js";
 export default function PostCard({ body, title, images, user, postId }) {
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -63,18 +68,18 @@ export default function PostCard({ body, title, images, user, postId }) {
   if (error) {
     return error;
   }
-
   return (
-    <Stack
-      margin={"auto"}
-      sx={{
-        bgcolor: "red",
-      }}
-    >
-      <Card sx={{ width: 555, boxShadow: "none", borderRadius: "10px",
-       display:"flex",
-       flexDirection:"column",
-       gap:"20px" }}>
+    <Stack margin={"auto"} sx={{}}>
+      <Card
+        sx={{
+          width: 555,
+          boxShadow: "none",
+          borderRadius: "10px",
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+        }}
+      >
         <CardHeader
           sx={{ pl: "16px", pt: "12px", pb: "8px", pr: "16px" }}
           avatar={
@@ -120,7 +125,6 @@ export default function PostCard({ body, title, images, user, postId }) {
           <Typography fontSize={"15px"} color="text.secondary">
             {title}
           </Typography>
-
           <Typography
             fontSize={"15px"}
             color="text.secondary"
@@ -132,7 +136,6 @@ export default function PostCard({ body, title, images, user, postId }) {
           >
             {body}
           </Typography>
-
           <Button
             className="seemore"
             onClick={() => {
@@ -197,29 +200,71 @@ export default function PostCard({ body, title, images, user, postId }) {
           }}
         >
           <IconButton
-            sx={{ gap: "10px" }}
+            sx={{ gap: "10px", position: "relative" }}
             onMouseEnter={() => SetReactiondiv(true)}
             onMouseLeave={() => SetReactiondiv(false)}
           >
-            <ThumbUpOffAltRoundedIcon fontSize="20px" />
-            <Typography fontSize={"14px"} sx={{}}>
+            <ThumbUpOffAltRoundedIcon fontSize="20px" sx={{}} />
+            <Typography fontSize={"14px"}>
               {reaction ? reaction : "Like"}
             </Typography>
             {Reactiondiv && (
-              <Box className="reactionsdiv" sx={{}}>
-                {" "}
-                <ReactionBarSelector
-                  onSelect={(label) => {
-                    if (label === "satisfaction") {
-                      label = "Like";
-                    }
-
-                    setReaction(label);
-                    if (label) {
-                      ReactionClick(label);
-                    }
+              <Box
+                className="reactionsdiv"
+                sx={{
+                  position: "absolute",
+                  bottom: "30px",
+                  left: "1px",
+                  width: "",
+                }}
+              >
+                <RadioGroup
+                  aria-label="platform"
+                  defaultValue="Website"
+                  overlay
+                  name="platform"
+                  sx={{
+                    flexDirection: "row",
+                    gap: 2,
+                    [`& .${radioClasses.checked}`]: {
+                      [`& .${radioClasses.action}`]: {
+                        inset: -1,
+                        border: "3px solid",
+                        borderColor: "primary.500",
+                      },
+                    },
+                    [`& .${radioClasses.radio}`]: {
+                      display: "contents",
+                      "& > svg": {
+                        zIndex: 2,
+                        position: "absolute",
+                        top: "-8px",
+                        right: "-8px",
+                        bgcolor: "background.surface",
+                        borderRadius: "50%",
+                      },
+                    },
                   }}
-                />
+                >
+                  {["Like", "Love", "funny", "Insight"].map((value) => (
+                    <Sheet
+                      key={value}
+                      variant="outlined"
+                      sx={{
+                        borderRadius: "md",
+                        boxShadow: "sm",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      <FormLabel htmlFor={value}>
+                        {" "}
+                        <img src={value} />{" "}
+                      </FormLabel>
+                    </Sheet>
+                  ))}
+                </RadioGroup>{" "}
               </Box>
             )}
           </IconButton>

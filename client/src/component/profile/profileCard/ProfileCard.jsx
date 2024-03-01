@@ -1,15 +1,15 @@
 import React from "react";
 import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-const ProfileCard = ({ nameBody, handleOnClick }) => {
+const ProfileCard = ({ nameBody,connection}) => {
   return (
-    <Paper
+    <Box
       sx={{
         width: "300px",
         height: "400px",
         backgroundColor: "#FFFFFF",
         borderRadius: "10px",
-        "&:hover": { boxShadow: 6 },
+       
       }}
       className="papper"
       elevation={"1"}
@@ -68,7 +68,7 @@ const ProfileCard = ({ nameBody, handleOnClick }) => {
             }}>
           <Typography fontSize={"16px"} sx={{
             fontWeight:800,
-          }}>John Doe {nameBody} </Typography>
+          }}> {nameBody} </Typography>
           <Typography fontSize={"13px"}> Front-end Developer </Typography>
           </Box>
           
@@ -107,7 +107,7 @@ const ProfileCard = ({ nameBody, handleOnClick }) => {
             color={"#999999"}
             textAlign={"center"}
           >
-            50
+            {connection}
             
           </Typography>
           </Box>
@@ -173,7 +173,7 @@ const ProfileCard = ({ nameBody, handleOnClick }) => {
         
         </Stack>
       </Stack>
-    </Paper>
+    </Box>
   );
 };
 

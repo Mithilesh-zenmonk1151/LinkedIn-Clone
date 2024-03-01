@@ -29,20 +29,23 @@ exports.updateUserProfile = async (payload) => {
     throw error;
   }
 };
-
 exports.getUser = async (payload) => {
-  console.log("get user service")
+  console.log("get user service");
   const userId = payload.params.id;
-  console.log("userId",userId)
+  console.log("userId", userId);
   let user;
   try {
-   
+    const connectionCount = userModel.userModel.connections
+      ? userModel.userModel.connections.length
+      : 0;
 
     user = await userModel.userModel.findById(userId, "-password");
+    const count = user.connections ? user.connections.length : 0;
+    console.log(count, "ÿahi cpounfgdfbhcgbfghfghfghhf");
     if (!user) {
       return "User Not Found";
     } else {
-      return user;
+      return {user,count};
     }
   } catch (error) {
     throw error;
