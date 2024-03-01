@@ -1,16 +1,18 @@
-const { userServices } = require("../services");
-exports.updateProfile = async (req, res) => {
+const { updateUserProfileService } = require("../services");
+exports.updateUserProfile = async (req, res) => {
   try {
-    const response = await userServices.updateUserProfile(req);
+    console.log("user update")
+    const response = await updateUserProfileService.updateUserProfile(req);
     res.status(200).json(response);
   } catch (error) {
+    console.log("update user error")
     console.log(error);
     res.status(500).json(error);
   }
 };
 exports.getUser = async (req, res) => {
   try {
-    const response = await userService.getUser(req);
+    const response = await updateUserProfileService.getUser(req);
     if (response == "User Not Found") {
       return res.status(400).json({ response });
     } else {

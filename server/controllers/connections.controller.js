@@ -36,7 +36,7 @@ exports.setConnectionFlag = async (req, res) => {
 };
 exports.getConnection = async(req,res)=>{
   try{
-      const userId = req.user._id;
+      const userId = req._id;
       const response = await connectionService.getConnection(userId);
       return res.status(200).json(response)
   }
@@ -50,8 +50,9 @@ exports.getConnection = async(req,res)=>{
 exports.getSuggestion = async(req,res)=>{
   try{
       
-          const userId = req.user._id;
+      const userId = req._id;
       const response = await connectionService.getSuggestion(userId);
+      console.log("userId for suggestions",userId)
       return res.status(200).json(response)
   }
   catch(error){

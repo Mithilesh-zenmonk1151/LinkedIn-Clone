@@ -9,11 +9,10 @@ function CreateComment({ postId }) {
   const [showemoji, setShowemoji] = useState(false);
   const [comment, setCommentbody] = useState("");
   const dispatch = useDispatch();
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(commentUser({comment,postId}));
-
+      dispatch(commentUser({ comment, postId }));
     } catch (error) {
       alert(error);
     }

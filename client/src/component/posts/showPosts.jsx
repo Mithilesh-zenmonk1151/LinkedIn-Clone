@@ -6,6 +6,7 @@ import Posts from "../postCard/PostCard";
 import DialogBox from "../dialogBox/DialogBox";
 import { useNavigate } from "react-router";
 import GetComment from "../comment/getComment/GetComment";
+import "./post.css"
 
 const ShowPosts = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -121,7 +122,12 @@ const ShowPosts = () => {
             <Divider />
             {posts.posts?.map((post) => {console.log(post,"posts")
               return (
-                <Stack className="display-posts">
+                <Stack className="display-posts" sx={{
+                  display:"flex",
+                  flexDirection:"column",
+                  gap:"20px",
+                  bgcolor:"red"
+                }}>
                   <Posts
                     title={post.title}
                     body={post.body}

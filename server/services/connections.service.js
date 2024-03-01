@@ -48,7 +48,7 @@ exports.setConnectionFlag = async (payload) => {
       });
     }
 
-    if (status === "withdraw" && response.Status === "pending") {
+    if (status === "withdraw" && response.status === "pending") {
       const res = await connectionModel.findOneAndUpdate(
         { senderId: senderId, _id: connectionId },
         { Status: status },
@@ -64,17 +64,17 @@ exports.setConnectionFlag = async (payload) => {
       );
       console.log("res: ", res);
       return res;
-    } else if (status === "deleted" && response.Status === "accepted") {
-      const res = await connectionModel.findOneAndUpdate(
-        {
-          $or: [
-            { _id: connectionId, receiverId: recieverId },
-            { senderId: senderId, _id: connectionId },
-          ],
-        },
-        { Status: status },
-        { new: true, upsert: true }
-      );
+    // } else if (status === "deleted" && response.Status === "accepted") {
+    //   const res = await userModel.userModel.findOneAndUpdate(
+    //     {
+    //       $or: [
+    //         { _id: connectionId, receiverId: recieverId },
+    //         { senderId: senderId, _id: connectionId },
+    //       ],
+    //     },
+    //     { Status: status },
+    //     { new: true, upsert: true }
+    //   );
       console.log("res: ", res);
       return res;
     }
@@ -152,7 +152,8 @@ exports.getSuggestion = async (payload) => {
 
   try {
     const userId = payload;
-    const result = await connectionModel.find({
+    console.log("payload",payload)
+    const result = await connectionModel.connectionModel.find({
       $and: [
         { $or: [{ senderId: userId }, { receiverId: userId }] },
         { $or: [{ Status: "rejected" }, { Status: "deleted" }] },
@@ -162,7 +163,9 @@ exports.getSuggestion = async (payload) => {
     result?.map((connection) => {
       if (connection.senderId.toString() === userId)
         _id.push(connection.receiverId);
-      else ids.push(connection.senderId);
+      else {
+        _id.push(connection.senderId);
+      }
     });
     _id.push(userId);
     const response = await userModel.userModel.find({ _id: { $nin: _id } });

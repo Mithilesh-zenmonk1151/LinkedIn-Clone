@@ -1,25 +1,21 @@
 const userModel = require("../models");
-exports.updateProfile = async (req) => {
+exports.updateUserProfile = async (payload) => {
   try {
-    console.log( req.params);
-    const { id } = req.params;
-    const { username, phone, website, title, industry, summary } = req.body;
-    const address = JSON.parse(req.body.address);
-    const image = req.file.path;
+    console.log(payload.params);
+    const { id } = payload.params;
+    const { username, phone, website, title, industry, summary } = payload.body;
+    if (req.body.address) {
+      var { street, state, city, pincode, country } = req.body.address;
+    }
+    // const image = req.file.path;
     const user = await userModel.userModel.findByIdAndUpdate(
       id,
       {
         username: username,
-        address: {
-          street: address.street,
-          state: address.state,
-          city: address.city,
-          pincode: address.pincode,
-          country: address.country,
-        },
+        address: { street, state, city, pincode, country },
         phone: phone,
         website: website,
-        image: image,
+        // image: image,
         title: title,
         summary: summary,
         industry: industry,
@@ -27,7 +23,7 @@ exports.updateProfile = async (req) => {
       { new: true }
     );
     await user.save();
-    const updatedUser= await userModel.userModel.findById(id);
+    const updatedUser = await userModel.userModel.findById(id);
     return updatedUser;
   } catch (error) {
     throw error;
@@ -35,9 +31,13 @@ exports.updateProfile = async (req) => {
 };
 
 exports.getUser = async (payload) => {
-  const userId = payload.id;
+  console.log("get user service")
+  const userId = payload.params.id;
+  console.log("userId",userId)
   let user;
   try {
+   
+
     user = await userModel.userModel.findById(userId, "-password");
     if (!user) {
       return "User Not Found";
@@ -49,3 +49,26 @@ exports.getUser = async (payload) => {
   }
 };
 
+// onsole.log("hjdfv" ,req.params)
+//         console.log("file" ,req.file)
+//         const { id } = req.params;
+//     const { username, phone, website, title, industry, summary } = req.body;
+//     if (req.body.address) {
+//         var { street, state, city, pincode, country } = req.body.address;
+//     }
+//     const image = req.file.path;
+//         const user = await UsersModel.findByIdAndUpdate(id, {
+//             username: username,
+//             address: { street, state, city, pincode, country },
+//             phone: phone,
+//             website: website,
+//             image: image,
+//             title: title,
+//             summary: summary,
+//             industry: industry
+//         },{new:true});
+//         if (!user) {
+//             throw new CustomError('User not updated' , 404)
+//         } else {
+//             return user
+//         }

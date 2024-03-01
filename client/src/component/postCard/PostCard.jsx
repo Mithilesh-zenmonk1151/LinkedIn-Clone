@@ -56,7 +56,7 @@ export default function PostCard({ body, title, images, user, postId }) {
     dispatch(postReactionUser({ label, postId }));
   };
   const ReactionsData = useSelector((state) => state.reaction.data);
-  console.log("reaction", ReactionsData)
+  console.log("reaction", ReactionsData);
   if (isLoading) {
     return "Loading...";
   }
@@ -65,8 +65,16 @@ export default function PostCard({ body, title, images, user, postId }) {
   }
 
   return (
-    <Stack margin={"auto"}>
-      <Card sx={{ width: 555, boxShadow: "none", borderRadius: "10px" }}>
+    <Stack
+      margin={"auto"}
+      sx={{
+        bgcolor: "red",
+      }}
+    >
+      <Card sx={{ width: 555, boxShadow: "none", borderRadius: "10px",
+       display:"flex",
+       flexDirection:"column",
+       gap:"20px" }}>
         <CardHeader
           sx={{ pl: "16px", pt: "12px", pb: "8px", pr: "16px" }}
           avatar={
@@ -198,9 +206,7 @@ export default function PostCard({ body, title, images, user, postId }) {
               {reaction ? reaction : "Like"}
             </Typography>
             {Reactiondiv && (
-              <Box className="reactionsdiv" sx={{
-                
-              }}>
+              <Box className="reactionsdiv" sx={{}}>
                 {" "}
                 <ReactionBarSelector
                   onSelect={(label) => {

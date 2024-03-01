@@ -40,24 +40,9 @@ export const getCommentUser = createAsyncThunk(
       const res = await axios.get(
         `http://localhost:4000/api/comments/${postId}`
       );
-      // let comment={};
-      // for(let i=0; i<response.length; i++){
-      //   comment=comment.push(response[i].comment)
-
-      // }
-
-      //   let comments = [];
-      // response.forEach((comment) => {
-      //   comments.push(comment?.comment);
-      // })
-
-      // console.log("this is response of only get comment data",response);
-      // console.log("comment duwedqwed er3weq get daata",comments);
-
       return { postId, res };
     } catch (error) {
       console.log("errorrmgvdsfhdryjjkyuljk", error);
-
       return rejectWithValue(error.response.data);
     }
   }
