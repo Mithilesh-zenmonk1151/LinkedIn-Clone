@@ -126,7 +126,7 @@ const ShowPosts = () => {
                   display:"flex",
                   flexDirection:"column",
                   gap:"20px",
-                  bgcolor:"red"
+                  
                 }}>
                   <Posts
                     title={post.title}

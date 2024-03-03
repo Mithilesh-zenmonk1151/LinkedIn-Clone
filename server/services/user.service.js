@@ -3,15 +3,16 @@ exports.updateUserProfile = async (payload) => {
   try {
     console.log(payload.params);
     const { id } = payload.params;
-    const { username, phone, website, title, industry, summary } = payload.body;
-    if (req.body.address) {
-      var { street, state, city, pincode, country } = req.body.address;
+    const { firstName,lastName, phone, website, title, industry, summary } = payload.body;
+    if (payload.body.address) {
+      var { street, state, city, pincode, country } = payload.body.address;
     }
     // const image = req.file.path;
     const user = await userModel.userModel.findByIdAndUpdate(
       id,
       {
-        username: username,
+        firstName: firstName,
+        latName:lastName,
         address: { street, state, city, pincode, country },
         phone: phone,
         website: website,

@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    firstName: {
       type: String,
+    },
+    lastName:{
+    type:String
     },
     email: {
       type: String,
@@ -18,6 +21,12 @@ const userSchema = new mongoose.Schema(
     additionalDetails: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "_id",
+    },
+    position: {
+      type:String
+    },
+    additionalDetail:{
+      type:String
     },
     address: {
       type: Object,

@@ -32,7 +32,6 @@ import {
   postReactionUser,
 } from "../../slices/reaction.slice.js";
 export default function PostCard({ body, title, images, user, postId }) {
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -53,7 +52,6 @@ export default function PostCard({ body, title, images, user, postId }) {
     dispatch(getCommentUser(postId));
   };
   console.log(commentArray);
-  // const comments=useSelector((state)=>state.comments.content)
   const ReactionClick = (label) => {
     const reactionData = {};
     reactionData.reaction = label;
@@ -69,7 +67,12 @@ export default function PostCard({ body, title, images, user, postId }) {
     return error;
   }
   return (
-    <Stack margin={"auto"} sx={{}}>
+    <Stack margin={"auto"} sx={{display:"flex",
+    displayDirection:"column",
+    gap:"20px",
+    bgColor: "red"
+
+    }}>
       <Card
         sx={{
           width: 555,
@@ -77,7 +80,7 @@ export default function PostCard({ body, title, images, user, postId }) {
           borderRadius: "10px",
           display: "flex",
           flexDirection: "column",
-          gap: "20px",
+          
         }}
       >
         <CardHeader

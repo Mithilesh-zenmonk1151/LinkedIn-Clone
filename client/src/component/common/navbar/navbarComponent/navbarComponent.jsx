@@ -60,11 +60,15 @@ function NavbarComponent() {
     dispatch(logoutUser());
     navigate("/Login");
   };
+  const handleDashboard=()=>{
+    navigate("/dashboard");
+  }
   return (
     <AppBar
       position="static"
       sx={{
         bgcolor: "#ffffff",
+        height: "48px"
       }}
     >
       <Container
@@ -74,17 +78,22 @@ function NavbarComponent() {
           margin: "0",
           padding: "0",
           justifyContent: "center",
-          gap: "20px",
+            gap: "40px",
         }}
       >
         <Toolbar disableGutters>
-          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
-          <img
+          
+         <Box sx={{
+          display:"flex",
+          gap:"10px"
+         }} >
+         <img
             src={LinnkedInLogo}
             alt="inkedin Logo"
             className="linkedInLogo"
           />
           <SearchBar />
+         </Box>
           <Typography
             variant="h6"
             noWrap
@@ -163,25 +172,30 @@ function NavbarComponent() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "black", display: "block" }}
+                sx={{  color: "black", display: "block" }}
               >
                 <Box
                   sx={{
                     display: "flex",
                     flexDirection: "column",
                     color: "black",
-                    alignItems: "flx-end",
+                    alignItems:"center",
                     paddingBottom: "0px",
                     margin: 0,
                   }}
                 >
-                  <img key={page} src={page.src} alt="" />
+                  <img key={page} src={page.src} alt="" className="home-logo"
+                    />
                   <Link
                     href={page.href}
                     underline="hover"
                     className={page.current ? "active" : "inActive"}
                     sx={{
                       color: "black",
+                      fontSize: "10px",
+                      display:"flex",
+                      justifyContent:"center",
+                      
                     }}
                   >
                     {page.name}
@@ -193,11 +207,15 @@ function NavbarComponent() {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{
+                  height:"32px",
+                  width: "32px"
+                }} />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: "45px" }}
+              sx={{ position:"absolute",
+              top:"35px" }}
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
@@ -221,7 +239,7 @@ function NavbarComponent() {
                   alignItems: "flex-start",
                 }}
               >
-                <Typography textAlign="center">Profile</Typography>
+                <Typography textAlign="center">Dashboard</Typography>
               
               </MenuItem>
               <MenuItem
@@ -244,7 +262,7 @@ function NavbarComponent() {
                   alignItems: "flex-start",
                 }}
               >
-                <Typography textAlign="center">Dashboard</Typography>
+                <Typography textAlign="center" onClick={handleDashboard}>Profile</Typography>
              
                
               </MenuItem>

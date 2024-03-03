@@ -15,6 +15,7 @@ export default function SearchBar() {
         bgcolor: "#eef3f8",
         borderBottom: "white",
         boxShadow: "none",
+        marginBottom: "10px"
       }}
     >
       <InputBase

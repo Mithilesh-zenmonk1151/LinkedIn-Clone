@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-const ProfileCard = ({ firstName,lastName,connection}) => {
+const SideProfile = ({ firstName,lastName,connection}) => {
   return (
     <Box
       sx={{
@@ -180,4 +180,4 @@ const ProfileCard = ({ firstName,lastName,connection}) => {
   );
 };
 
-export default ProfileCard;
+export default SideProfile;
