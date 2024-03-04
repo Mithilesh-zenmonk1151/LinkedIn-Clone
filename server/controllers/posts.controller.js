@@ -4,6 +4,7 @@ exports.createPosts = async (req, res) => {
   try {
     const userId = req.body.user;
     const response = await postsService.createPosts({title:req.body.title , body:req.body.body , files:req.files , id:userId});
+    console.log("response post->>",response);
     console.log(response);
     return res.status(201).json({
       success: true,

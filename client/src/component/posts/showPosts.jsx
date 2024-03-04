@@ -5,7 +5,10 @@ import { getPosts } from "../../slices/post.slice";
 import Posts from "../postCard/PostCard";
 import DialogBox from "../dialogBox/DialogBox";
 import { useNavigate } from "react-router";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import PhotoCameraBackIcon from '@mui/icons-material/PhotoCameraBack';
 import GetComment from "../comment/getComment/GetComment";
+import ArticleIcon from '@mui/icons-material/Article';
 import "./post.css"
 
 const ShowPosts = () => {
@@ -48,7 +51,7 @@ const ShowPosts = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Avatar
+              {/* <Avatar
                 sx={{
                   border: "1px solid #d7d8d6",
                   borderRadius: "100%",
@@ -62,16 +65,24 @@ const ShowPosts = () => {
                 aria-label="recipe"
               >
                 MK
-              </Avatar>
-              User details
+              </Avatar> */}
+              
             </Stack>
 
-            <Box className="side-profile">News</Box>
+            {/* <Box className="side-profile">News</Box> */}
           </Stack>
 
           <Stack>
-            <Stack className="AddPost">
-              <Stack flexDirection={"row"} gap={1}>
+            <Stack className="AddPost" sx={{
+              bgcolor:"white",
+              height:"116px",
+              borderRadius:"10px",
+              border:"0.5px solid #B0B0B0"
+            }} >
+              <Stack flexDirection={"row"} gap={1} sx={{
+                mt:"10px"
+                
+              }}>
                 <Avatar
                   sx={{
                     border: "1px solid #d7d8d6",
@@ -113,19 +124,50 @@ const ShowPosts = () => {
                 height={"100%"}
                 alignItems={"flex-end"}
                 justifyContent={"center"}
-              >
-                <Button className="create-post-btns">Media</Button>
-                <Button className="create-post-btns">Event</Button>
-                <Button className="create-post-btns">Write Article</Button>
+              ><Box sx={{
+                display:"inline"
+              }}>
+                <PhotoCameraBackIcon sx={{
+                  color:"blue",
+                   position:"relative",
+                   top:"5px"
+
+                }}/>
+                <Button className="create-post-btns" sx={{
+                  color:"black",
+                }} >Media</Button>
+
+              </Box>
+              <Box>
+            <CalendarMonthIcon   sx={{
+                  position:"relative",
+                  top:"5px"
+                }}/>
+
+              <Button className="create-post-btns" sx={{
+                color:"black"
+              }}>Event</Button>
+
+              </Box>
+              <Box>
+                <ArticleIcon sx={{
+                  position:"relative",
+                  top:"5px"
+                }}/>
+                <Button className="create-post-btns"   sx={{
+                color:"black"
+              }}>Write Article</Button>
+
+              </Box>
               </Stack>
             </Stack>
             <Divider />
-            {posts.posts?.map((post) => {console.log(post,"posts")
+            {posts.posts?.map((post) => {
               return (
                 <Stack className="display-posts" sx={{
                   display:"flex",
                   flexDirection:"column",
-                  gap:"20px",
+                  mt:"6px"
                   
                 }}>
                   <Posts
@@ -137,8 +179,6 @@ const ShowPosts = () => {
               );
             })}
           </Stack>
-
-          <Box className="home-news-section">News</Box>
         </Stack>
       </Box>
     </Stack>

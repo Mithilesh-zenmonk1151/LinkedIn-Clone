@@ -45,7 +45,7 @@ export const deleteReactionUser = createAsyncThunk("ReactionDeleteAction", async
           }
       }
     
-      const res = await axios.delete(`http://localhost:4000/post/reaction/${reactionId}`, config)
+      const res = await axios.delete(`http://localhost:4000/api/reactions/${reactionId}`, config)
     
       return res.data
   }
@@ -54,6 +54,7 @@ export const deleteReactionUser = createAsyncThunk("ReactionDeleteAction", async
       return rejectWithValue(error.response.data)
   }
 })
+
 export const reactionSlice = createSlice({
   name: "reaction",
   initialState: {

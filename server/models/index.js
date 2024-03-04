@@ -3,5 +3,6 @@ module.exports = {
   postsModel: require("./posts.model"),
   commentModel: require("./comment.model"),
   reactionModel: require("./reaction.model"),
-  connectionModel:require("./connections.model")
+  connectionModel:require("./connections.model"),
+  chatModel:require("./chat.model")
 };

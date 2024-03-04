@@ -23,9 +23,9 @@ function DialogBox() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const [postbody, setPostbody] = useState("");
-  const [posttitle, setPosttitle] = useState("");
-  const [postimage, setPostimage] = useState("");
+  const [postBody, setPostBody] = useState("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postImage, setPostImage] = useState("");
   const [showemoji, setShowemoji] = useState(false);
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const handleClickOpen = () => {
@@ -39,31 +39,31 @@ function DialogBox() {
     for (let i = 0; i < e.target.files.length; i++) {
       file = [...file, e.target.files[i]];
     }
-    setPostimage(file);
+    setPostImage(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!postimage) {
+    if (!postImage) {
       alert("Upload Image");
     }
 
-    const formdata = new FormData();
-    formdata.append("title", posttitle);
-    formdata.append("body", postbody);
-    for (let i = 0; i < postimage?.length; i++) {
-      formdata.append("images", postimage[i]);
+    const formData = new FormData();
+    formData.append("title", postTitle);
+    formData.append("body", postBody);
+    for (let i = 0; i < postImage?.length; i++) {
+      formData.append("images", postImage[i]);
     }
 
     try {
-      dispatch(createPosts(formdata));
+      dispatch(createPosts(formData));
     } catch (err) {
       alert(err);
     }
     handleClose();
-    setPostbody("");
-    setPosttitle("");
-    setPostimage(null);
+    setPostBody("");
+    setPostTitle("");
+    setPostImage(null);
   };
 
   return (
@@ -89,14 +89,13 @@ function DialogBox() {
             <Box className="list-item">
               <i class="fa-solid fa-image" style={{ color: "#378FE9" }}></i>
 
-              <h1 className="post-heading">Media</h1>
+              {/* <h1 className="post-heading">Media</h1> */}
             </Box>
             <Box className="list-item">
               <i
                 class="fa-solid fa-calendar-days"
                 style={{ color: "#C37D16" }}
               ></i>
-              <h1 className="post-heading">Job</h1>
             </Box>
             <Box className="list-item">
               <i
@@ -104,7 +103,7 @@ function DialogBox() {
                 style={{ color: "#E06847" }}
               ></i>
 
-              <h1 className="post-heading">Write a article</h1>
+              {/* <h1 className="post-heading">Write a article</h1> */}
             </Box>
           </Box>
         </Box>
@@ -166,8 +165,8 @@ function DialogBox() {
                 size="small"
                 placeholder="Title of post...."
                 name="posttitle"
-                value={posttitle}
-                onChange={(e) => setPosttitle(e.target.value)}
+                value={postTitle}
+                onChange={(e) => setPostTitle(e.target.value)}
               />
               <TextField
                 multiline
@@ -177,8 +176,8 @@ function DialogBox() {
                 InputProps={{ disableUnderline: true }}
                 name="postbody"
                 placeholder="What do you want to talk about?"
-                value={postbody}
-                onChange={(e) => setPostbody(e.target.value)}
+                value={postBody}
+                onChange={(e) => setPostBody(e.target.value)}
                 minRows={12}
               ></TextField>
               <i
@@ -201,6 +200,7 @@ function DialogBox() {
                     type="file"
                     name="postimage"
                     multiple
+                    value={""}
                     id=""
                     onChange={handleFilesChange}
                   />

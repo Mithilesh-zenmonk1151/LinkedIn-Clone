@@ -1,54 +1,48 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import { styled } from "@mui/material/styles";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import CreateIcon from "@mui/icons-material/Create";
 
-import {
-    Box,
-    
-    
-    Stack,
-    TextField,
-  } from "@mui/material";
-import EditInfoCard from '../../card/EditInfoCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateUserProfile } from '../../../slices/profile.slice';
+import { Box, Stack, TextField } from "@mui/material";
+import EditInfoCard from "../../card/EditInfoCard";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUserProfile } from "../../../slices/profile.slice";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
-  '& .MuiDialogContent-root': {
+  "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
   },
-  '& .MuiDialogActions-root': {
+  "& .MuiDialogActions-root": {
     padding: theme.spacing(1),
   },
 }));
 
-const UpdateProfile=()=> {
+const UpdateProfile = () => {
   const [open, setOpen] = React.useState(false);
-  
+
   const theme = useTheme();
-  const dispatch= useDispatch();
-  const  userId=useSelector((state)=> state.auth.user._id)
-  const  user=useSelector((state)=> state.auth.user)
+  const dispatch = useDispatch();
+  const userId = useSelector((state) => state.auth.user._id);
+  const user = useSelector((state) => state.auth.user);
   const [formData, setFormData] = React.useState({
     firstName: user.firstName || "",
-    lastName: user.lastName||"",
-    additionalDetail:user.additionalDetail||"",
+    lastName: user.lastName || "",
+    additionalDetail: user.additionalDetail || "",
     address: {
-        country: user.address ? user.address.country : "",
-        city: user.address ? user.address.city : "",
-      },
-    position:user.position||"", // Assuming these fields are optional
+      country: user.address ? user.address.country : "",
+      city: user.address ? user.address.city : "",
+    },
+    position: user.position || "", // Assuming these fields are optional
     city: user.city || "",
-    
   });
   console.log("form data", formData);
 
@@ -58,20 +52,13 @@ const UpdateProfile=()=> {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-   
-    try{
-        dispatch(updateUserProfile({ userId, userData: formData }));
 
+    try {
+      dispatch(updateUserProfile({ userId, userData: formData }));
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-        console.log(error);
-
-    }
-    
-    }
-
-   
-
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -84,16 +71,13 @@ const UpdateProfile=()=> {
 
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-      
-        <img src="../../../../" alt='sdd'/>
-      </Button>
+      <CreateIcon onClick={handleClickOpen} />
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-         <Dialog
+        <Dialog
           onClose={handleClose}
           fullScreen={fullScreen}
           fullWidth
@@ -101,12 +85,8 @@ const UpdateProfile=()=> {
         >
           <DialogTitle>
             <Box className="title-box">
-              
               <Box className="post-title-head">
-                
-                <Typography sx={{ fontSize: "14px" }}>
-                  Edit intro
-                </Typography>
+                <Typography sx={{ fontSize: "14px" }}>Edit intro</Typography>
               </Box>
             </Box>
           </DialogTitle>
@@ -119,9 +99,7 @@ const UpdateProfile=()=> {
               top: 8,
               color: (theme) => theme.palette.grey[500],
             }}
-          >
-            
-          </IconButton>
+          ></IconButton>
           <Box
             component={"form"}
             onSubmit={handleSubmit}
@@ -150,7 +128,6 @@ const UpdateProfile=()=> {
                 onChange={handleChange}
               />
               <TextField
-                
                 type="text"
                 variant="standard"
                 required
@@ -162,73 +139,56 @@ const UpdateProfile=()=> {
                 minRows={12}
               ></TextField>
               <Typography>Additional Details</Typography>
-              <TextField type="text"
+              <TextField
+                type="text"
                 variant="standard"
-                
                 InputProps={{ disableUnderline: true }}
                 name="additionalDetails"
                 placeholder="Additional details"
                 value={formData.additionalDetail}
                 onChange={handleChange}
-                minRows={12}>
-
-              </TextField>
-              <Typography>
-                Current Position
-              </Typography>
-              <Typography>
-                positions*
-              </Typography>
-              <TextField type="text"
+                minRows={12}
+              ></TextField>
+              <Typography>Current Position</Typography>
+              <Typography>positions*</Typography>
+              <TextField
+                type="text"
                 variant="standard"
-                required
                 InputProps={{ disableUnderline: true }}
                 name="position"
                 placeholder="Additional details"
                 value={formData.position}
                 onChange={handleChange}
-                minRows={12}>
-
-              </TextField>
-              <Typography>
-                Education
-              </Typography>
+                minRows={12}
+              ></TextField>
+              <Typography>Education</Typography>
               <Typography>+Add new education</Typography>
               <Typography>Location</Typography>
               <Typography>Country</Typography>
-              <TextField type="text"
+              <TextField
+                type="text"
                 variant="standard"
-                required
                 InputProps={{ disableUnderline: true }}
                 name="country"
                 placeholder="Additional details"
                 value={formData.address.country}
                 onChange={handleChange}
-                minRows={12}>
-
-              </TextField>
+                minRows={12}
+              ></TextField>
               <Typography>City</Typography>
-              <TextField type="text"
+              <TextField
+                type="text"
                 variant="standard"
-                required
                 InputProps={{ disableUnderline: true }}
                 name="city"
                 placeholder="Additional details"
                 value={formData.address.city}
                 onChange={handleChange}
-                minRows={12}>
-
-              </TextField>
+                minRows={12}
+              ></TextField>
               <Typography>Contact Info</Typography>
-              <EditInfoCard/>
+              <EditInfoCard />
 
-             
-
-
-
-
-
-             
               <Stack
                 direction="row"
                 marginTop="10px"
@@ -238,11 +198,7 @@ const UpdateProfile=()=> {
                 <Button
                   sx={{ minWidth: "0px", padding: "0px" }}
                   component="label"
-                >
-                 
-                </Button>
-                
-               
+                ></Button>
               </Stack>
             </DialogContent>
             <DialogActions>
@@ -260,21 +216,14 @@ const UpdateProfile=()=> {
             </DialogActions>
           </Box>
         </Dialog>
-      
-    
-
       </BootstrapDialog>
     </React.Fragment>
   );
-}
-export default UpdateProfile
+};
+export default UpdateProfile;
 
-
-
-
-
-
-{/* <IconButton
+{
+  /* <IconButton
 aria-label="close"
 onClick={handleClose}
 sx={{
@@ -284,4 +233,5 @@ sx={{
   color: (theme) => theme.palette.grey[500],
 }}
 >
-<CloseIcon /> */}
+<CloseIcon /> */
+}

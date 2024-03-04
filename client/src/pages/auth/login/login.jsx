@@ -24,8 +24,8 @@ const Login = () => {
     e.preventDefault();
     try {
       dispatch(loginUser({ email, password }));
-    } catch (err) {
-      alert(err);
+    } catch (error) {
+      alert(error);
     }
   };
   useEffect(() => {

@@ -27,7 +27,7 @@ const pages = [
   { name: "Home", src: Home, href: "/home", current: true },
   { name: "My Networks", src: Network, href: "/my-network", current: false },
   { name: "Jobs", src: Bag, href: "/jobs", current: false },
-  { name: "Messagging", src: Message, href: "/message", current: false },
+  { name: "Messaging", src: Message, href: "/message", current: false },
   {
     name: "Notifications",
     src: Notification,
@@ -139,7 +139,9 @@ function NavbarComponent() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} sx={{
+                  textTransform:"none"
+                }} onClick={handleCloseNavMenu}>
                   <Link
                     href={page.href}
                     underline="hover"
@@ -172,7 +174,7 @@ function NavbarComponent() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{  color: "black", display: "block" }}
+                sx={{  color: "black", display: "block" ,textTransform:"none"}}
               >
                 <Box
                   sx={{

@@ -30,13 +30,14 @@ export const getPosts = createAsyncThunk(
 export const createPosts = createAsyncThunk(
   "posts/createPosts",
   async (data, { rejectWithValue }) => {
-    console.log("formdat",(data.getAll('images')));
+    // console.log("formdata",(data.getAll('images')));
     try {
       const formData = {
         'body': data.get('body'),
         'images': data.getAll('images'),
         'title': data.get('title')
       }
+      console.log("posts formdata iamgesw wqalaa a",formData);
       const response = await axios.post(
         "http://localhost:4000/api/posts",
         formData,

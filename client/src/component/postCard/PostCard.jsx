@@ -8,6 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { ReactionBarSelector } from '@charkour/react-reactions';
 // import SendSharpIcon from '@mui/icons-material/SendSharp';
 import RepeatOutlinedIcon from "@mui/icons-material/RepeatOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -22,14 +23,15 @@ import PublicIcon from "@mui/icons-material/Public";
 import CommentCard from "../commentCard/CommentCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getCommentUser } from "../../slices/comment.slice.js";
-import FormLabel from "@mui/joy/FormLabel";
-import { radioClasses } from "@mui/joy/Radio";
-import RadioGroup from "@mui/joy/RadioGroup";
-import Sheet from "@mui/joy/Sheet";
+// import FormLabel from "@mui/joy/FormLabel";
+// import { radioClasses } from "@mui/joy/Radio";
+// import RadioGroup from "@mui/joy/RadioGroup";
+// import Sheet from "@mui/joy/Sheet";
 // import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import {
   getReactionUser,
   postReactionUser,
+  deleteReactionUser,
 } from "../../slices/reaction.slice.js";
 export default function PostCard({ body, title, images, user, postId }) {
   const dispatch = useDispatch();
@@ -40,13 +42,17 @@ export default function PostCard({ body, title, images, user, postId }) {
   const commentArray = useSelector(
     (state) => state.comments.content.commentData
   );
+  const numberOfComments=commentArray?.length || 0;
+  console.log("number of comment Array ", commentArray);
   const isLoading = useSelector((state) => state.comments.loading);
   const error = useSelector((state) => state.comments.error);
   const [seeMore, setSeeMore] = React.useState(true);
   const [seecomment, setSeecomment] = React.useState(false);
-  const [Reactiondiv, SetReactiondiv] = React.useState(false);
+  const [ReactionDiv, SetReactionDiv] = React.useState(false);
   const [reaction, setReaction] = React.useState("");
   const [isOpen, setIsOpen] = React.useState(false);
+  const [reactionId, setReactionId] = React.useState(null)
+   
   const handleCommentClick = () => {
     setSeecomment(!seecomment);
     dispatch(getCommentUser(postId));
@@ -58,6 +64,8 @@ export default function PostCard({ body, title, images, user, postId }) {
     reactionData.postId = postId;
     dispatch(postReactionUser({ label, postId }));
   };
+  const userId= useSelector((state)=>state.auth.user);
+
   const ReactionsData = useSelector((state) => state.reaction.data);
   console.log("reaction", ReactionsData);
   if (isLoading) {
@@ -66,6 +74,19 @@ export default function PostCard({ body, title, images, user, postId }) {
   if (error) {
     return error;
   }
+  const handleDeleteReaction = async () => {
+
+    if (reactionId) {
+
+        const res = await dispatch(deleteReactionUser(reactionId));
+        if (res) {
+            getReactionUser()
+
+            setReaction('')
+        }
+
+    }
+}
   return (
     <Stack margin={"auto"} sx={{display:"flex",
     displayDirection:"column",
@@ -202,76 +223,32 @@ export default function PostCard({ body, title, images, user, postId }) {
             position: "relative",
           }}
         >
-          <IconButton
-            sx={{ gap: "10px", position: "relative" }}
-            onMouseEnter={() => SetReactiondiv(true)}
-            onMouseLeave={() => SetReactiondiv(false)}
-          >
-            <ThumbUpOffAltRoundedIcon fontSize="20px" sx={{}} />
-            <Typography fontSize={"14px"}>
-              {reaction ? reaction : "Like"}
-            </Typography>
-            {Reactiondiv && (
-              <Box
-                className="reactionsdiv"
-                sx={{
-                  position: "absolute",
-                  bottom: "30px",
-                  left: "1px",
-                  width: "",
-                }}
-              >
-                <RadioGroup
-                  aria-label="platform"
-                  defaultValue="Website"
-                  overlay
-                  name="platform"
-                  sx={{
-                    flexDirection: "row",
-                    gap: 2,
-                    [`& .${radioClasses.checked}`]: {
-                      [`& .${radioClasses.action}`]: {
-                        inset: -1,
-                        border: "3px solid",
-                        borderColor: "primary.500",
-                      },
-                    },
-                    [`& .${radioClasses.radio}`]: {
-                      display: "contents",
-                      "& > svg": {
-                        zIndex: 2,
-                        position: "absolute",
-                        top: "-8px",
-                        right: "-8px",
-                        bgcolor: "background.surface",
-                        borderRadius: "50%",
-                      },
-                    },
-                  }}
-                >
-                  {["Like", "Love", "funny", "Insight","Support","Insightful"].map((value) => (
-                    <Sheet
-                      key={value}
-                      variant="outlined"
-                      sx={{
-                        borderRadius: "md",
-                        boxShadow: "sm",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                      }}
-                    >
-                      <FormLabel htmlFor={value}>
-                        {" "}
-                       
-                      </FormLabel>
-                    </Sheet>
-                  ))}
-                </RadioGroup>{" "}
-              </Box>
-            )}
-          </IconButton>
+           <IconButton sx={{ gap: '10px', color: Boolean(ReactionsData[postId]?.find((likes) => likes.userId === userId._id)) ? '#0374b3' : '#807c7c' }}
 
+onMouseEnter={() => SetReactionDiv(true)}
+onMouseLeave={() => SetReactionDiv(false)}
+onClick={handleDeleteReaction}
+>
+<ThumbUpOffAltRoundedIcon fontSize='20px' />
+<Typography fontSize={'14px'} >{reaction ? reaction : 'Love'}</Typography>
+{ReactionDiv && <Box className='reactionsDiv' onClick={(e) => e.stopPropagation()} sx={{
+   position:"absolute",
+   left:"2px",
+   bottom:"30px"
+
+}} > 
+<ReactionBarSelector   onSelect={(label) => {
+    if (label === 'satisfaction') {
+        label = 'Like'
+    }
+    console.log("label", label)
+    setReaction(label)
+    if (label) {
+        ReactionClick(label)
+    }
+
+}} /></Box>}
+</IconButton>
           <IconButton sx={{ gap: "10px" }}>
             <i
               class="fa-regular fa-comment"

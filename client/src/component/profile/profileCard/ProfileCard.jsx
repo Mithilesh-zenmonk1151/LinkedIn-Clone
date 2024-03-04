@@ -9,6 +9,7 @@ const ProfileCard = ({ firstName,lastName,connection}) => {
         height: "400px",
         backgroundColor: "#FFFFFF",
         borderRadius: "10px",
+        mt:"30px"
        
       }}
       className="papper"
@@ -38,7 +39,7 @@ const ProfileCard = ({ firstName,lastName,connection}) => {
                 borderBottomRightRadius: 0,
                 background: "#57beeb",
               }}
-            ></img>
+            ></img> 
           </Box>
 
           <Avatar

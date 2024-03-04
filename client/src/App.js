@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import MyNetwork from "./pages/myNetwork/MyNetwork";
 import Navbar from "./component/common/navbar/Navbar";
 import Dashboard from "./component/profile/dashboard/Dashboard";
+import Message from "./component/message/Message";
 function App() {
   const PrivateRoute = ({ children }) => {
     const isAuth = localStorage.getItem("token");
@@ -54,6 +55,14 @@ function App() {
           element={
             <PrivateRoute>
               <Dashboard/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/message"
+          element={
+            <PrivateRoute>
+              <Message/>
             </PrivateRoute>
           }
         />
