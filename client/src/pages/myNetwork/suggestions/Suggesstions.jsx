@@ -12,9 +12,9 @@ const Suggesstions = () => {
     dispatch(getConnectionSuggestions());
   }, [dispatch]);
   const getSuggestions = useSelector(
-    (state) => state.connections.content.response
+    (state) => state.connections?.content
   );
-
+console.log("get suggestions", getSuggestions);
   const isLoading = useSelector((state) => state.connections.isLoading);
   const error = useSelector((state) => state.connections.error);
 

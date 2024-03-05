@@ -1,145 +1,135 @@
-import React, { useState } from "react";
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Avatar, Box, Button,  Paper, Stack, TextField, Typography } from "@mui/material";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
-import EditCalendarIcon from "../../../assets/svg/edIT.svg";
+import { Avatar, Button, Divider, InputBase, Stack, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { deepOrange} from '@mui/material/colors';
-import MessageSearch from "../../common/navbar/navbarComponent/searchComponent/MessageSearch";
-import MessageTab from "./messageTab/MessageTab";
-const MessageCard = ({ userName, lastName, connection }) => {
-  const [search, setSearch]= useState("");
-  const [searchResult,setSerchResult]= useState([]);
-  const [loading, setLoading]= useState(false);
-  const [loadingChat, setLoadingChat]= useState();
-  const handleOnSearch =()=>{
-    if(!search){
-      alert("Please write somthing in searchfield");
+import VideoCallIcon from '@mui/icons-material/VideoCall';
+import StarBorderRoundedIcon from '@mui/icons-material/StarBorderRounded';
+import PhotoIcon from '@mui/icons-material/Photo';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import GifIcon from '@mui/icons-material/Gif';
+import SentimentSatisfiedAltIcon from '@mui/icons-material/SentimentSatisfiedAlt';
+// import { fetchMessages } from '../../redux/slice/messages/messageAction';
+import { useDispatch } from 'react-redux';
 
-    }
+const MessageCard = ({reciever, socket}) => {
+
+  const dispatch = useDispatch()
+  console.log(reciever)
+  console.log(socket)
+  const [message, setMessage] = useState('')
+
+  useEffect(() => {
+    // dispatch(fetchMessages())
+  }, [dispatch])
+
+  useEffect(() => {
+    
+  })
+
+  const handleMessage = () => {
+      socket.emit('')
   }
+
   return (
-    <Box sx={{
-        display:"flex",
-        width:"100%",
-        justifyContent:"center",
-        marginTop:"22px"
-        
+    <Stack className='user-message-box' sx={{width: '468px'}}>
 
-
-    }}> 
-
-
-
-    <Stack>
-      <TextField placeholder="Search by name and email"
-       value={search}>
-
-      </TextField>
-
-      <Button onClick={handleOnSearch}></Button>
-    </Stack>
-    <Box
-      
-    >
-      <Stack
-        flexDirection={"column"}
-        sx={{
-          cursor: "pointer",
-          backgroundColor: "#FFFFFF",
-          borderRadius: "10px",
-          width:"312px",
-          border:"1px solid #989898"
-        }}
-      >     <Box sx={{
-        display:"flex",
-        justifyContent:"space-between"
-      }}> <Typography>
-        Messaging 
-      </Typography>
-           <Box> </Box>   <MoreHorizIcon/> <img src={EditCalendarIcon} alt="edit"/> </Box>
-        <Stack flexDirection={"column"} alignItems={"center"}></Stack>
-        <Stack
-          flexDirection={"column"}
-          sx={{
-            m: 0,
-            pb: 1.5,
-            pl: "12px",
-            pr: "12px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          
-
-        
-          <Box
+            <Stack className='user-name' 
+            flexDirection={'row'} 
+            justifyContent={'space-between'} 
+            alignItems={'center'} 
+            sx={{ width: '100%', boxSizing: 'border-box', padding: '8px'}}
+            >
+            <Typography 
             sx={{
-              width: "109%",
-              bgcolor: "black",
-              height: "1px",
-              opacity: 0.3,
-            }}
-          ></Box>
-          <Box>
-          {/* <Avatar sx={{ bgcolor: deepOrange[500] }} ></Avatar> */}
-
-          </Box>
-          <Box
-            sx={{
-              display: "flex",
-              width: "95%",
-              mt: "12px",
-              gap: "5px",
-              fontSize: "16px",
-              fontWeight: "900",
+              fontSize: '16px', 
+              fontWeight: '500',
             }}
           >
-          <MessageSearch/>
-           
-          </Box>
-          <MessageTab/>
-        </Stack>
-      </Stack>
-    </Box>
-    <Box sx={{
-        height:"100%",
-        width:"1px",
-        bgcolor:"black",
-    }}></Box>
-    <Box>
-    <Stack sx={{
-        width:"468px",
-        display:"flex",
-        flexDirection:"row",
-        justifyContent:"space-between",
-        border:"1px solid #989898"
+          {reciever.name}
+          </Typography>
+
+            <Stack flexDirection={'row'} gap={2}>
+              <MoreHorizIcon />
+              <VideoCallIcon />
+              <StarBorderRoundedIcon />
+            </Stack>
+
+            </Stack>
+            <Divider />
+            <Stack sx={{height: '58vh', overflow: "scroll", overflowX: 'hidden', overflowY: 'scroll', boxSizing: 'border-box'}}>
+              <Stack sx={{width: '100%', padding: '8px'}}>
+
+              <Avatar sx={{height: '72px', width: '72px'}}></Avatar>
+              <Typography 
+              sx={{ 
+                fontSize: '17px', 
+                fontWeight: '500',
+                marginLeft: '11px',
+                marginTop: '10px',
+                "&:hover": {
+                  textDecoration: 'underline',
+                  cursor: 'pointer'
+                }
+              }}>{reciever?.name}</Typography>
+              <Typography
+              sx={{
+                fontSize: '14px',
+                marginLeft: '11px',
+              }}
+              >{reciever?.headline}</Typography>
+              </Stack>
+              <Divider />
+            </Stack>
+            <Divider />
+            <Stack className='textField' sx={{boxSizing: 'border-box', padding: '10px', height: '121px'}}>
+              <InputBase
+              multiline
+              minRows={4}
+              placeholder='Write a message...'
+              sx={{
+                backgroundColor: '#f5f3ee', 
+                borderRadius: '5px', 
+                boxSizing: 'border-box', 
+                padding: '30px 10px 10px 10px',
+                fontSize: '14px',
+                height: '100%',
+                overflow: 'scroll',
+                WebkitOverflowScrolling: 'auto',
+                overflowX: 'hidden'
+                }}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+               />
+            </Stack>
+            <Divider />
+
+              <Stack 
+                flexDirection={'row'} 
+                sx={{height: '98px', boxSizing: 'border-box', padding: '20px'}}
+                gap={2}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+              >
+              <Stack flexDirection={'row'}  gap={2}>
+                <PhotoIcon />
+                <AttachFileIcon sx={{rotate: '50deg'}} />
+                <GifIcon />
+                <SentimentSatisfiedAltIcon />
+              </Stack>
+              <Stack flexDirection={'row'} alignItems={'center'} gap={2}>
+                <Button variant='contained' 
+                sx={{textTransform: 'none', borderRadius:'50px', padding: '0'}}
+                onClick={handleMessage}
+                >
+                  Send
+                </Button>
+                <MoreHorizIcon />
+              </Stack>
+              </Stack>
         
-    }}>
-    <Box sx={{
+        
+        
+         </Stack>
+  )
+}
 
-    }}>
-    <Typography>userName{userName}</Typography>
-        <Typography variant="p">LinkedIn</Typography>
-    </Box>
-    <Box sx={{
-        display:"flex",
-
-    }}>
-    <MoreHorizIcon/>
-
-      <StarBorderIcon/>
-    </Box>
-
-    </Stack>
-    <Box sx={{
-        height:"0.5px",
-        width:"100%",
-        bgcolor:"1px solid #989898"
-    }}></Box>
-    </Box>
-    </Box>
-  );
-};
-
-export default MessageCard;
+export default MessageCard

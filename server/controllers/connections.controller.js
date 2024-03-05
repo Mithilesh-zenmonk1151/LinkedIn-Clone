@@ -1,63 +1,82 @@
 const { connectionService } = require("../services");
 
-exports.sendConnectionRequest = async (req, res) => {
+exports.sendNewConnection = async (req, res) => {
   try {
-    const response = await connectionService.sendConnectionRequest(req);
-   
-    return res.status(201).json(response);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    const response = await connectionService.sendNewConnection(req);
+    return res
+      .status(201)
+      .json({ message: "request for connection", response });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
-exports.getConnectionsRequest = async (req, res) => {
+
+exports.getConnectionReciever = async (req, res) => {
   try {
-    const response = await connectionService.getConnectionsRequest(req);
-    return res.status(201).json(response);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    const response = await connectionService.getConnectionReciever(req);
+    if (response === 204) {
+      return res.status(204);
+    } else {
+      return res
+        .status(200)
+        .json({ message: "connection requests found", response });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
-exports.setConnectionFlag = async (req, res) => {
+
+exports.getConnectionSender = async (req, res) => {
   try {
-    const response = await connectionService.setConnectionFlag(req);
-    return res.status(201).json(response);
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
+    const response = await connectionService.getConnectionSender(req);
+    if (response === 204) {
+      return res.status(204);
+    } else {
+      return res
+        .status(200)
+        .json({ message: "connection requests found", response });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
-exports.getConnection = async(req,res)=>{
-  try{
-      const userId = req._id;
-      const response = await connectionService.getConnection(userId);
-      return res.status(200).json(response)
-  }
-  catch(error){
-      return res.status(500).json({
-        success:false,
-        message:error.message
-      })
+
+exports.getAllConnections = async (req, res) => {
+  try {
+    const response = await connectionService.getAllConnections(req);
+
+    if (response === 204) {
+      return res.status(204);
+    } else {
+      return res.status(200).json({ message: "All Connections", response });
+    }
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };
-exports.getSuggestion = async(req,res)=>{
-  try{
-      
-      const userId = req._id;
-      const response = await connectionService.getSuggestion(userId);
-      console.log("userId for suggestions",userId)
-      return res.status(200).json(response)
+
+exports.editConnectionStatus = async (req, res) => {
+  try {
+    const response = await connectionService.editConnectionStatus(req);
+    return res
+      .status(200)
+      .json({ message: "Status changes Succesfully", response });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
-  catch(error){
-      return res.status(500).json({
-        success:false,
-        message:error.message })
+};
+
+exports.getSuggestions = async (req, res) => {
+  try {
+    const response = await connectionService.getSuggestions(req);
+    return res.status(200).json(response);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send(err);
   }
 };

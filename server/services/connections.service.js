@@ -1,175 +1,140 @@
 const connectionModel = require("../models");
 const userModel = require("../models");
-exports.sendConnectionRequest = async (payload, senderId) => {
-  try {
-    //getting sender id from token
-    console.log("user", payload.user);
-    const senderId = "65d439ac920eb7189504b036";
 
-    const recieverId = payload.params?.userId;
-    // console.log(recieverId, "this is receiver id");
-    const request = await connectionModel.create({
-      senderId: senderId,
-
-      recieverId: recieverId,
-      status: "pending", //single user
-    });
-    console.log(request);
-  } catch (error) {
-    throw error;
-  }
-};
-exports.getConnectionsRequest = async (payload) => {
+exports.sendNewConnection = async (payload) => {
   try {
-    const recieverId = payload.params;
-    const requests = await connectionModel.connectionModel
-      .find({ recieverId: recieverId })
-      .sort({ createdAt: -1 });
-    return { requests };
-  } catch (error) {
-    throw error;
-  }
-};
-exports.setConnectionFlag = async (payload) => {
-  try {
-    // console.log("user", payload.user);
-    const senderId = payload.params;
-    const status = payload.body.status;
-    const recieverId = payload.params?.userId;
-    // console.log(recieverId, "this is receiver id");
-    const user = await connectionModel.connectionModel.findOne({
-      senderId: senderId,
-      recieverId: recieverId,
-    });
-    if (!status) {
-      throw res.status(400).json({
-        success: false,
-        message: "No connection found",
-      });
-    }
-
-    if (status === "withdraw" && response.status === "pending") {
-      const res = await connectionModel.findOneAndUpdate(
-        { senderId: senderId, _id: connectionId },
-        { Status: status },
-        { new: true, upsert: true }
-      );
-      console.log("res: ", res);
-      return res;
-    } else if (status === "accepted" || status === "rejected") {
-      const res = await connectionModel.findOneAndUpdate(
-        { receiverId: recieverId, _id: connectionId },
-        { Status: status },
-        { new: true, upsert: true }
-      );
-      console.log("res: ", res);
-      return res;
-    // } else if (status === "deleted" && response.Status === "accepted") {
-    //   const res = await userModel.userModel.findOneAndUpdate(
-    //     {
-    //       $or: [
-    //         { _id: connectionId, receiverId: recieverId },
-    //         { senderId: senderId, _id: connectionId },
-    //       ],
-    //     },
-    //     { Status: status },
-    //     { new: true, upsert: true }
-    //   );
-      console.log("res: ", res);
-      return res;
-    }
-    if (status === "accepted") {
-      const User = await userModel.userModel.findById(senderId);
-
-      User.connections.push(recieverId);
-
-      await User.save();
-      const User2 = await userModel.userModel.findById(recieverId);
-      User2.connections.push(senderId);
-      await User2.save();
-    }
-    // const isAccepted = await connectionModel.connectionModel.findOne({
-    //   senderId: senderId,
-    // });
-    // console.log(isAccepted);
-    if (isAccepted.status === "accepted") {
-      console.log("already accepted");
-      return;
-    } else if (isAccepted.status === "rejected") {
-    }
-    user.status = status;
-    await user.save();
-    console.log(user, "sttauss,s user");
-  } catch (error) {
-    throw error;
-  }
-};
-exports.removeConnctionsRequest = async (payload) => {
-  try {
-    const id = payload.params;
-    const removeConnec = await connectionModel.findByIdAndDelete({ id });
-  } catch (error) {}
-};
-exports.getConnectionsLists = async (payload) => {
-  try {
-    const userId = payload;
-    const response = await connectionModel.find({
-      $or: [{ senderId: userId }, { recieverId: userId }],
-    });
-    const result = {};
-    let request, connection, reject;
-    if (response.length > 0) {
-      request = response.filter((req) => {
-        return req.Status === "pending" && req.senderId.toString() === userId;
-      });
-      console.log("request: ", request);
-      connection = response.filter((req) => {
-        return (
-          req.Status === "accepted" &&
-          (req.receiverId.toString() === userId ||
-            req.senderId.toString() === userId)
-        );
-      });
-      reject = response.filter((req) => {
-        return (
-          req.Status === "deleted" &&
-          (req.receiverId.toString() === userId ||
-            req.senderId.toString() === userId)
-        );
-      });
-    }
-    result.pendingRequest = request;
-    result.connected = connection;
-    result.cancel = reject;
-    return result;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-exports.getSuggestion = async (payload) => {
-  //userId from authentication
-
-  try {
-    const userId = payload;
-    console.log("payload",payload)
-    const result = await connectionModel.connectionModel.find({
-      $and: [
-        { $or: [{ senderId: userId }, { receiverId: userId }] },
-        { $or: [{ Status: "rejected" }, { Status: "deleted" }] },
+    console.log(payload.body);
+    const userId = payload.user._id;
+    const { Id } = payload.body;
+    // const {status} = req.body
+    const currStatus = await connectionModel.connectionModel.find({
+      or: [
+        { senderId: userId, recieverId: Id },
+        { senderId: Id, recieverId: userId },
       ],
     });
-    const _id = [];
-    result?.map((connection) => {
-      if (connection.senderId.toString() === userId)
-        _id.push(connection.receiverId);
-      else {
-        _id.push(connection.senderId);
-      }
+    console.log(currStatus);
+    if (currStatus.length > 0) {
+      return currStatus;
+    } else {
+      const connect = new connectionModel({
+        senderId: userId,
+        recieverId: Id,
+      });
+      console.log(connect);
+      await connect.save();
+      return connect;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getConnectionReciever = async (payload) => {
+  try {
+    const userId = payload._id;
+    const pending = await connectionModel.connectionModel
+      .find({
+        status: "pending",
+        recieverId: userId,
+      })
+      .sort({ createdAt: -1 })
+      .populate("sender", "name company headline");
+
+    if (pending.length === 0) {
+      console.log(pending);
+      return 204;
+    } else {
+      console.log(pending);
+      return pending;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getConnectionSender = async (payload) => {
+  try {
+    const userId = payload.id;
+    const pending = await connectionModel.commentModel
+      .find({
+        status: "pending",
+        senderId: userId,
+      })
+      .sort({ createdAt: -1 })
+      .populate("recieverId", "name company headline");
+    if (pending.length === 0) {
+      return 204;
+    } else {
+      console.log(pending);
+      return pending;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.getAllConnections = async (payload) => {
+  try {
+    const userId = payload.id;
+    const connections = await connectionModel.connectionModel.find({
+      status: "accepted",
+      $or: [{ senderId: userId }, { recieverId: userId }],
     });
-    _id.push(userId);
-    const response = await userModel.userModel.find({ _id: { $nin: _id } });
-    return { response };
+    const total = connections.length;
+    if (connections.length === 0) {
+      return 204;
+    } else {
+      return { connections, total };
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+exports.editConnectionStatus = async (payload) => {
+  try {
+    const userId = payload.id;
+    const { Id, status } = payload.body;
+    console.log(status);
+    if (status === "accepted" || status === "rejected") {
+      const newStatus = await connectionModel.connectionModel.findOneAndUpdate(
+        { $and: [{ recieverId: userId }, { senderId: Id }] },
+        { status: status },
+        { new: true }
+      );
+      return newStatus;
+    } else if (status === "withdraw") {
+      const newStatus = await connectionModel.connectionModel.findOneAndUpdate(
+        { $and: [{ recieverId: Id }, { senderId: userId }] },
+        { status: status },
+        { new: true }
+      );
+      return newStatus;
+    }
+  } catch (error) {
+    throw error;
+  }
+};
+exports.getSuggestions = async (payload) => {
+  try {
+    const userId = payload.id;
+    const response = await connectionModel.connectionModel.find({
+      $or: [{ senderId: userId }, { recieverId: userId }],
+    });
+    const users = response.map((i) =>
+      i.senderId == userId ? i.recieverId : i.senderId
+    );
+
+    users.push(userId);
+    console.log(users);
+    const suggestions = await userModel.userModel.find(
+      { _id: { $nin: users } },
+      "-password"
+    );
+    if (!suggestions) {
+      return 404;
+    }
+    return suggestions;
   } catch (error) {
     throw error;
   }

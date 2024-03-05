@@ -12,7 +12,7 @@ import Home from "./pages/Home";
 import MyNetwork from "./pages/myNetwork/MyNetwork";
 import Navbar from "./component/common/navbar/Navbar";
 import Dashboard from "./component/profile/dashboard/Dashboard";
-import Message from "./component/message/Message";
+import Message from "./pages/messages/Message.jsx";
 function App() {
   const PrivateRoute = ({ children }) => {
     const isAuth = localStorage.getItem("token");

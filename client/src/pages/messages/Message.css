@@ -1,0 +1,18 @@
+.messages-side-box.css-0 {
+    height: fit-content !important;
+    width: 278px !important;
+    border: 1px solid #d7d8d6 !important;
+    padding: 15px 20px;
+    border-radius: 10px !important;
+    background-color: #fff !important;
+}
+
+
+.main-message-box {
+    height: 93vh !important;
+    width: 782px !important;
+    border: 1px solid #d7d8d6 !important;
+    border-radius: 10px !important;
+    background-color: #fff !important;
+
+}

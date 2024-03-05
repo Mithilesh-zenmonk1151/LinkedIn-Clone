@@ -22,9 +22,9 @@ const ShowPosts = () => {
     setIsOpen(true);
   };
 
-  const posts = useSelector((state) => state.posts.content);
-  const loading = useSelector((state) => state.posts.isLoading);
-  const error = useSelector((state) => state.posts.error);
+  const posts = useSelector((state) => state.posts?.content);
+  const loading = useSelector((state) => state.posts?.isLoading);
+  const error = useSelector((state) => state.posts?.error);
   console.log("empty", posts);
   if (loading) {
     return "Loading...";
@@ -198,9 +198,10 @@ const ShowPosts = () => {
                   }}
                 >
                   <Posts
-                    title={post.title}
-                    body={post.body}
-                    postId={post._id}
+                    title={post?.title}
+                    body={post?.body}
+                    postId={post?._id}
+                    images={post?.images}
                   />
                 </Stack>
               );
