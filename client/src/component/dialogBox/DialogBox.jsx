@@ -41,7 +41,6 @@ function DialogBox() {
     }
     setPostImage(file);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!postImage) {
@@ -198,9 +197,9 @@ function DialogBox() {
                   <Hover classt="fa-solid fa-image" name="Add media" />
                   <input
                     type="file"
-                    name="postimage"
+                    name="images"
                     multiple
-                    value={""}
+                    // value={""}
                     id=""
                     onChange={handleFilesChange}
                   />

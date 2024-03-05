@@ -10,6 +10,21 @@ exports.updateUserProfile = async (req, res) => {
     res.status(500).json(error);
   }
 };
+exports.allUser = async (req, res) => {
+  try {
+    const response = await updateUserProfileService.allUser(req);
+    res.status(200).json({
+      success: true,
+      users: response,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 exports.getUser = async (req, res) => {
   try {
     const response = await updateUserProfileService.getUser(req);

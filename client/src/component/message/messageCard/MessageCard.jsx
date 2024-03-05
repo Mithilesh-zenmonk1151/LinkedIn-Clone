@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Button,  Paper, Stack, TextField, Typography } from "@mui/material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import EditCalendarIcon from "../../../assets/svg/edIT.svg";
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
@@ -8,6 +8,16 @@ import { deepOrange} from '@mui/material/colors';
 import MessageSearch from "../../common/navbar/navbarComponent/searchComponent/MessageSearch";
 import MessageTab from "./messageTab/MessageTab";
 const MessageCard = ({ userName, lastName, connection }) => {
+  const [search, setSearch]= useState("");
+  const [searchResult,setSerchResult]= useState([]);
+  const [loading, setLoading]= useState(false);
+  const [loadingChat, setLoadingChat]= useState();
+  const handleOnSearch =()=>{
+    if(!search){
+      alert("Please write somthing in searchfield");
+
+    }
+  }
   return (
     <Box sx={{
         display:"flex",
@@ -18,6 +28,17 @@ const MessageCard = ({ userName, lastName, connection }) => {
 
 
     }}> 
+
+
+
+    <Stack>
+      <TextField placeholder="Search by name and email"
+       value={search}>
+
+      </TextField>
+
+      <Button onClick={handleOnSearch}></Button>
+    </Stack>
     <Box
       
     >

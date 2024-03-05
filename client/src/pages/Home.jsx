@@ -3,6 +3,7 @@ import React from "react";
 import ShowPosts from "../component/posts/ShowPosts";
 import Profile from "../component/profile/Profile";
 import LinkedInNews from "../component/linkedInNews/LinkedInNews";
+import DialogBox from "../component/dialogBox/DialogBox";
 const Home = () => {
   return (
     <Box sx={{

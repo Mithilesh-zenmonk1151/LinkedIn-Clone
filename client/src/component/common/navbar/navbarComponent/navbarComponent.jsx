@@ -78,7 +78,7 @@ function NavbarComponent() {
           margin: "0",
           padding: "0",
           justifyContent: "center",
-            gap: "40px",
+            gap: "80px",
         }}
       >
         <Toolbar disableGutters>

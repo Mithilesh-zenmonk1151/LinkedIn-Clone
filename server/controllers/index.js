@@ -4,5 +4,7 @@ module.exports = {
   commentController: require("./comment.controller"),
   reactionController: require("./reaction.controller"),
   updateUserProfileController:require("./user.controller"),
-  connectionController:require("./connections.controller")
+  connectionController:require("./connections.controller"),
+  chatController:require("./chat.controller"),
+  messageController:require("./message.controller")
 };

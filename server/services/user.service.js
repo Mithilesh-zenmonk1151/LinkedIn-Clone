@@ -3,7 +3,8 @@ exports.updateUserProfile = async (payload) => {
   try {
     console.log(payload.params);
     const { id } = payload.params;
-    const { firstName,lastName, phone, website, title, industry, summary } = payload.body;
+    const { firstName, lastName, phone, website, title, industry, summary } =
+      payload.body;
     if (payload.body.address) {
       var { street, state, city, pincode, country } = payload.body.address;
     }
@@ -12,7 +13,7 @@ exports.updateUserProfile = async (payload) => {
       id,
       {
         firstName: firstName,
-        latName:lastName,
+        latName: lastName,
         address: { street, state, city, pincode, country },
         phone: phone,
         website: website,
@@ -26,6 +27,25 @@ exports.updateUserProfile = async (payload) => {
     await user.save();
     const updatedUser = await userModel.userModel.findById(id);
     return updatedUser;
+  } catch (error) {
+    throw error;
+  }
+};
+
+exports.allUser = async (payload) => {
+  try {
+    const keyword = payload.query.search
+      ? {
+          $or: [
+            { firstName: { $regex: payload.query.search, $options: "i" } },
+            { email: { $regex: payload.query.search, $options: "i" } },
+          ],
+        }
+      : {};
+    const users = await userModel.userModel
+      .find(keyword)
+      .find({ _id: { $ne: payload.user._id } });
+    return users;
   } catch (error) {
     throw error;
   }
@@ -46,10 +66,9 @@ exports.getUser = async (payload) => {
     if (!user) {
       return "User Not Found";
     } else {
-      return {user,count};
+      return { user, count };
     }
   } catch (error) {
     throw error;
   }
 };
-

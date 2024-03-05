@@ -1,19 +1,6 @@
 const chatModel = require("../models");
 const userModel = require("../models");
-exports.allUser = async (payload) => {
-  const keyword = payload.query.search
-    ? {
-        $or: [
-          { firstName: { $regex: payload.query.search, $options: "i" } },
-          { email: { $regex: payload.query.search, $options: "i" } },
-        ],
-      }
-    : {};
-  const users = await userModel.userModel
-    .find(keyword)
-    .find({ _id: { $ne: payload.user._id } });
-  res.send(users);
-};
+
 exports.accessChat = async (payload) => {
   const { userId } = payload.body;
   if (!userId) {
@@ -49,12 +36,14 @@ exports.accessChat = async (payload) => {
       .findOne({ _id: createdChat._id })
       .populate("users", "-password");
     return fullChat;
-  } catch (error) {}
+  } catch (error) {
+    throw error;
+  }
 };
 exports.fetchChats = async (payload) => {
   try {
     chatModel
-      .find({ users: { $elemMatch: { $eq: req.user._id } } })
+      .find({ users: { $elemMatch: { $eq: payload.user._id } } })
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .populate("latestMessage")
@@ -66,7 +55,6 @@ exports.fetchChats = async (payload) => {
         });
         return results;
       });
-    res.send(result);
   } catch (error) {
     throw error;
   }
@@ -101,6 +89,7 @@ exports.createGroupChat = async (payload) => {
   }
 };
 exports.renameGroup = async (payload) => {
+ try{
   const { chatId, chatName } = payload.body;
   const updatedChat = await chatModel.chatModel
     .findByIdAndUpdate(
@@ -114,50 +103,52 @@ exports.renameGroup = async (payload) => {
     )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
+
+    return updatedChat;
+
+ }
+ catch(error){
+  throw error;
+
+ }
+
 };
 
-exports.addToGroup= async(payload)=>{
-    const{chatId, userId}=payload.body;
-    const added= chatModel.chatModel.findByIdAndUpdate(
-        chatId,
-        {
-            $push:{users:userId},
-        },
-        { new: true }
-    ).populate("users","-password").populate("groupAdmin","-password");
-    if(!added){
-        res.status(404);
-        throw new Error("chat not found")
-
-    }
-    else{
-        return added
-    }
-    
-
-}
-exports.removeFromGroup= async(payload)=>{
-    const{chatId, userId}=payload.body;
-    const remove= chatModel.chatModel.findByIdAndUpdate(
-        chatId,
-        {
-            $pull:{users:userId},
-        },
-        { new: true }
-    ).populate("users","-password").populate("groupAdmin","-password");
-    if(!remove){
-        res.status(404);
-        throw new Error("chat not found")
-
-    }
-    else{
-        return added
-    }
-    
-
-}
-
-
-
-
-
+exports.addToGroup = async (payload) => {
+  const { chatId, userId } = payload.body;
+  const added = chatModel.chatModel
+    .findByIdAndUpdate(
+      chatId,
+      {
+        $push: { users: userId },
+      },
+      { new: true }
+    )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+  if (!added) {
+    res.status(404);
+    throw new Error("chat not found");
+  } else {
+    return added;
+  }
+};
+exports.removeFromGroup = async (payload) => {
+  const { chatId, userId } = payload.body;
+  const remove = chatModel.chatModel
+    .findByIdAndUpdate(
+      chatId,
+      {
+        $pull: { users: userId },
+      },
+      { new: true }
+    )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+  if (!remove) {
+    res.status(404);
+    throw new Error("chat not found");
+  } else {
+    return added;
+  }
+};

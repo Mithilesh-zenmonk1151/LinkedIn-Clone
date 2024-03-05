@@ -4,5 +4,6 @@ module.exports = {
   commentModel: require("./comment.model"),
   reactionModel: require("./reaction.model"),
   connectionModel:require("./connections.model"),
-  chatModel:require("./chat.model")
+  chatModel:require("./chat.model"),
+  messageModel:require("./message.model"),
 };

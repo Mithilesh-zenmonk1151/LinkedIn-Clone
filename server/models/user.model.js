@@ -4,8 +4,8 @@ const userSchema = new mongoose.Schema(
     firstName: {
       type: String,
     },
-    lastName:{
-    type:String
+    lastName: {
+      type: String,
     },
     email: {
       type: String,
@@ -23,10 +23,10 @@ const userSchema = new mongoose.Schema(
       ref: "_id",
     },
     position: {
-      type:String
+      type: String,
     },
-    additionalDetail:{
-      type:String
+    additionalDetail: {
+      type: String,
     },
     address: {
       type: Object,

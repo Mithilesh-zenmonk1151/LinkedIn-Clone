@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
- const user = require("./user.model");
+const user = require("./user.model");
 //  const post= require("./posts.model")
- const { ObjectId } = require("mongodb");
+const { ObjectId } = require("mongodb");
 const commentSchema = new mongoose.Schema(
   {
     userId: {
