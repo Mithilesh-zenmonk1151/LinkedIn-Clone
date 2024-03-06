@@ -5,7 +5,7 @@ const { auth } = authMiddleware;
 
 
 
-router.post("/",auth,messageController.sendMessage)
-router.get("/:chatId",auth,messageController.getAllMessage)
+router.post("/",messageController.sendMessage)
+router.get("/:userId",messageController.getAllMessage)
 
 module.exports= router;

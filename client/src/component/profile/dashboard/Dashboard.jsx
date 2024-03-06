@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import {getUpdatedUserProfile} from "../../../slices/profile.slice"
 import DashboardCard from './dashboardCard/DashBoardCard';
+import src from "../../../assets/profile.jpeg"
 const Profile = () => {
     const dispatch= useDispatch();
     const user= useSelector((state)=>state.auth.user._id)
@@ -13,7 +14,7 @@ const Profile = () => {
 
     },[])
     
-    const profile=useSelector((state) => state.profile.content.response.user);
+    const profile=useSelector((state) => state.profile?.content?.response?.user);
 
     console.log("dashboard profile", profile)
     const content= useSelector((state)=>state.auth.user);
@@ -31,7 +32,7 @@ const Profile = () => {
 
 
    }}>
-     <DashboardCard firstName={profile.firstName} lastName={SVGTextContentElement.lastName} connection={content?.connections.length} />
+     <DashboardCard firstName={profile.firstName} lastName={profile?.lastName} connection={content?.connections?.length} Image={src}  />
      
 
    </Box>

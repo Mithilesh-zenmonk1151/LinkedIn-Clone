@@ -34,18 +34,23 @@ exports.updateUserProfile = async (payload) => {
 
 exports.allUser = async (payload) => {
   try {
-    const keyword = payload.query.search
-      ? {
-          $or: [
-            { firstName: { $regex: payload.query.search, $options: "i" } },
-            { email: { $regex: payload.query.search, $options: "i" } },
-          ],
-        }
-      : {};
-    const users = await userModel.userModel
-      .find(keyword)
-      .find({ _id: { $ne: payload.user._id } });
-    return users;
+    // const keyword = payload.query.search
+    //   ? {
+    //       $or: [
+    //         { firstName: { $regex: payload.query.search, $options: "i" } },
+    //         { email: { $regex: payload.query.search, $options: "i" } },
+    //       ],
+    //     }
+    //   : {};
+    // const users = await userModel.userModel
+    //   .find(keyword)
+    //   .find({ _id: { $ne: payload.user._id } });
+    const users= await userModel.userModel.find();
+    const userData= Promise.all(users?.map(async(user)=>{
+      return { user:{email:user.email,firstName:user.firstName},userId:user._id}
+    }))
+
+    return userData;
   } catch (error) {
     throw error;
   }

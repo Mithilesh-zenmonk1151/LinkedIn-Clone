@@ -3,17 +3,18 @@ const User = require("./user.model");
 const Chat = require("./chat.model");
 const messaageSchema = new mongoose.Schema(
   {
-    sender: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "user",
+    senderId: {
+      type: String,
     },
-    content: {
+    members:{
+      type:Array
+    },
+    message: {
       type: String,
       trim: true,
     },
-    chat: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "chat",
+    conversationId: {
+      type: String,
     },
   },
   { timestamps: true }

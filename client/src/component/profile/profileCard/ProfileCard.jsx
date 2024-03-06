@@ -1,7 +1,7 @@
 import React from "react";
 import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-const ProfileCard = ({ firstName,lastName,connection}) => {
+const ProfileCard = ({ firstName,lastName,connection,Image}) => {
   return (
     <Box
       sx={{
@@ -44,7 +44,7 @@ const ProfileCard = ({ firstName,lastName,connection}) => {
 
           <Avatar
             alt=""
-            src=""
+            src={Image}
             sx={{ height: "100px", width: "104px", mt: "-52px" }}
           />
         </Stack>

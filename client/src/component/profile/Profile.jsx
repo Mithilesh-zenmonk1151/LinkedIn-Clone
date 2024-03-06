@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import ProfileCard from "./profileCard/ProfileCard";
 import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
+import src from "../../assets/profile.jpeg"
 import { getUpdatedUserProfile } from "../../slices/profile.slice";
 const Profile = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Profile = () => {
         firstName={profile?.firstName}
         lastName={content?.lastName}
         connection={content?.connections?.length}
+        Image={src}
       />
     </Box>
   );

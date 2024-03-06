@@ -15,7 +15,7 @@ exports.allUser = async (req, res) => {
     const response = await updateUserProfileService.allUser(req);
     res.status(200).json({
       success: true,
-      users: response,
+      userData: response,
     });
   } catch (error) {
     console.log(error);

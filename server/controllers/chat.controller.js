@@ -1,8 +1,9 @@
 const { chatService } = require("../services");
 
-exports.accessChat = async (req, res) => {
+exports.sendMessage = async (req, res) => {
   try {
-    const response = await chatService.accessChat(req);
+    const response = await chatService.sendMessage(req);
+    console.log("Response", response);
     res.status(200).json({
       success: true,
       fullChat: response,
@@ -15,12 +16,12 @@ exports.accessChat = async (req, res) => {
     });
   }
 };
-exports.fetchChats = async (req, res) => {
+exports.getMessage = async (req, res) => {
   try {
-    const response = await chatService.fetchChats(req);
+    const response = await chatService.getMessage(req);
     res.status(200).json({
       success: true,
-      results: response,
+      messages: response,
     });
   } catch (error) {
     console.log(error);

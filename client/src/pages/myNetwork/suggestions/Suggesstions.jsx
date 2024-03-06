@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import SuggestionCard from "../suggestionsCard/SuggestionCard";
 import { getConnectionSuggestions } from "../../../slices/connections.slice";
-
 const Suggesstions = () => {
   console.log("sdfertreg");
   const dispatch = useDispatch();
@@ -11,10 +10,8 @@ const Suggesstions = () => {
     console.log("inside useEffect");
     dispatch(getConnectionSuggestions());
   }, [dispatch]);
-  const getSuggestions = useSelector(
-    (state) => state.connections?.content
-  );
-console.log("get suggestions", getSuggestions);
+  const getSuggestions = useSelector((state) => state.connections?.content);
+  console.log("get suggestis", getSuggestions);
   const isLoading = useSelector((state) => state.connections.isLoading);
   const error = useSelector((state) => state.connections.error);
 
@@ -45,14 +42,15 @@ console.log("get suggestions", getSuggestions);
           padding: "150px",
         }}
       >
-        {getSuggestions?.map((suggestion) => {
-          return (
-            <SuggestionCard
-              nameBody={suggestion.email}
-              handleOnClick={handleOnClick}
-            />
-          );
-        })}
+        {getSuggestions &&  getSuggestions.length>0 &&
+          getSuggestions?.map((suggestion) => {
+            return (
+              <SuggestionCard
+                nameBody={suggestion.email}
+                handleOnClick={handleOnClick}
+              />
+            );
+          })}
       </Stack>
     </Box>
   );

@@ -68,7 +68,7 @@ function NavbarComponent() {
       position="static"
       sx={{
         bgcolor: "#ffffff",
-        height: "48px"
+        height: "52px"
       }}
     >
       <Container
@@ -194,7 +194,7 @@ function NavbarComponent() {
                     className={page.current ? "active" : "inActive"}
                     sx={{
                       color: "black",
-                      fontSize: "10px",
+                      fontSize: "14px",
                       display:"flex",
                       justifyContent:"center",
                       
@@ -210,8 +210,10 @@ function NavbarComponent() {
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" sx={{
-                  height:"32px",
-                  width: "32px"
+                  height:"40px",
+                  width: "40px",
+                  position:"relative",
+                  bottom:"3px"
                 }} />
               </IconButton>
             </Tooltip>

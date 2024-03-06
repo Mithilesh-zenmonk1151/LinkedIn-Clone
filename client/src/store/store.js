@@ -7,8 +7,6 @@ import connectionSlice from "../slices/connections.slice";
 import profileSlice from "../slices/profile.slice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
-
-
 const combinedReducer = combineReducers({
   auth: authReducer,
   posts: postSlice,

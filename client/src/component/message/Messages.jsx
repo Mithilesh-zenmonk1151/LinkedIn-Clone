@@ -124,7 +124,7 @@ const Messages = ({handleReciever}) => {
         </>
         )
       })
-      : <> No Messages Yet </>
+      : <> <Avatar></Avatar> </>
 
 }
 

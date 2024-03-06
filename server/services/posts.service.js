@@ -45,6 +45,7 @@ exports.getPost = async (payload) => {
   console.log(userId);
   try {
     const posts = await postsModel.find().sort({ createdAt: -1 });
+    console.log('posts: ', posts);
     // console.log(posts);
     return posts;
   } catch (error) {

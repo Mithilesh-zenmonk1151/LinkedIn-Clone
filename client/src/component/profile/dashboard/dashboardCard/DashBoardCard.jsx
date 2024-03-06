@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, Box, Button, Paper, Stack, Typography } from "@mui/material";
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import UpdateProfile from "../../updateProfile/UpdateProfile";
-const DashboardCard = ({ firstName,lastName,connection}) => {
+const DashboardCard = ({ firstName,lastName,connection,Image}) => {
   return (
     <Box
       sx={{
@@ -55,7 +55,7 @@ const DashboardCard = ({ firstName,lastName,connection}) => {
          }}>
          <Avatar
             alt=""
-            src=""
+            src={Image}
             sx={{ height: "100px", width: "104px", mt: "-52px" }}
           />
 

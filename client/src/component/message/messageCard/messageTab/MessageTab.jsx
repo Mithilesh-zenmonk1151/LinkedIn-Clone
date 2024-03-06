@@ -1,14 +1,14 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import { Avatar, Stack } from '@mui/material';
-import TabOne from './TabOne';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import { Avatar, Stack } from "@mui/material";
+import TabOne from "./TabOne";
 
 function CustomTabPanel(props) {
-  const {userName , children, value, index, ...other} = props;
+  const { userName, children, value, index, ...other } = props;
 
   return (
     <div
@@ -36,7 +36,7 @@ CustomTabPanel.propTypes = {
 function a11yProps(index) {
   return {
     id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
   };
 }
 
@@ -48,39 +48,44 @@ export default function MessageTab() {
   };
 
   return (
-    <Box sx={{ width: '110%',
-    display:"flex",
-    flexDirection:"column",
-     }}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider',
-      display:"flex",
-      justifyContent:"space-between",
-       }}>
-        <Tabs value={value} onChange={handleChange} sx={{
-            display:"flex",
-            flexDirection:"row",
-            justifyContent:"space-between",
-            gap:"160px",
-            width:"100%"
-            
-            
-        }} aria-label="basic tabs example">
+    <Box sx={{ width: "110%", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          display: "flex",
+          justifyContent: "space-between",
+        }}
+      >
+        <Tabs
+          value={value}
+          onChange={handleChange}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            gap: "160px",
+            width: "100%",
+          }}
+          aria-label="basic tabs example"
+        >
           <Tab label="Focused" {...a11yProps(0)} />
-          <Tab label="Other" sx={{
-            position:"relative",
-            left:"80px"
-          }} {...a11yProps(1)} />
-          
+          <Tab
+            label="Other"
+            sx={{
+              position: "relative",
+              left: "80px",
+            }}
+            {...a11yProps(1)}
+          />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-      <TabOne/>
-      
+        <TabOne />
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         Item Two
       </CustomTabPanel>
-      
     </Box>
   );
 }

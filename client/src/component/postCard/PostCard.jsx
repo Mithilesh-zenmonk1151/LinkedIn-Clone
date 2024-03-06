@@ -40,12 +40,12 @@ export default function PostCard({ body, title, images, user, postId }) {
     dispatch(getReactionUser(postId));
   }, []);
   const commentArray = useSelector(
-    (state) => state.comments.content.commentData
+    (state) => state.comments?.content?.commentData
   );
   const numberOfComments=commentArray?.length || 0;
   console.log("number of comment Array ", commentArray);
-  const isLoading = useSelector((state) => state.comments.loading);
-  const error = useSelector((state) => state.comments.error);
+  const isLoading = useSelector((state) => state.comments?.loading);
+  const error = useSelector((state) => state.comments?.error);
   const [seeMore, setSeeMore] = React.useState(true);
   const [seecomment, setSeecomment] = React.useState(false);
   const [ReactionDiv, SetReactionDiv] = React.useState(false);
