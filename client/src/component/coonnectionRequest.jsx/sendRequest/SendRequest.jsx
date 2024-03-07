@@ -36,7 +36,7 @@ const SendRequest= () => {
       {
         sent && 
         sent?.map &&
-        sent.length !== 0 ?
+        sent?.length !== 0 ?
         sent?.map((i) => {
           return (
             <Stack  key={i._id}>

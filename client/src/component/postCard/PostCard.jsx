@@ -64,9 +64,9 @@ export default function PostCard({ body, title, images, user, postId }) {
     reactionData.postId = postId;
     dispatch(postReactionUser({ label, postId }));
   };
-  const userId= useSelector((state)=>state.auth.user);
+  const userId= useSelector((state)=>state.auth?.user);
 
-  const ReactionsData = useSelector((state) => state.reaction.data);
+  const ReactionsData = useSelector((state) => state.reaction?.data);
   console.log("reaction", ReactionsData);
   if (isLoading) {
     return "Loading...";

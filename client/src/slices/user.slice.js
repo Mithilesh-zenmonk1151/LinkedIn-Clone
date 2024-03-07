@@ -16,7 +16,7 @@ export const getUserDetails = createAsyncThunk(
       );
       const data = response.data;
 
-      console.log("get suggestion data",data);
+      console.log("get suggestion data", data);
       return data;
     } catch (error) {
       console.log(error);
@@ -39,7 +39,7 @@ export const connectionSlice = createSlice({
     builder.addCase(getConnectionSuggestions.fulfilled, (state, action) => {
       state.isLoading = false;
       state.content = action.payload;
-      console.log("state fullfield",state.content)
+      console.log("state fullfield", state.content);
     });
     builder.addCase(getConnectionSuggestions.rejected, (state, action) => {
       state.isLoading = false;

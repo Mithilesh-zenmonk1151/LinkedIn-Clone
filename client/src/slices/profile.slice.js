@@ -2,7 +2,7 @@ import axios from "axios";
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 const getUserProfile = "getUserProfile/updateUser";
-const postUserProfile= "postUserprofile/updateuser";
+const postUserProfile = "postUserprofile/updateuser";
 export const getUpdatedUserProfile = createAsyncThunk(
   getUserProfile,
   async (userId, { rejectWithValue }) => {
@@ -25,24 +25,23 @@ export const getUpdatedUserProfile = createAsyncThunk(
     }
   }
 );
-export const updateUserProfile=createAsyncThunk(
+export const updateUserProfile = createAsyncThunk(
   postUserProfile,
-  async({ userId, userData },{rejectWithValue})=>{
-    console.log("redux form data",userData);
-    try{
-      const response= await axios.put(
+  async ({ userId, userData }, { rejectWithValue }) => {
+    console.log("redux form data", userData);
+    try {
+      const response = await axios.put(
         `http://localhost:4000/api/users/${userId}`,
         userData
-      )
-      console.log("update user profile",response)
-        return response.data;
-    }
-    catch(error){
+      );
+      console.log("update user profile", response);
+      return response.data;
+    } catch (error) {
       console.log(error);
       return rejectWithValue(error.response.data);
     }
   }
-)
+);
 
 export const profileSlice = createSlice({
   name: "profile",
@@ -81,7 +80,7 @@ export const profileSlice = createSlice({
         state.loading = false;
         state.error = action.error.message;
         console.log("error", state.error);
-      })
+      });
   },
 });
 

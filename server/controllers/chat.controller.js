@@ -6,7 +6,7 @@ exports.sendMessage = async (req, res) => {
     console.log("Response", response);
     res.status(200).json({
       success: true,
-      fullChat: response,
+      newMessages: response,
     });
   } catch (error) {
     console.log(error);
@@ -21,7 +21,7 @@ exports.getMessage = async (req, res) => {
     const response = await chatService.getMessage(req);
     res.status(200).json({
       success: true,
-      messages: response,
+      messageUserData: response,
     });
   } catch (error) {
     console.log(error);

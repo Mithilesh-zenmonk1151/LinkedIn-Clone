@@ -34,31 +34,34 @@ export const getReactionUser = createAsyncThunk(
     return data;
   }
 );
-export const deleteReactionUser = createAsyncThunk("ReactionDeleteAction", async (reactionId, { rejectWithValue, getState }) => {
-  try {
-      
+export const deleteReactionUser = createAsyncThunk(
+  "ReactionDeleteAction",
+  async (reactionId, { rejectWithValue, getState }) => {
+    try {
       const token = getState().auth.token;
-      
+
       const config = {
-          headers: {
-              'Authorization': `Bearer ${token}`
-          }
-      }
-    
-      const res = await axios.delete(`http://localhost:4000/api/reactions/${reactionId}`, config)
-    
-      return res.data
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const res = await axios.delete(
+        `http://localhost:4000/api/reactions/${reactionId}`,
+        config
+      );
+
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
-  catch (error) {
-     
-      return rejectWithValue(error.response.data)
-  }
-})
+);
 
 export const reactionSlice = createSlice({
   name: "reaction",
   initialState: {
-    data:[],
+    data: [],
     loading: false,
     error: null,
     success: false,
@@ -106,7 +109,6 @@ export const reactionSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       });
-
   },
 });
 export default reactionSlice.reducer;

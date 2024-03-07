@@ -65,7 +65,7 @@ function NavbarComponent() {
   }
   return (
     <AppBar
-      position="static"
+      position="fixed"
       sx={{
         bgcolor: "#ffffff",
         height: "52px"
@@ -147,7 +147,7 @@ function NavbarComponent() {
                     underline="hover"
                     className={page.current ? "active" : "inActive"}
                   >
-                    {page.name}
+                    {page?.name}
                   </Link>
                 </MenuItem>
               ))}
@@ -170,7 +170,7 @@ function NavbarComponent() {
             }}
           ></Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {pages?.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
@@ -189,9 +189,9 @@ function NavbarComponent() {
                   <img key={page} src={page.src} alt="" className="home-logo"
                     />
                   <Link
-                    href={page.href}
+                    href={page?.href}
                     underline="hover"
-                    className={page.current ? "active" : "inActive"}
+                    className={page?.current ? "active" : "inActive"}
                     sx={{
                       color: "black",
                       fontSize: "14px",
@@ -200,7 +200,7 @@ function NavbarComponent() {
                       
                     }}
                   >
-                    {page.name}
+                    {page?.name}
                   </Link>
                 </Box>
               </Button>

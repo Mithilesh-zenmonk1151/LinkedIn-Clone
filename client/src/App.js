@@ -13,19 +13,21 @@ import MyNetwork from "./pages/myNetwork/MyNetwork";
 import Navbar from "./component/common/navbar/Navbar";
 import Dashboard from "./component/profile/dashboard/Dashboard";
 import Message from "./pages/messages/Message.jsx";
+import { Box } from "@mui/material";
+import Notification from "./pages/notification/Notification.jsx";
 function App() {
   const PrivateRoute = ({ children }) => {
     const isAuth = localStorage.getItem("token");
     return isAuth === null ? <Navigate to="/login" /> : <>{children}</>;
   };
- 
+
   return (
-    <>
     <Router>
-    <Navbar/>
+      <Box>
+        <Navbar />
+      </Box>
       <Routes>
-      
-            {/* <Route
+        {/* <Route
             path="/"
             element={
             <PrivateRoute>
@@ -33,7 +35,7 @@ function App() {
             </PrivateRoute>
             }
             /> */}
-          
+
         <Route
           path="/home"
           element={
@@ -42,19 +44,19 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/my-network"
           element={
             <PrivateRoute>
-              <MyNetwork/>
+              <MyNetwork />
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
           path="/dashboard"
           element={
             <PrivateRoute>
-              <Dashboard/>
+              <Dashboard />
             </PrivateRoute>
           }
         />
@@ -62,7 +64,15 @@ function App() {
           path="/message"
           element={
             <PrivateRoute>
-              <Message/>
+              <Message />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/notification"
+          element={
+            <PrivateRoute>
+              <Notification />
             </PrivateRoute>
           }
         />
@@ -70,6 +80,6 @@ function App() {
         <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
-    </>);
+  );
 }
 export default App;

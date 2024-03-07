@@ -18,18 +18,25 @@ const Message = () => {
   const [socket, setSocket] = useState(null);
   const messageRef = useRef(null);
   const usr = useSelector((state) => state.auth?.user);
+  const [receiverId, setReceiverId]= useState("");
+  const [open, setOpen]= useState(false);
 
   const userId = useSelector((state) => state.auth?.user?._id);
   const [user, setUser] = useState(usr);
-
+  const hansdleOnClickEmail = (receiverId) => {
+    console.log(`clicked on ${receiverId}`);
+      setReceiverId(receiverId);
+      setOpen(true);
+  };
   useEffect(() => {
     setSocket(io("http://localhost:4000"));
   }, []);
 
   useEffect(() => {
-    socket?.emit("addUser", userId);
+    socket?.emit("addUser", receiverId);
+    console.log("message user Id", userId);
     socket?.on("getUsers", (users) => {
-      console.log("activeUsers :>> ", users);
+      console.log("activeUsers ghghghg:>> ", users);
     });
     socket?.on("getMessage", (data) => {
       setMessages((prev) => ({
@@ -56,7 +63,7 @@ const Message = () => {
           },
         }
       );
-      const resData = await res.data;
+      const resData = await res?.data;
       setConversations(resData);
     };
     fetchConversations();
@@ -75,10 +82,15 @@ const Message = () => {
     };
     fetchUsers();
   }, []);
+ 
+  console.log("ReceverId",receiverId)
+  console.log("userId",userId)
+  // console.log("receiver_id", receiver_id)
 
-  const fetchMessages = async (conversationId, receiver) => {
+  const fetchMessages = async (conversationId,receiver) => {
+
     const res = await axios.get(
-      `http://localhost:4000/api/chats/${conversationId}?senderId=${user?.id}&&receiverId=${receiver?.receiverId}`,
+      `http://localhost:4000/api/chats/${conversationId}?senderId=${userId}&&receiverId=${receiverId}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -86,108 +98,137 @@ const Message = () => {
       }
     );
     const resData = await res.data;
+    console.log("RESPONSE FROM GET MASX",resData);
+  
+    console.log("conversationId", conversationId)
+
     setMessages({ messages: resData, receiver, conversationId });
   };
   const sendMessage = async (e) => {
     setMessage("");
     socket?.emit("sendMessage", {
-      senderId: user?.id,
-      receiverId: messages?.receiver?.receiverId,
+      senderId: userId,
+      receiverId:receiverId,
       message,
       conversationId: messages?.conversationId,
     });
-    const res = await axios.post(`http://localhost:8000/api/message`, {
+
+    const res = await axios.post(`http://localhost:4000/api/chats/message`, {
       headers: {
         "Content-Type": "application/json",
       },
-      body: {
+      body: ({
         conversationId: messages?.conversationId,
         senderId: userId,
         message,
         receiverId: messages?.receiver?.receiverId,
-      },
+      }),
     });
+    // console.log("Body", body);
   };
-
+ 
   return (
     <Box>
-      {/* <Box className="home-nav"><Navbar /></Box> */}
-      <Stack
-        flexDirection={"row"}
-        justifyContent={"center"}
-        gap={3}
-        sx={{ marginTop: "20px" }}
-      >
-        <Box>
-          {/* { messages.map((massage)=>{
+      // {/* <Box className="home-nav"><Navbar /></Box> */}
+      {/* <Stack */}
+      {/* //     flexDirection={"row"} */}
+      {/* //     justifyContent={"center"} */}
+      {/* //     gap={3} */}
+      {/* //     sx={{ marginTop: "20px" }} */}
+      {/* //   > */}
+      {/* //     <Box> */}
+      //{" "}
+      {/* { messages.map((massage)=>{
             
-          })} */}
-        </Box>
-        <Box
-          className="main-message-box"
-          sx={{ display: "flex", flexDirection: "row" }}
-        >
-          {/* <Messages handleReciever={handleReciever} />
-          <Divider orientation="vertical" />
-          <MessageCard reciever={reciever} socket={socket} /> */}
-        </Box>
-
-        <Box className="messages-side-box">
-          <Typography
-            sx={{
-              fontSize: "18px",
-              fontWeight: "500",
-              marginBottom: "8px",
-            }}
-          >
-            Grow Your Network with Premium
-          </Typography>
-
-          <Typography
-            sx={{
-              marginBottom: "8px",
-            }}
-          >
-            Premium InMail is 4.6x more effective in hearing back than cold
-            email.
-          </Typography>
-          <Button
-            variant="contained"
-            onClick={sendMessage}
-            sx={{
-              boxShadow: "none",
-              borderRadius: "50px",
-              color: "black",
-              backgroundColor: "#f8c882",
-              textTransform: "none",
-              fontWeight: "500",
-              padding: "3px 15px",
-              fontSize: "18px",
-            }}
-          >
-            Try Premium for free
-          </Button>
-        </Box>
-      </Stack>
+    //       })} */}
+      {/* //     </Box> */}
+      {/* //     <Box */}
+      {/* // className="main-message-box" */}
+      {/* //       sx={{ display: "flex", flexDirection: "row" }} */}
+      {/* //     >
+    //       {/* <Messages handleReciever={handleReciever} /> */}
+      {/* //       <Divider orientation="vertical" />
+    //       <MessageCard reciever={reciever} socket={socket} /> */}
+      {/* </Box>  */}
+      {/* //     <Box className="messages-side-box">
+    //       <Typography */}
+      {/* //         sx={{ */}
+      {/* //           fontSize: "18px",
+    //           fontWeight: "500",
+    //           marginBottom: "8px",
+    //         }}
+    //       >
+    //         Grow Your Network with Premium
+    //       </Typography> */}
+      {/* //       <Typography */}
+      {/* //         sx={{
+    //           marginBottom: "8px",
+    //         }}
+    //       >
+    //         Premium InMail is 4.6x more effective in hearing back than cold
+    //         email.
+    //       </Typography> */}
+      {/* //       <Button */}
+      {/* //         variant="contained"
+    //         onClick={sendMessage}
+    //         sx={{ */}
+      {/* //           boxShadow: "none",
+    //           borderRadius: "50px",
+    //           color: "black",
+    //           backgroundColor: "#f8c882",
+    //           textTransform: "none",
+    //           fontWeight: "500",
+    //           padding: "3px 15px",
+    //           fontSize: "18px",
+    //         }}
+    //       >
+    //         Try Premium for free
+    //       </Button> */}
+      {/* //     </Box> */}
+      {/* //   </Stack> */}
       {/* //demo conversion */}
       <Box>
-        {conversations.length > 0 ? (
-          conversations.map(({ conversationId, user }) => {
+        {conversations?.length > 0 ? (
+          conversations?.map(({ conversationId, user }) => {
             return (
-              <Box className=" " sx={{ display: 'flex', alignItems: 'center', py: 8, borderBottom: '1px solid #ccc' }}>
-  {/* Your content here */}
+              <Box
+                className=" "
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  py: 8,
+                  borderBottom: "1px solid #ccc",
+                }}
+              >
+                {/* Your content here */}
                 <Box
-                  sx= { {cursor: 'pointer', display: 'flex', alignItems: 'center' } }
-
+                  sx={{
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
                   onClick={() => fetchMessages(conversationId, user)}
                 >
                   {/* <Box><img src={Img1} className="w-[60px] h-[60px] rounded-full p-[2px] border border-primary" /></Box> */}
-                  <Box className="" sx={{
-                    ml:"6px"
-                  }}>
-                    <Typography sx={{ fontSize: '1.25rem', fontWeight: 'bold' } }>{user?.fullName}</Typography>
-                    <Typography variant="p"  sx={ { fontSize: '0.875rem', fontWeight: 300, color: '#4b5563' } }
->
+                  <Box
+                    className=""
+                    sx={{
+                      ml: "6px",
+                    }}
+                  >
+                    <Typography
+                      sx={{ fontSize: "1.25rem", fontWeight: "bold" }}
+                    >
+                      {user?.fullName}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      sx={{
+                        fontSize: "0.875rem",
+                        fontWeight: 300,
+                        color: "#4b5563",
+                      }}
+                    >
                       {user?.email}
                     </Typography>
                   </Box>
@@ -196,31 +237,62 @@ const Message = () => {
             );
           })
         ) : (
-          <Box  sx={{ textAlign: 'center', fontSize: '1.25rem', fontWeight: 'bold', marginTop: 24 } }
->
+          <Box
+            sx={{
+              textAlign: "center",
+              fontSize: "1.25rem",
+              fontWeight: "bold",
+              marginTop: 24,
+            }}
+          >
             No Conversations
           </Box>
         )}
       </Box>
-      <Box  sx={{ width: '50%', height: '100vh', backgroundColor: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center' } }
->
+      <Box
+        sx={{
+          width: "50%",
+          height: "100vh",
+          backgroundColor: "white",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         {messages?.receiver?.fullName && (
-          <Box  sx={{ width: '75%', backgroundColor: 'secondary', height: '80px', marginTop: 14, borderRadius: '40px', display: 'flex', alignItems: 'center', paddingLeft: 14, paddingRight: 14, paddingTop: 2, paddingBottom: 2 } }
->
+          <Box
+            sx={{
+              width: "75%",
+              backgroundColor: "secondary",
+              height: "80px",
+              marginTop: 14,
+              borderRadius: "40px",
+              display: "flex",
+              alignItems: "center",
+              paddingLeft: 14,
+              paddingRight: 14,
+              paddingTop: 2,
+              paddingBottom: 2,
+            }}
+          >
             {/* <{ sx: { marginLeft: 6, marginRight: 'auto' } }
 Box className='cursor-pointer'><img src={Img1} width={60} height={60} className="rounded-full" /></> */}
-            <Box  sx={{ marginLeft: 6, marginRight: 'auto' } }
->
-              <Typography variant="h3"  sx={{ fontSize: '1.25rem' } }
->{messages?.receiver?.fullName}</Typography>
-              <Typography variant="p" sx={{ fontSize: '0.875rem', fontWeight: 300, color: '#4b5563' } }
->
+            <Box sx={{ marginLeft: 6, marginRight: "auto" }}>
+              <Typography variant="h3" sx={{ fontSize: "1.25rem" }}>
+                {messages?.receiver?.fullName}
+              </Typography>
+              <Typography
+                variant="p"
+                sx={{ fontSize: "0.875rem", fontWeight: 300, color: "#4b5563" }}
+              >
                 {messages?.receiver?.email}
               </Typography>
             </Box>
-            <Box sx={{
-                cursor:"pointer"
-            }}>
+            <Box
+              sx={{
+                cursor: "pointer",
+              }}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="icon icon-tabler icon-tabler-phone-outgoing"
@@ -242,11 +314,17 @@ Box className='cursor-pointer'><img src={Img1} width={60} height={60} className=
           </Box>
         )}
       </Box>
-      <Box sx={{ height: '75%', width: '100%', overflow: 'scroll', boxShadow: 'sm' } }
->
-        <Box className="" sx={{p:14}}>
+      <Box
+        sx={{
+          height: "75%",
+          width: "100%",
+          overflow: "scroll",
+          boxShadow: "sm",
+        }}
+      >
+        <Box className="" sx={{ p: 14 }}>
           {messages?.messages?.length > 0 ? (
-            messages.messages.map(({ message, user: { id } = {} }) => {
+            messages?.messages?.map(({ message, user: { id } = {} }) => {
               return (
                 <>
                   <Box
@@ -270,7 +348,7 @@ Box className='cursor-pointer'><img src={Img1} width={60} height={60} className=
         </Box>
       </Box>
       <Box>
-        {messages?.receiver?.email && (
+        {open && (
           <Box className="p-14 w-full flex items-center">
             <Input
               placeholder="Type a message..."
@@ -328,8 +406,9 @@ Box className='cursor-pointer'><img src={Img1} width={60} height={60} className=
           </Box>
         )}
       </Box>
-      {users.length > 0 ? (
-        users.map(({ userId, user }) => {
+      {users?.length > 0 ? (
+        users?.map((user) => {
+          console.log("user Data",user)
           return (
             <Box className="flex items-center py-8 border-b border-b-gray-300">
               <Box
@@ -339,8 +418,12 @@ Box className='cursor-pointer'><img src={Img1} width={60} height={60} className=
                 {/* <Box><img src={Img1} className="w-[60px] h-[60px] rounded-full p-[2px] border border-primary" /></Box> */}
                 <Box className="ml-6">
                   <h3 className="text-lg font-semibold">{user?.firstName}</h3>
-                  <p className="text-sm font-light text-gray-600">
-                    {user?.email}
+                  <p
+                    className="text-sm font-light text-gray-600"
+                    onClick={() => hansdleOnClickEmail(user?.userId)}
+                  >
+                    {user?.user?.email}
+                    {/* {user?.userId} */}
                   </p>
                 </Box>
               </Box>

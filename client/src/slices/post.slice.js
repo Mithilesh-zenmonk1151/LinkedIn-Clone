@@ -36,7 +36,7 @@ export const createPosts = createAsyncThunk(
         formData,
         {
           header: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data'
           },
         }
       );

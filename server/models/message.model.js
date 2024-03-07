@@ -9,10 +9,7 @@ const messaageSchema = new mongoose.Schema(
     members:{
       type:Array
     },
-    message: {
-      type: String,
-      trim: true,
-    },
+  
     conversationId: {
       type: String,
     },

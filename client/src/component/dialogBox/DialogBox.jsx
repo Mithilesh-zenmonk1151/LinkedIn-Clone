@@ -36,7 +36,7 @@ function DialogBox() {
   };
   const handleFilesChange = (e) => {
     var file = [];
-    for (let i = 0; i < e.target.files.length; i++) {
+    for (let i = 0; i < e.target.files?.length; i++) {
       file = [...file, e.target.files[i]];
     }
     setPostImage(file);
