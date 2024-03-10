@@ -1,6 +1,6 @@
-const chatModel = require("../models");
-const userModel = require("../models");
-const messageModel = require("../models/message.model");
+// const chatModel = require("../models");
+// const userModel = require("../models");
+// const messageModel = require("../models");
 
 // exports.accessChat = async (payload) => {
 //   const { userId } = payload.body;
@@ -154,38 +154,82 @@ const messageModel = require("../models/message.model");
 //   }
 // };
 
-exports.sendMessage = async (payload) => {
-  try {
-    const { conversationId, senderId, message,recieverId } = payload.body;
-    if(!conversationId && recieverId){
-      const newConversation= new messageModel({members:[senderId,recieverId]});
-      await newConversation.save();
-      const newMessage= new chatModel.chatModel({conversationId:newConversation._id,senderId,message});
-      await newMessage.save();
+// exports.sendMessage = async (payload) => {
+//   try {
+//     const { conversationId, senderId, message,recieverId } = payload.body;
+//     if(!conversationId && recieverId){
+//       const newConversation= new messageModel({members:[senderId,recieverId]});
+//       await newConversation.save();
+//       const newMessage= new chatModel.chatModel({conversationId:newConversation._id,senderId,message});
+//       await newMessage.save();
+//     }
+//     const newMessages = new chatModel.chatModel({
+//       conversationId,
+//       senderId,
+//       message,
+//     });
+//     await newMessages.save();
+//     return newMessages;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+// exports.getMessage = async (payload) => {
+//   try {
+//     const conversationId = payload.params.conversationId;
+//     if(conversationId==='new') return 
+//     const messages = await chatModel.chatModel.find({ conversationId });
+//   const messageUserData= Promise.all(messages?.map(async(message)=>{
+//     const user= await userModel.userModel.findById(message.senderId);
+//     return{user:{id:user._id, email:user.email,firstName:user.firstName},message:message.message}
+//   }))
+//     console.log("message", messages);
+//     return messageUserData;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+// const RoomModel = require('../models/RoomSchema')
+// const UsersModel = require('../models/UserSchema')
+const chatModel = require("../models");
+const userModel = require("../models");
+const messageModel = require("../models");
+ const customError = require("../utils/error")
+var mongoose = require('mongoose');
+exports.userRoom = async ({ body, userId }) => {
+    try {
+        const receiverId = body.receiverId;
+        const receiver = await userModel.userModel.findById({ _id: receiverId },
+            { name: 1, _id: 1, image: 1 });
+        if (!receiver)
+            throw new customError("User doesn't exist", 404);
+        const output = {};
+        output.receiver = receiver;
+        const participantsId = [(new mongoose.Types.ObjectId(userId)),
+        (new mongoose.Types.ObjectId(receiverId))];
+        const roomExist = await chatModel.chatModel.findOne({
+            participantsId:
+                { $all: participantsId }
+        });
+        output.room = (roomExist && roomExist.length !== 0) ?
+            roomExist : await chatModel.chatModel.create({ participantsId })
+        if (!output.room) throw new customerError("Room not created", 500);
+        // console.log('output: ', output);
+        return output
     }
-    const newMessages = new chatModel.chatModel({
-      conversationId,
-      senderId,
-      message,
-    });
-    await newMessages.save();
-    return newMessages;
-  } catch (error) {
-    throw error;
-  }
+    catch (err) { throw err; }
 };
-exports.getMessage = async (payload) => {
-  try {
-    const conversationId = payload.params.conversationId;
-    if(conversationId==='new') return 
-    const messages = await chatModel.chatModel.find({ conversationId });
-  const messageUserData= Promise.all(messages?.map(async(message)=>{
-    const user= await userModel.userModel.findById(message.senderId);
-    return{user:{id:user._id, email:user.email,firstName:user.firstName},message:message.message}
-  }))
-    console.log("message", messages);
-    return messageUserData;
-  } catch (error) {
-    throw error;
-  }
-};
+
+
+
+exports.fetchedRoom = async ({ userId }) => {
+    const response = await chatModel.chatModel.find({ participantsId: userId })
+                                    .populate({
+                                            path: 'participantsId',
+                                            select: ['_id', 'email', 'name', 'image'],
+                                            match: { _id: { $ne: userId } }
+                                             });
+    // console.log('response: ', response);
+    if (!response) throw new customError("No rooms found", 204);
+    return response;
+}

@@ -1,5 +1,14 @@
-const router = require("express").Router();
-const {chatController}= require("../controllers")
-router.get("/:conversationId",chatController.getMessage);
-router.post("/message", chatController.sendMessage);
-module.exports=router
+const express = require('express');
+const router = express.Router();
+
+const auth = require('../middlewares/auth.middleware');
+const { chatController } = require("../controllers");
+
+router.post('/roomCreate', chatController.userRoom)
+router.get('/roomGet', chatController.fetchedRoom)
+
+
+
+
+
+module.exports = router;

@@ -10,9 +10,9 @@ const GetComment = () => {
   useEffect(() => {
     dispatch(commentUser());
   }, [dispatch]);
-  const comments = useSelector((state) => state.comments.content) || {};
+  const comments = useSelector((state) => state.comments?.content) || {};
   console.log("commentshgj",comments);
-  const data= comments.data;
+  const data= comments?.data;
   // const commentData=data.commentData
    
   // const response= comments.comments;

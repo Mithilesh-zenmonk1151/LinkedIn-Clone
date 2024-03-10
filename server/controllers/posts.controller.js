@@ -19,7 +19,6 @@ exports.createPosts = async (req, res) => {
 exports.getPost = async (req, res) => {
   try {
     const response = await postsService.getPost(req);
-
     return res.status(200).json({
       success: true,
       posts: response,

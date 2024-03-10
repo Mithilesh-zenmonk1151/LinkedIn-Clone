@@ -20,7 +20,7 @@ export const postReactionUser = createAsyncThunk(
       console.log("response: ", response);
       return response;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -30,7 +30,7 @@ export const getReactionUser = createAsyncThunk(
     const res = await axios.get(
       `http://localhost:4000/api/reactions?postId=${postId}`
     );
-    const data = res.data;
+    const data = res?.data;
     return data;
   }
 );
@@ -51,7 +51,7 @@ export const deleteReactionUser = createAsyncThunk(
         config
       );
 
-      return res.data;
+      return res?.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

@@ -1,11 +1,12 @@
 const router = require("express").Router();
-const {messageController}= require("../controllers");
+const { messageController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 const { auth } = authMiddleware;
 
+router.get(
+  "/allroommessages/:roomId",
+  auth,
+  messageController.getAllMessage
+);
 
-
-router.post("/",messageController.sendMessage)
-router.get("/:userId",messageController.getAllMessage)
-
-module.exports= router;
+module.exports = router;

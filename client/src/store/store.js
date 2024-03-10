@@ -1,25 +1,30 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authReducer from "../slices/auth.slice";
-import postSlice from "../slices/post.slice";
-import commentSlice from "../slices/comment.slice";
-import reactionSlice from "../slices/reaction.slice";
-import connectionSlice from "../slices/connections.slice";
-import profileSlice from "../slices/profile.slice";
+import postReducer from "../slices/post.slice";
+import commentReducer from "../slices/comment.slice";
+import reactionReducer from "../slices/reaction.slice";
+import connectionReducer from "../slices/connections.slice";
+import profileReducer from "../slices/profile.slice";
 import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
+import roomReducer from "../slices/room.slice";
+import messageReducer from "../slices/message.slice";
 const combinedReducer = combineReducers({
   auth: authReducer,
-  posts: postSlice,
-  comments: commentSlice,
-  reaction: reactionSlice,
-  connections: connectionSlice,
-  profile: profileSlice,
+  posts: postReducer,
+  comments: commentReducer,
+  reaction: reactionReducer,
+  connections: connectionReducer,
+  profile: profileReducer,
+  room:roomReducer,
+  message:messageReducer
+
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ['comments',"connections"]
+  blacklist: []
 };
 const persistedReducer = persistReducer(persistConfig, combinedReducer);
 

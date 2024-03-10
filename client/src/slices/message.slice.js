@@ -1,89 +1,74 @@
-import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
+const MessageFetchAction='message/fetchMessageUser'
 
-export const getMessages = createAsyncThunk(
-  "messages/getMessages",
-  async (inputs, { rejectWithValue }) => {
-    try {
-      const head = {
-        header: {
-          Athorization: `Bearer&{token}`,
-        },
-      };
-      const response = await axios.get(
-        `http://localhost:4000/api/messages/${chatId}`,
-        inputs,
-        head
-      );
-      console.log("response message",response);
-      const data = response.data;
-      return data;
-    } catch (error) {
-      console.log("error", error.response.data);
-      return rejectWithValue(error.response.data);
-    }
+
+export const fetchMessageUser = createAsyncThunk(
+  MessageFetchAction,
+  async (id,{ rejectWithValue,getState}) => {
+    //  console.log('id: mm', id);
+
+      const roomId=id;
+      try {
+          const token = getState().auth.token;
+         // console.log('token: ', token);
+       
+          const config = {
+              headers: {
+                  'authorization': `Bearer ${token}`
+              }
+          };
+          const response = await axios.get(`http://localhost:4000/allroommessages/${roomId}`, config);
+
+         // console.log('response:messs ', response);
+          return response;
+      }
+      catch (err) {
+
+          return rejectWithValue(err.response);
+
+
+      }
   }
 );
-
-export const sendMessage = createAsyncThunk(
-  "messages/sendMessage",
-  async (formData, { rejectWithValue }) => {
-  
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/message",
-        formData,
-        {
-          header: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("response from create", response.data);
-      return response.data;
-    } catch (error) {
-      console.log("error", error.response.data);
-      alert("api not hitted");
-      return rejectWithValue(error.response.data);
-    }
-  }
-);
-
-export const mesageSlice = createSlice({
-  name: "message",
+export const messageSlice = createSlice({
+  name: 'message',
   initialState: {
-    content: [],
-    isLoading: false,
+    loading: false,
     error: null,
+    success:false,
+  
+    messageData:[]
   },
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(sendMessage.pending, (state) => {
-      state.isLoading = true;
-      state.error = null;
-    });
-    builder.addCase(sendMessage.fulfilled, (state) => {
-      state.isLoading = false;
-      state.success = true;
-      console.log(" state", state.success);
-    });
-    builder.addCase(sendMessage.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error.message;
-    });
-    builder.addCase(getMessages.pending, (state) => {
-      state.isLoading = false;
-    });
-    builder.addCase(getMessages.fulfilled, (state, action) => {
-      state.isLoading = false;
-      state.content = action.payload;
-    });
-    builder.addCase(getMessages.rejected, (state, action) => {
-      state.isLoading = false;
-      state.error = action.error;
-    });
-  },
-});
+  reducers: {
+   addNewMessages(state,action){
+      state.messageData=[...state.messageData , action.payload]
 
-export default mesageSlice.reducer;
+   }
+  },
+  extraReducers: (builder) => {
+    builder 
+     .addCase(fetchMessageUser.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+   
+    })
+    .addCase(fetchMessageUser.fulfilled, (state,action) => {
+      state.loading = false;
+      state.messageData = action.payload.data;
+     // console.log("action of room",state.messageData)
+      
+    
+    })
+    .addCase(fetchMessageUser.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+     
+    })
+ 
+   
+},
+});
+export const {addNewMessages}=messageSlice.actions
+export default messageSlice.reducer;

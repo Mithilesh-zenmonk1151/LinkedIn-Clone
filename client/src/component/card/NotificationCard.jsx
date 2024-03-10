@@ -1,35 +1,17 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import Button from "@mui/material/Button";
-import { deepOrange} from "@mui/material/colors";
+import { Avatar, Box, IconButton, Stack } from '@mui/material'
+import React from 'react'
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { Avatar, Typography } from "@mui/material";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
-
-export default function NotificationCard() {
-  
-  return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent>
-        <Avatar sx={{ bgcolor: deepOrange[500] }}></Avatar>
-        <Box>
-            <Typography>Linked News India</Typography>
-        </Box>
-      </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
-    </Card>
-  );
+function NotificationCard() {
+    return (
+        <Stack direction={'row'} p={1} justifyContent={'space-between'} gap={2} alignItems={'center'}  >
+            <Avatar sx={{ width: 56, height: 56 }} />
+            <Box className='notification' sx={{ fontSize: '14px' }}><span className='name'>User Name :</span><span className='content'>&nbsp;New Post created by userName </span></Box>
+            <Stack>
+                <Box sx={{ fontSize: '12px' }}>2hr ago </Box>
+                <IconButton><MoreHorizIcon /></IconButton>
+            </Stack>
+        </Stack>)
 }
+
+export default NotificationCard

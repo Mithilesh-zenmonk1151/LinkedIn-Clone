@@ -17,11 +17,11 @@ export const getPosts = createAsyncThunk(
         head
       );
       console.log("response from get post",response);
-      const data = response.data;
+      const data = response?.data;
       return data;
     } catch (error) {
-      console.log("error", error.response.data);
-      return rejectWithValue(error.response.data);
+      console.log("error", error?.response?.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -41,11 +41,11 @@ export const createPosts = createAsyncThunk(
         }
       );
       console.log("response from create", response.data);
-      return response.data;
+      return response;
     } catch (error) {
       console.log("error", error.response.data);
       alert("api not hitted");
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );

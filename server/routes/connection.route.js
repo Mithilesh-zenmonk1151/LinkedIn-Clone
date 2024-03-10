@@ -2,11 +2,9 @@ const router = require("express").Router();
 const { connectionController } = require("../controllers");
 const { authMiddleware } = require("../middlewares");
 const { auth } = authMiddleware;
-router.post('/connection', auth, connectionController.sendNewConnection) // userId of person to whom connection request is being send
-router.get('/connctionReciever', auth, connectionController.getConnectionReciever)
-router.get('/connectionSender', auth, connectionController.getConnectionSender)
-router.get('/connections', auth, connectionController.getAllConnections)
+router.post('/user/connection/:receiverId' , auth, connectionController.uploadingConnection),
+router.get('/user/connection', auth ,connectionController.fetchConnection),
+router.get('/user/suggestion', auth ,connectionController.fetchSuggestion),
+router.put('/user/connection/:connectionId' ,auth ,connectionController.updatingConnection)
 
-router.patch('/:connectionId', auth, connectionController.editConnectionStatus)
-router.get('/suggestions', connectionController.getSuggestions)
 module.exports = router;

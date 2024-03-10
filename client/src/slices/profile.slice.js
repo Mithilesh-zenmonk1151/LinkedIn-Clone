@@ -21,7 +21,7 @@ export const getUpdatedUserProfile = createAsyncThunk(
     } catch (error) {
       console.log("Profile error", error);
 
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -35,10 +35,10 @@ export const updateUserProfile = createAsyncThunk(
         userData
       );
       console.log("update user profile", response);
-      return response.data;
+      return response?.data;
     } catch (error) {
       console.log(error);
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );

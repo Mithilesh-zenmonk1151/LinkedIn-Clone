@@ -17,11 +17,11 @@ export const authUser = createAsyncThunk(
         }
       );
       console.log(response.data);
-      return response.data;
+      return response?.data;
     } catch (error) {
-      console.log("error", error.response.data);
+      console.log("error", error?.response?.data);
       alert("api not hitted");
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -38,11 +38,11 @@ export const loginUser = createAsyncThunk(
           password,
         }
       );
-      const data=response.data;
-      console.log("response redux", response.data);
-      console.log("error wala response",data.error)
+      const data=response?.data;
+      console.log("response redux", response?.data);
+      console.log("error wala response",data?.error)
       localStorage.setItem("logged", "true");
-      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("token", response?.data?.token);
       return data;
     } catch (error) {
       // console.log("error", error.response.data);
@@ -63,7 +63,7 @@ export const logoutUser = createAsyncThunk(
       localStorage.removeItem("logged");
       localStorage.removeItem("token");
       const response = await axios.post("http://localhost:4000/api/logout");
-      return response.data;
+      return response?.data;
     } catch (error) {
       return rejectWithValue(error.message);
     }

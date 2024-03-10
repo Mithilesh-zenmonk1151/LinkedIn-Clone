@@ -14,7 +14,7 @@ export const getUserDetails = createAsyncThunk(
         inputs,
         head
       );
-      const data = response.data;
+      const data = response?.data;
 
       console.log("get suggestion data", data);
       return data;

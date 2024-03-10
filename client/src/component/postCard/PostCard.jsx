@@ -40,7 +40,7 @@ export default function PostCard({ body, title, images, user, postId }) {
     dispatch(getReactionUser(postId));
   }, []);
   const commentArray = useSelector(
-    (state) => state.comments?.content?.commentData
+    (state) => state.comments?.content?.res?.data?.commentData
   );
   const numberOfComments=commentArray?.length || 0;
   console.log("number of comment Array ", commentArray);

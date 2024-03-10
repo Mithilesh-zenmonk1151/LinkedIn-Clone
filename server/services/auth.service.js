@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 exports.signup = async (payload) => {
   try {
-    const { name, email, password } = payload.body;
+    const { name, email, password }  = payload.body;
     console.log(payload.body);
     const existingUser = await userModel.userModel.findOne({ email });
    
