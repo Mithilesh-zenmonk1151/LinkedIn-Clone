@@ -36,7 +36,7 @@ const ShowPosts = () => {
     console.log("post wala field is clicked");
   }
   return (
-    <Stack flexDirection={"column"} className="Home">
+    <Stack flexDirection={"column"}  className="Home">
       <Box className="home-nav"></Box>
       <Box className="home-main">
         <Stack

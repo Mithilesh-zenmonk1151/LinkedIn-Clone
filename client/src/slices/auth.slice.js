@@ -38,6 +38,7 @@ export const loginUser = createAsyncThunk(
           password,
         }
       );
+      
       const data=response?.data;
       console.log("response redux", response?.data);
       console.log("error wala response",data?.error)
