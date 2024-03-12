@@ -72,7 +72,7 @@ export const getCommentUser = createAsyncThunk(
   return {postId,res};
 }
 catch (error) {
-         console.log("errorrmgvdsfhdryjjkyuljk",error)
+         console.log("errorrmg",error)
       // }
 
   return rejectWithValue(error.response.data);
@@ -88,7 +88,6 @@ export const commentSlice = createSlice({
       loading: false,
       error: null,
       success:false,
-
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -101,7 +100,6 @@ export const commentSlice = createSlice({
           state.loading = false;
           state.success=true;
           console.log(' state' , state.success)
-
         })
         .addCase(commentUser.rejected, (state, action) => {
           state.loading = false;
